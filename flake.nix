@@ -125,6 +125,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+    ign.url = "github:tacogips/ign";
   };
 
   outputs =
@@ -132,6 +133,7 @@
       self,
       nixpkgs,
       flake-utils,
+      ign,
     }:
     flake-utils.lib.eachDefaultSystem (
       system:
@@ -185,6 +187,7 @@
             gotools
             golangci-lint
             go-task
+            ign.packages.${system}.default
           ];
 
           shellHook = ''
@@ -192,6 +195,7 @@
             echo "Go version: $(go version)"
             echo "Task version: $(task --version)"
             echo "golangci-lint version: $(golangci-lint --version)"
+            echo "ign version: $(ign --version 2>&1 || echo 'available')"
           '';
         };
       }

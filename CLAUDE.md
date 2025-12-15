@@ -127,7 +127,163 @@ feat: implement user authentication system
 
 ## Project Overview
 
-This is a Golang project with Nix flake development environment support.
+This is a template repository for ign (https://github.com/tacogips/ign), a project scaffolding tool. This repository is used to create and manage templates that can be consumed by the ign CLI tool.
+
+## About ign
+
+ign is a CLI tool for project scaffolding that downloads templates from GitHub repositories and generates new projects through variable substitution. It follows a two-step workflow:
+
+1. **Build Init**: Create build configuration from a template
+2. **Init**: Generate project files using the build configuration
+
+### ign Installation
+
+ign is available in the Nix development environment via flake input:
+
+```bash
+# Enter development shell (ign will be available)
+nix develop
+
+# Or run directly without entering shell
+nix run github:tacogips/ign -- --help
+```
+
+### ign Workflow
+
+**Step 1: Initialize Build Configuration**
+
+```bash
+ign build init [TEMPLATE_URL]
+```
+
+This creates a `.ign-build/` directory containing `ign-var.json` with template variables.
+
+URL formats supported:
+- Full HTTPS: `https://github.com/owner/repo`
+- Short form: `github.com/owner/repo`
+- Owner/repo: `owner/repo`
+- With path: `github.com/owner/repo/templates/go-basic`
+- Git SSH: `git@github.com:owner/repo.git`
+- Specific ref: `--ref v1.2.0` or `--ref branch-name`
+
+**Step 2: Configure Variables**
+
+Edit `.ign-build/ign-var.json` to set variable values for your project.
+
+**Step 3: Generate Project**
+
+```bash
+ign init
+```
+
+This processes the template and generates project files in the current directory (or `--output` path).
+
+### ign Commands Reference
+
+**Build Management**
+```bash
+ign build init [URL]           # Create build config from template
+  -o, --output string          # Output directory (default ".ign-build")
+  -r, --ref string             # Git branch, tag, or commit (default "main")
+  -f, --force                  # Overwrite existing .ign-build directory
+```
+
+**Project Generation**
+```bash
+ign init                       # Generate project from build config
+  -c, --config string          # Path to ign-var.json (default ".ign-build/ign-var.json")
+  -o, --output string          # Output directory (default ".")
+  -w, --overwrite              # Overwrite existing files
+  -d, --dry-run                # Show what would be generated
+  -v, --verbose                # Show detailed processing info
+```
+
+**Template Validation**
+```bash
+ign template check [PATH]      # Validate template syntax
+  -r, --recursive              # Check subdirectories recursively
+  -v, --verbose                # Show detailed validation info
+```
+
+**Global Flags**
+```bash
+--debug                        # Enable debug logging
+--no-color                     # Disable colored output
+-q, --quiet                    # Suppress non-error output
+```
+
+### Template Syntax
+
+ign templates use `@ign-` prefix for directives to avoid conflicts with programming language syntax.
+
+**Variables**
+```
+@ign-var:NAME@                           # Required variable
+@ign-var:NAME:default_value@             # Variable with default
+@ign-var:NAME:string:default@            # Typed variable (string, int, bool)
+```
+
+**Conditionals**
+```
+@ign-if:VAR@
+  Content shown if VAR is truthy
+@ign-endif@
+
+@ign-if:!VAR@
+  Content shown if VAR is falsy
+@ign-endif@
+```
+
+**File Inclusion**
+```
+@ign-include:path/to/file.txt@           # Include file content
+```
+
+**Raw Content (Escape Processing)**
+```
+@ign-raw@
+  This content is not processed by ign
+  @ign-var:FOO@ will appear literally
+@ign-endraw@
+```
+
+**Template-Only Comments**
+```
+@ign-comment@
+  This comment will not appear in generated output
+@ign-endcomment@
+```
+
+### Template Repository Access
+
+**Public Repositories**
+No authentication required.
+
+**Private Repositories**
+Requires GitHub authentication via either:
+
+1. GitHub CLI (`gh` command must be authenticated)
+2. `GITHUB_TOKEN` environment variable
+
+```bash
+export GITHUB_TOKEN="your_github_token"
+ign build init github.com/owner/private-repo
+```
+
+### IMPORTANT: Issue Reporting
+
+**ign is not yet stable and may have unexpected behavior.** If you encounter any bugs, strange behavior, or issues while using ign:
+
+1. **Do NOT try to work around or fix issues manually**
+2. **Create an issue at https://github.com/tacogips/ign/issues**
+3. Include in the issue:
+   - Command that caused the problem
+   - Expected behavior vs actual behavior
+   - Error messages or unexpected output
+   - Template structure if relevant
+   - ign version (`ign version`)
+
+This helps improve ign for everyone and ensures issues are tracked and resolved properly.
 
 ## Development Environment
 - **Language**: Go
@@ -149,6 +305,7 @@ This is a Golang project with Nix flake development environment support.
 - `gopls` - Go language server (LSP)
 - `gotools` - Additional Go development tools
 - `task` - Task runner (go-task)
+- `ign` - Template-based project scaffolding tool (available in nix develop)
 
 ## Coding Standards
 - Follow standard Go conventions and idioms
