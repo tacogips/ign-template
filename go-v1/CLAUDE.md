@@ -157,6 +157,11 @@ This is @ign-var:PROJECT_NAME@ - a Golang project with Nix flake development env
 - Keep functions focused and single-purpose
 - Avoid over-engineering - implement only what's requested
 
+### MANDATORY Rules
+
+- **Path hygiene** [MANDATORY]: Development machine-specific paths must NOT be included in code. When writing paths as examples in comments, use generalized paths (e.g., `/home/user/project` instead of `/home/john/my-project`). When referencing project-specific paths, always use relative paths (e.g., `./internal/service` instead of `/home/user/project/internal/service`)
+- **Credential and environment variable protection** [MANDATORY]: Environment variable values from the development environment must NEVER be included in code. If user instructions contain credential content or values, those must NEVER be included in any output. "Output" includes: source code, commit messages, GitHub comments (issues, PR body), and any other content that may be transmitted outside this machine.
+
 ## Go Code Development
 **IMPORTANT**: When writing Go code, you (the LLM model) MUST use the specialized go-coding sub agent located at `.claude/agents/go-coding.md`.
 

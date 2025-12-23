@@ -322,7 +322,7 @@ This helps improve ign for everyone and ensures issues are tracked and resolved 
 - Avoid over-engineering - implement only what's requested
 
 ## Go Code Development
-**IMPORTANT**: When writing Go code, you (the LLM model) MUST use the specialized go-coding sub agent located at `/g/gits/tacogips/ign/.claude/agents/go-coding.md`.
+**IMPORTANT**: When writing Go code, you (the LLM model) MUST use the specialized go-coding sub agent located at `.claude/agents/go-coding.md`.
 
 Use the Task tool with the go-coding agent for:
 - Writing new Go code

@@ -24,6 +24,12 @@
       "help": "Go version for go.mod (e.g., 1.21, 1.22, 1.23, 1.24)",
       "default": "1.24"
     },
+    "HOMEPAGE": {
+      "type": "string",
+      "description": "Project homepage URL",
+      "help": "URL for project homepage (e.g., GitHub repository URL)",
+      "default": "https://github.com/user/repo"
+    },
     "LICENSE": {
       "type": "string",
       "description": "License type",
