@@ -11,9 +11,9 @@
       "default": "A Go project"
     },
     "GO_VERSION": {
-      "type": "int",
-      "description": "Variable GO_VERSION",
-      "default": 1
+      "type": "string",
+      "description": "Go version for go.mod",
+      "default": "1.24"
     },
     "LICENSE": {
       "type": "string",
