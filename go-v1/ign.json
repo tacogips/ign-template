@@ -1,0 +1,39 @@
+{
+  "name": "go-v1",
+  "version": "1.0.0",
+  "description": "Go project template with standard layout",
+  "author": "tacogips",
+  "repository": "https://github.com/tacogips/ign-template",
+  "variables": {
+    "PROJECT_NAME": {
+      "type": "string",
+      "description": "Project name (used for binary and directory names)",
+      "required": true
+    },
+    "MODULE_PATH": {
+      "type": "string",
+      "description": "Go module path (e.g., github.com/user/project)",
+      "required": true
+    },
+    "GO_VERSION": {
+      "type": "string",
+      "description": "Go version",
+      "default": "1.23"
+    },
+    "DESCRIPTION": {
+      "type": "string",
+      "description": "Project description",
+      "default": "A Go project"
+    },
+    "USE_TASK": {
+      "type": "bool",
+      "description": "Include Taskfile.yml for go-task",
+      "default": true
+    },
+    "LICENSE": {
+      "type": "string",
+      "description": "License type",
+      "default": "MIT"
+    }
+  }
+}
