@@ -462,7 +462,7 @@ Example format:
 
 ## Claude Code Plugin Specification
 
-This section documents the Claude Code plugin system based on official documentation.
+This section documents the Claude Code plugin system based on official documentation and verified working configurations.
 
 ### References
 
@@ -476,7 +476,7 @@ This section documents the Claude Code plugin system based on official documenta
 | Concept | Description |
 |---------|-------------|
 | **Plugin** | A single extension unit containing commands, agents, skills, hooks, MCP/LSP servers |
-| **Marketplace** | A collection/registry of multiple plugins for distribution |
+| **Marketplace** | A DIRECTORY containing `.claude-plugin/marketplace.json` that registers multiple plugins |
 
 ### Plugin Directory Structure
 
@@ -507,8 +507,22 @@ my-plugin/                      # Plugin root
 }
 ```
 
-### marketplace.json (Marketplace Definition)
+### Marketplace Structure
 
+A marketplace is a **DIRECTORY** that contains `.claude-plugin/marketplace.json`:
+
+```
+marketplace-dir/                # Marketplace directory
+├── .claude-plugin/
+│   └── marketplace.json        # Marketplace definition (REQUIRED location)
+└── plugins/                    # Plugins directory
+    └── my-plugin/
+        ├── .claude-plugin/
+        │   └── plugin.json
+        └── .lsp.json
+```
+
+**marketplace.json (inside .claude-plugin/):**
 ```json
 {
   "name": "marketplace-name",
@@ -519,7 +533,7 @@ my-plugin/                      # Plugin root
   "plugins": [
     {
       "name": "plugin-name",
-      "source": "./path/to/plugin",
+      "source": "./plugins/my-plugin",
       "description": "Plugin description",
       "version": "1.0.0"
     }
@@ -527,98 +541,99 @@ my-plugin/                      # Plugin root
 }
 ```
 
-The `source` field is relative to the repository root (where `.claude-plugin/marketplace.json` exists), NOT relative to the marketplace.json file itself.
+**Important**: The `source` field is relative to the marketplace directory (where `.claude-plugin/marketplace.json` exists), NOT relative to the repository root.
 
-### Project-Scoped Plugin Configuration
+### Project-Scoped Plugin Configuration (Recommended)
 
-To enable plugins at project scope (for all collaborators), configure `.claude/settings.json`:
-
-```json
-{
-  "extraKnownMarketplaces": {
-    "local": {
-      "source": {
-        "source": "file",
-        "path": ".claude/marketplace.json"
-      }
-    }
-  },
-  "enabledPlugins": {
-    "plugin-name@marketplace-name": true
-  }
-}
-```
-
-### Marketplace Source Types
-
-| Type | Example |
-|------|---------|
-| `github` | `{"source": "github", "repo": "owner/repo"}` |
-| `git` | `{"source": "git", "url": "https://example.com/repo.git"}` |
-| `file` | `{"source": "file", "path": ".claude/marketplace.json"}` |
-| `directory` | `{"source": "directory", "path": "./plugins"}` |
-| `url` | `{"source": "url", "url": "https://example.com/marketplace.json"}` |
-| `npm` | `{"source": "npm", "package": "@org/plugins"}` |
-
-### Local Plugin Structure for Project Scope
-
-For a project with an embedded local plugin:
+For a project with an embedded local marketplace at `.claude/marketplace/`:
 
 ```
 project/
 ├── .claude/
-│   ├── marketplace.json          # Local marketplace definition
-│   ├── settings.json             # extraKnownMarketplaces + enabledPlugins
-│   └── plugins/
-│       └── my-plugin/
-│           ├── .claude-plugin/
-│           │   └── plugin.json   # Plugin manifest
-│           ├── .lsp.json         # LSP config (optional)
-│           └── .mcp.json         # MCP config (optional)
+│   ├── settings.json             # Only hooks + enabledPlugins
+│   ├── marketplace/              # Local marketplace DIRECTORY
+│   │   ├── .claude-plugin/
+│   │   │   └── marketplace.json  # Marketplace definition
+│   │   └── plugins/
+│   │       └── lsp/
+│   │           ├── .claude-plugin/
+│   │           │   └── plugin.json
+│   │           └── .lsp.json
+│   ├── agents/
+│   ├── commands/
+│   └── ...
 └── ...
 ```
 
-**marketplace.json:**
+**.claude/marketplace/.claude-plugin/marketplace.json:**
 ```json
 {
   "name": "local",
   "owner": { "name": "Project" },
   "plugins": [
     {
-      "name": "my-plugin",
-      "source": "./plugins/my-plugin",
+      "name": "go-lsp",
+      "source": "./plugins/lsp",
+      "description": "Go language server support",
       "version": "1.0.0"
     }
   ]
 }
 ```
 
-**settings.json:**
+**.claude/settings.json:**
 ```json
 {
   "extraKnownMarketplaces": {
     "local": {
       "source": {
-        "source": "file",
-        "path": ".claude/marketplace.json"
+        "source": "directory",
+        "path": ".claude/marketplace"
       }
     }
   },
   "enabledPlugins": {
-    "my-plugin@local": true
+    "go-lsp@local": true
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "goimports -w ."
+          }
+        ]
+      }
+    ]
   }
 }
 ```
 
+**Note**: `extraKnownMarketplaces` with `source: "directory"` registers the marketplace at project scope. When team members clone the repo, they are prompted to install the marketplace. The path is relative to the repository root.
+
 ### Plugin Loading Methods
 
-1. **Via settings.json (Project Scope)**: Configure `extraKnownMarketplaces` and `enabledPlugins` as shown above
+1. **Via .claude/marketplace/ directory (Project Scope, Recommended)**: Place marketplace at `.claude/marketplace/` with `.claude-plugin/marketplace.json` inside
 2. **Via CLI flag (Development/Testing)**: `claude --plugin-dir ./path/to/plugin`
-3. **Via /plugin command (Interactive)**: `/plugin marketplace add ./path` then `/plugin install plugin@marketplace`
+3. **Via /plugin command (Interactive)**: `/plugin marketplace add .claude/marketplace` then `/plugin install plugin@marketplace`
+
+### Marketplace Source Types
+
+| Type | Example |
+|------|---------|
+| `directory` | `{"source": "directory", "path": ".claude/marketplace"}` (for local project) |
+| `github` | `{"source": "github", "repo": "owner/repo"}` |
+| `git` | `{"source": "git", "url": "https://example.com/repo.git"}` |
+| `url` | `{"source": "url", "url": "https://example.com/marketplace.json"}` |
+| `npm` | `{"source": "npm", "package": "@org/plugins"}` |
 
 ### Key Points
 
-- Plugins cannot be enabled directly by path in settings.json - marketplace layer is required
+- A marketplace is a DIRECTORY containing `.claude-plugin/marketplace.json`, not a standalone JSON file
+- Use `extraKnownMarketplaces` in settings.json with `source: "directory"` for project-scoped marketplaces
+- Plugin `source` paths in marketplace.json are relative to the marketplace directory
 - `enabledPlugins` format is always `"plugin-name@marketplace-name": true`
-- All paths in marketplace.json are relative to repository root
-- Plugin components (commands, agents, etc.) must be at plugin root, not inside `.claude-plugin/`
+- When team members clone the repo, they are prompted to install the marketplace
+- Plugin components (commands/, agents/, etc.) must be at plugin root, not inside `.claude-plugin/`

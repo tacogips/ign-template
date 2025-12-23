@@ -2,8 +2,8 @@
   "extraKnownMarketplaces": {
     "local": {
       "source": {
-        "source": "file",
-        "path": ".claude/marketplace.json"
+        "source": "directory",
+        "path": ".claude/marketplace"
       }
     }
   },
