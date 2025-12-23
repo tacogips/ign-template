@@ -5,35 +5,35 @@
   "author": "tacogips",
   "repository": "https://github.com/tacogips/ign-template",
   "variables": {
-    "PROJECT_NAME": {
-      "type": "string",
-      "description": "Project name (used for binary and directory names)",
-      "required": true
-    },
-    "MODULE_PATH": {
-      "type": "string",
-      "description": "Go module path (e.g., github.com/user/project)",
-      "required": true
-    },
-    "GO_VERSION": {
-      "type": "string",
-      "description": "Go version",
-      "default": "1.23"
-    },
     "DESCRIPTION": {
       "type": "string",
-      "description": "Project description",
+      "description": "Variable DESCRIPTION",
       "default": "A Go project"
     },
-    "USE_TASK": {
-      "type": "bool",
-      "description": "Include Taskfile.yml for go-task",
-      "default": true
+    "GO_VERSION": {
+      "type": "int",
+      "description": "Variable GO_VERSION",
+      "default": 1
     },
     "LICENSE": {
       "type": "string",
-      "description": "License type",
+      "description": "Variable LICENSE",
       "default": "MIT"
+    },
+    "MODULE_PATH": {
+      "type": "string",
+      "description": "Variable MODULE_PATH",
+      "required": true
+    },
+    "PROJECT_NAME": {
+      "type": "string",
+      "description": "Variable PROJECT_NAME",
+      "required": true
+    },
+    "USE_TASK": {
+      "type": "bool",
+      "description": "Variable USE_TASK",
+      "required": true
     }
   }
 }
