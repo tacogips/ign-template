@@ -1,6 +1,6 @@
 {
 
-  description = "@ign-var:DESCRIPTION:A Golang project@";
+  description = "@ign-var:DESCRIPTION=A Golang project@";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -39,7 +39,7 @@
             ];
             meta = with pkgs.lib; {
               description = "@ign-var:DESCRIPTION@";
-              homepage = "@ign-var:HOMEPAGE:https://github.com/user/repo@";
+              homepage = "@ign-var:HOMEPAGE=https://github.com/user/repo@";
               license = licenses.mit;
               maintainers = [ ];
             };
