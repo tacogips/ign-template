@@ -1,30 +1,64 @@
-# Binaries
+# This .gitignore file is expanded to the directory where `ign checkout` is executed.
+# It is NOT for the ign-template repository itself.
+
+# Go binaries
 *.exe
 *.exe~
 *.dll
 *.so
 *.dylib
+*.test
 /@ign-var:PROJECT_NAME@
 /bin/
+/dist/
 
-# Test binary
-*.test
-
-# Output of go coverage
+# Go coverage
 *.out
 
-# Dependency directories
+# Dependencies
 /vendor/
 
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
+## nix/git
+.pre-commit-config.yaml
+**/.direnv
+**/.env
+**/.envrc.private*
+**/*.private*
 
-# OS
-.DS_Store
-Thumbs.db
+## large files
+**/*.zip
 
-# Build
-/dist/
+## ide's /meta infos
+**/.vscode
+**/.idea
+**/.~lock*
+**/.DS_Store
+
+## ts/js
+**/node_modules
+
+## zig
+**/zig-out
+**/.zig-cache
+
+## pythons
+**/.venv/
+**/venv/
+**/*.pkl
+**/*.pyc
+**/*.pyo
+**/*.ipynb
+**/__pycache__/
+**/.pytest_cache/
+**/.ipynb_checkpoints/
+**/.python-version
+**/.mypy_cache/
+**/notebook/
+**/.tox/
+**/.pytest_cache/
+
+## tmps
+result
+**/tmp
+
+## go binaries
