@@ -34,3 +34,42 @@ Use the `verify-pr-comment-resolution` agent to handle the verification and reso
 4. Determine if the issue has been fixed by analyzing code changes
 5. Automatically resolve verified comments on GitHub
 6. Display summary of resolved and remaining comments
+
+## Agent Delegation
+
+Use the `verify-pr-comment-resolution` agent (`.claude/agents/verify-pr-comment-resolution.md`) to perform the verification and resolution. The agent will:
+
+1. Fetch review threads via GraphQL API
+2. Compare source code at `originalCommit` vs. `HEAD`
+3. Analyze if changes address the review feedback
+4. Check for "no action needed" replies from PR author
+5. Post reply comments before resolving threads
+6. Execute GraphQL mutations to resolve threads
+
+## Resolution Criteria
+
+A comment is resolved when:
+- **Code Changed + Issue Fixed**: The change directly addresses the review feedback
+- **Code Deleted/Refactored**: The problematic code no longer exists
+- **No Action Needed Reply**: PR author or maintainer explicitly stated no action required
+
+A comment remains unresolved when:
+- No code change at the commented location (without acknowledgment)
+- Change does not address the specific issue raised
+- Only partial fix applied
+- Unable to determine with confidence
+
+## Error Handling
+
+- **No PR found**: Show error and exit
+- **No unresolved comments**: Report success with "Nothing to resolve"
+- **File not found at commit**: Log warning and skip that comment
+- **API rate limit**: Report partial progress and suggest retry
+- **Permission denied**: Verify write access to repository
+
+## Important Notes
+
+- **Automatic Resolution**: Comments are resolved automatically when verification passes
+- **Conservative Approach**: Only resolve when there is clear evidence of the fix
+- **Reply Before Resolve**: Always post a reply comment explaining the fix before resolving
+- **Source Comparison**: Uses `git show {commit}:{path}` to compare code at different commits
