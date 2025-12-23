@@ -131,10 +131,7 @@ This is a template repository for ign (https://github.com/tacogips/ign), a proje
 
 ## About ign
 
-ign is a CLI tool for project scaffolding that downloads templates from GitHub repositories and generates new projects through variable substitution. It follows a two-step workflow:
-
-1. **Build Init**: Create build configuration from a template
-2. **Init**: Generate project files using the build configuration
+ign is a CLI tool for project scaffolding that downloads templates from GitHub repositories and generates new projects through variable substitution.
 
 ### ign Installation
 
@@ -150,13 +147,16 @@ nix run github:tacogips/ign -- --help
 
 ### ign Workflow
 
-**Step 1: Initialize Build Configuration**
+**Checkout (Initialize and Generate)**
 
 ```bash
-ign build init [TEMPLATE_URL]
+ign checkout <url-or-path> [output-path]
 ```
 
-This creates a `.ign-build/` directory containing `ign-var.json` with template variables.
+This command combines initialization and checkout into a single step:
+1. Creates `.ign` directory with configuration
+2. Interactively prompts for template variables
+3. Generates project files from the template
 
 URL formats supported:
 - Full HTTPS: `https://github.com/owner/repo`
@@ -164,45 +164,44 @@ URL formats supported:
 - Owner/repo: `owner/repo`
 - With path: `github.com/owner/repo/templates/go-basic`
 - Git SSH: `git@github.com:owner/repo.git`
+- Local path: `./my-local-template` or `/absolute/path`
 - Specific ref: `--ref v1.2.0` or `--ref branch-name`
 
-**Step 2: Configure Variables**
-
-Edit `.ign-build/ign-var.json` to set variable values for your project.
-
-**Step 3: Generate Project**
-
+**Examples:**
 ```bash
-ign init
+ign checkout github.com/owner/repo
+ign checkout github.com/owner/repo ./my-project
+ign checkout github.com/owner/repo --ref v1.2.0
+ign checkout ./my-local-template ./output
+ign checkout github.com/owner/repo --force
+ign checkout github.com/owner/repo --dry-run
 ```
-
-This processes the template and generates project files in the current directory (or `--output` path).
 
 ### ign Commands Reference
 
-**Build Management**
+**Checkout (Project Generation)**
 ```bash
-ign build init [URL]           # Create build config from template
-  -o, --output string          # Output directory (default ".ign-build")
+ign checkout <url-or-path> [output-path]  # Initialize and generate project
   -r, --ref string             # Git branch, tag, or commit (default "main")
-  -f, --force                  # Overwrite existing .ign-build directory
+  -f, --force                  # Backup and reinitialize existing config, overwrite files
+  -d, --dry-run                # Show what would be generated without writing files
+  -v, --verbose                # Show detailed processing information
 ```
 
-**Project Generation**
+**Template Management**
 ```bash
-ign init                       # Generate project from build config
-  -c, --config string          # Path to ign-var.json (default ".ign-build/ign-var.json")
-  -o, --output string          # Output directory (default ".")
-  -w, --overwrite              # Overwrite existing files
-  -d, --dry-run                # Show what would be generated
-  -v, --verbose                # Show detailed processing info
-```
-
-**Template Validation**
-```bash
-ign template check [PATH]      # Validate template syntax
+ign template check [PATH]      # Validate template files for syntax errors
   -r, --recursive              # Check subdirectories recursively
   -v, --verbose                # Show detailed validation info
+
+ign template collect-vars [PATH]  # Collect variables from templates and update ign.json
+  --dry-run                    # Preview changes without writing
+  --merge                      # Only add new variables, preserve existing
+  -r, --recursive              # Recursively scan subdirectories
+
+ign template new [PATH]        # Create a new template scaffold
+  -t, --type string            # Scaffold type (default, go, web)
+  -f, --force                  # Overwrite existing files
 ```
 
 **Global Flags**
@@ -267,7 +266,7 @@ Requires GitHub authentication via either:
 
 ```bash
 export GITHUB_TOKEN="your_github_token"
-ign build init github.com/owner/private-repo
+ign checkout github.com/owner/private-repo
 ```
 
 ### IMPORTANT: Issue Reporting
