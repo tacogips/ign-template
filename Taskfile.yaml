@@ -1,7 +1,7 @@
 version: '3'
 
 vars:
-  PLUGINS_DIR: '{{.ROOT_DIR}}/.claude/plugins'
+  TEMPLATES_DIR: '{{.ROOT_DIR}}'
 
 tasks:
   default:
@@ -9,97 +9,79 @@ tasks:
     cmds:
       - task --list
 
-  plugin:list:
-    desc: List all available plugins
+  template-list:
+    desc: List all available ign templates
     cmds:
       - |
-        echo "Available plugins in {{.PLUGINS_DIR}}:"
-        for dir in {{.PLUGINS_DIR}}/*/; do
-          if [ -f "${dir}.claude-plugin/plugin.json" ]; then
+        echo "Available templates in {{.TEMPLATES_DIR}}:"
+        for json in {{.TEMPLATES_DIR}}/*/ign-template.json; do
+          if [ -f "$json" ]; then
+            dir=$(dirname "$json")
             name=$(basename "$dir")
             echo "  - $name"
           fi
         done
 
-  plugin:add:
-    desc: "Run Claude Code with specified plugin (usage: task plugin:add PLUGIN=lsp)"
+  template-update:
+    desc: "Update a specific template (usage: task template-update TEMPLATE=go-v1)"
     requires:
-      vars: [PLUGIN]
-    cmds:
-      - claude --plugin-dir {{.PLUGINS_DIR}}/{{.PLUGIN}}
-
-  plugin:add:all:
-    desc: Run Claude Code with all plugins loaded
+      vars: [TEMPLATE]
     cmds:
       - |
-        args=""
-        for dir in {{.PLUGINS_DIR}}/*/; do
-          if [ -f "${dir}.claude-plugin/plugin.json" ]; then
-            args="$args --plugin-dir $dir"
-          fi
-        done
-        claude $args
-
-  plugin:add:all:resume:
-    desc: Run Claude Code with all plugins loaded and resume last conversation
-    cmds:
-      - |
-        args=""
-        for dir in {{.PLUGINS_DIR}}/*/; do
-          if [ -f "${dir}.claude-plugin/plugin.json" ]; then
-            args="$args --plugin-dir $dir"
-          fi
-        done
-        claude $args --resume
-
-  plugin:check:
-    desc: "Verify plugin structure (usage: task plugin:check PLUGIN=lsp)"
-    requires:
-      vars: [PLUGIN]
-    vars:
-      PLUGIN_DIR: '{{.PLUGINS_DIR}}/{{.PLUGIN}}'
-    cmds:
-      - |
-        echo "Checking plugin structure..."
-        echo "Plugin root: {{.PLUGIN_DIR}}"
-        echo ""
-        if [ -f "{{.PLUGIN_DIR}}/.claude-plugin/plugin.json" ]; then
-          echo "[OK] .claude-plugin/plugin.json exists"
-          cat {{.PLUGIN_DIR}}/.claude-plugin/plugin.json
-        else
-          echo "[ERROR] .claude-plugin/plugin.json not found"
+        template_dir="{{.TEMPLATES_DIR}}/{{.TEMPLATE}}"
+        if [ ! -f "$template_dir/ign-template.json" ]; then
+          echo "Error: Template '{{.TEMPLATE}}' not found (missing ign-template.json)"
           exit 1
         fi
-        echo ""
-        echo "Plugin directories:"
-        for dir in commands agents skills hooks; do
-          if [ -d "{{.PLUGIN_DIR}}/$dir" ]; then
-            echo "[OK] $dir/ exists"
-          else
-            echo "[--] $dir/ not found (optional)"
-          fi
-        done
-        echo ""
-        echo "Config files:"
-        for file in .mcp.json .lsp.json; do
-          if [ -f "{{.PLUGIN_DIR}}/$file" ]; then
-            echo "[OK] $file exists"
-          else
-            echo "[--] $file not found (optional)"
-          fi
-        done
+        echo "Updating template: {{.TEMPLATE}}"
+        ign template update "$template_dir"
 
-  plugin:check:all:
-    desc: Verify all plugins structure
+  template-update-all:
+    desc: Update all ign templates
     cmds:
       - |
-        for dir in {{.PLUGINS_DIR}}/*/; do
-          if [ -d "$dir" ]; then
+        echo "Updating all templates..."
+        for json in {{.TEMPLATES_DIR}}/*/ign-template.json; do
+          if [ -f "$json" ]; then
+            dir=$(dirname "$json")
             name=$(basename "$dir")
             echo "========================================"
-            echo "Plugin: $name"
+            echo "Template: $name"
             echo "========================================"
-            task plugin:check PLUGIN="$name"
+            ign template update "$dir"
             echo ""
           fi
         done
+        echo "All templates updated."
+
+  template-check:
+    desc: "Check a specific template for syntax errors (usage: task template-check TEMPLATE=go-v1)"
+    requires:
+      vars: [TEMPLATE]
+    cmds:
+      - |
+        template_dir="{{.TEMPLATES_DIR}}/{{.TEMPLATE}}"
+        if [ ! -f "$template_dir/ign-template.json" ]; then
+          echo "Error: Template '{{.TEMPLATE}}' not found (missing ign-template.json)"
+          exit 1
+        fi
+        echo "Checking template: {{.TEMPLATE}}"
+        ign template check "$template_dir" -r -v
+
+  template-check-all:
+    desc: Check all ign templates for syntax errors
+    cmds:
+      - |
+        echo "Checking all templates..."
+        for json in {{.TEMPLATES_DIR}}/*/ign-template.json; do
+          if [ -f "$json" ]; then
+            dir=$(dirname "$json")
+            name=$(basename "$dir")
+            echo "========================================"
+            echo "Template: $name"
+            echo "========================================"
+            ign template check "$dir" -r -v
+            echo ""
+          fi
+        done
+        echo "All templates checked."

@@ -5,7 +5,12 @@
   "author": "tacogips",
   "repository": "https://github.com/tacogips/ign-template",
   "license": "MIT",
-  "tags": ["go", "golang", "nix", "task"],
+  "tags": [
+    "go",
+    "golang",
+    "nix",
+    "task"
+  ],
   "variables": {
     "DESCRIPTION": {
       "type": "string",
@@ -34,8 +39,11 @@
     }
   },
   "settings": {
-    "ignore_patterns": [".git", ".DS_Store"],
+    "ignore_patterns": [
+      ".git",
+      ".DS_Store"
+    ],
     "include_dotfiles": true
   },
-  "hash": "d68550d784b99f77d4ea5ea8e7d2959ce3f221832edf184d0f4a83056d857c66"
+  "hash": "12c78acac0c51b509a17062f5af7ea845f5c8df9d9d0b4ee742ef00882473d40"
 }

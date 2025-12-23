@@ -1,4 +1,15 @@
 {
+  "extraKnownMarketplaces": {
+    "local": {
+      "source": {
+        "source": "file",
+        "path": ".claude/marketplace.json"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "go-lsp@local": true
+  },
   "hooks": {
     "Stop": [
       {
