@@ -4,36 +4,54 @@
   "description": "Go project template with standard layout",
   "author": "tacogips",
   "repository": "https://github.com/tacogips/ign-template",
+  "license": "MIT",
+  "tags": ["go", "golang", "nix", "task"],
   "variables": {
+    "PROJECT_NAME": {
+      "type": "string",
+      "description": "Project name",
+      "help": "Used for binary name, directory names, and package references",
+      "required": true,
+      "example": "my-app"
+    },
+    "MODULE_PATH": {
+      "type": "string",
+      "description": "Go module path",
+      "help": "The import path for your Go module (e.g., github.com/username/project)",
+      "required": true,
+      "example": "github.com/username/my-app"
+    },
     "DESCRIPTION": {
       "type": "string",
-      "description": "Variable DESCRIPTION",
+      "description": "Project description",
+      "help": "A brief description of your project for README and documentation",
       "default": "A Go project"
     },
     "GO_VERSION": {
       "type": "string",
-      "description": "Go version for go.mod",
+      "description": "Go version",
+      "help": "Go version for go.mod (e.g., 1.21, 1.22, 1.23, 1.24)",
       "default": "1.24"
     },
     "LICENSE": {
       "type": "string",
-      "description": "Variable LICENSE",
+      "description": "License type",
+      "help": "License identifier for your project (e.g., MIT, Apache-2.0, GPL-3.0)",
       "default": "MIT"
-    },
-    "MODULE_PATH": {
-      "type": "string",
-      "description": "Go module path (e.g., github.com/username/project)",
-      "required": true
-    },
-    "PROJECT_NAME": {
-      "type": "string",
-      "description": "Variable PROJECT_NAME",
-      "required": true
     },
     "USE_TASK": {
       "type": "bool",
-      "description": "Variable USE_TASK",
-      "required": true
+      "description": "Include Taskfile.yml",
+      "help": "Include Taskfile.yml for task automation with go-task",
+      "default": true
     }
+  },
+  "settings": {
+    "preserve_executable": false,
+    "ignore_patterns": [
+      ".git",
+      ".DS_Store"
+    ],
+    "include_dotfiles": true
   }
 }

@@ -1,21 +1,26 @@
 {
-  "agents": {
-    "go-coding": ".claude/agents/go-coding.md",
-    "go-coding-guideline": ".claude/agents/go-coding-guideline.md",
-    "generate-commit": ".claude/agents/generate-commit.md",
-    "generate-pr": ".claude/agents/generate-pr.md",
-    "impl-progress": ".claude/agents/impl-progress.md",
-    "review-before-pr": ".claude/agents/review-before-pr.md",
-    "check-and-test-after-modify": ".claude/agents/check-and-test-after-modify.md",
-    "code-review-file": ".claude/agents/code_review_file.md",
-    "review-current-pr-and-fix": ".claude/agents/review-current-pr-and-fix.md",
-    "review-single-target": ".claude/agents/review-single-target.md",
-    "review-multiple-target": ".claude/agents/review-multiple-target.md",
-    "collect-relative-files-in-pr": ".claude/agents/collect-relative-files-in-pr.md",
-    "apply-pr-review-chunk": ".claude/agents/apply-pr-review-chunk.md",
-    "apply-specific-feedback": ".claude/agents/apply-specific-feedback.md",
-    "fix-unresolved-pr-comments": ".claude/agents/fix-unresolved-pr-comments.md",
-    "verify-pr-comment-resolution": ".claude/agents/verify-pr-comment-resolution.md",
-    "analyze-file-change-in-pr": ".claude/agents/analyze-file-change-in-pr.md"
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "goimports -w ."
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "goimports -w ."
+          }
+        ]
+      }
+    ]
   }
 }

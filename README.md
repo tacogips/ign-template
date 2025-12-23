@@ -4,10 +4,7 @@ A template repository for [ign](https://github.com/tacogips/ign), a CLI tool for
 
 ## What is ign?
 
-ign is a project scaffolding tool that downloads templates from GitHub repositories and generates new projects through variable substitution. It follows a simple workflow:
-
-1. **Init**: Download template and create configuration
-2. **Checkout**: Generate project files using the configuration
+ign is a CLI tool for initializing projects from templates. It downloads templates from GitHub repositories and generates new projects through variable substitution with a simple single-command workflow.
 
 ## Quick Start
 
@@ -27,24 +24,26 @@ ign --help
 
 ### Using This Template
 
-**Step 1: Initialize Configuration**
+Use `ign checkout` to initialize and generate a project in a single step:
 
 ```bash
-ign init github.com/tacogips/ign-template
+# From GitHub
+ign checkout github.com/tacogips/ign-template/go-v1
+
+# With output directory
+ign checkout github.com/tacogips/ign-template/go-v1 ./my-project
+
+# From local path
+ign checkout ./go-v1 ./my-project
+
+# Preview without writing files
+ign checkout github.com/tacogips/ign-template/go-v1 --dry-run
 ```
 
-This creates `.ign-config/ign-var.json` with template variables.
-
-**Step 2: Configure Variables**
-
-Edit `.ign-config/ign-var.json` to set your project-specific values.
-
-**Step 3: Generate Project**
-
-```bash
-ign checkout .              # Generate to current directory
-ign checkout ./my-project   # Generate to specific directory
-```
+The command will:
+1. Create `.ign` directory with configuration
+2. Interactively prompt for template variables
+3. Generate project files from the template
 
 ## Template Syntax
 
@@ -66,7 +65,7 @@ ign uses `@ign-` prefix for template directives:
 ```
 @ign-var:PROJECT_NAME@                    # Required variable
 @ign-var:AUTHOR=John Doe@                 # Variable with default
-@ign-var:PORT:int=8080@                   # Typed variable with default
+@ign-var:PORT:int=8080@                   # Integer variable with default
 @ign-var:DEBUG:bool=false@                # Boolean with default
 ```
 
@@ -76,6 +75,10 @@ ign uses `@ign-` prefix for template directives:
 @ign-if:FEATURE_ENABLED@
   This appears when FEATURE_ENABLED is truthy
 @ign-endif@
+
+@ign-if:!FEATURE_DISABLED@
+  This appears when FEATURE_DISABLED is falsy
+@ign-endif@
 ```
 
 ### Other Directives
@@ -84,8 +87,8 @@ ign uses `@ign-` prefix for template directives:
 |-----------|-------|
 | `@ign-if:VAR@...@ign-endif@` | Conditional block (bool) |
 | `@ign-include:PATH@` | Include another file |
-| `@ign-raw:CONTENT@` | Output literally (escape) |
-| `@ign-comment:TEXT@` | Template-only comment (removed) |
+| `@ign-raw@...@ign-endraw@` | Output literally (escape processing) |
+| `@ign-comment@...@ign-endcomment@` | Template-only comment (removed from output) |
 
 ## ign Commands Reference
 
@@ -97,21 +100,20 @@ These flags apply to all commands:
 |------|-------------|
 | `--no-color` | Disable colored output |
 | `--quiet`, `-q` | Suppress non-error output |
-| `--debug` | Enable debug output |
+| `--debug` | Enable debug logging |
 
-### `ign init <url-or-path>`
+### `ign checkout <url-or-path> [output-path]`
 
-Initialize configuration from a template source.
+Initialize and generate project from template in a single step.
 
 ```bash
 # From GitHub
-ign init github.com/owner/repo
-ign init github.com/owner/repo/path/to/template
-ign init github.com/owner/repo --ref v1.0.0
+ign checkout github.com/owner/repo
+ign checkout github.com/owner/repo ./my-project
+ign checkout github.com/owner/repo --ref v1.0.0
 
 # From local path
-ign init ./my-local-template
-ign init /absolute/path/to/template
+ign checkout ./my-local-template ./output
 ```
 
 **Flags:**
@@ -119,47 +121,17 @@ ign init /absolute/path/to/template
 | Flag | Short | Description |
 |------|-------|-------------|
 | `--ref` | `-r` | Git branch, tag, or commit SHA (default: main) |
-| `--force` | `-f` | Backup existing config and reinitialize |
+| `--force` | `-f` | Backup and reinitialize existing config, overwrite files |
+| `--dry-run` | `-d` | Show what would be generated without writing |
+| `--verbose` | `-v` | Show detailed processing information |
 
 **Behavior:**
 
 | Condition | Action |
 |-----------|--------|
-| `.ign-config/` does not exist | Create `.ign-config/ign-var.json` |
-| `.ign-config/` exists | Do nothing (skip) |
-| `.ign-config/` exists + `--force` | Backup existing config, then reinitialize |
-
-**Backup naming:** When `--force` is used, existing `ign-var.json` is backed up as `ign-var.json.bk1`, `ign-var.json.bk2`, etc.
-
-### `ign checkout <path>`
-
-Generate project files to the specified path using existing `.ign-config/`.
-
-```bash
-ign checkout .              # Generate to current directory
-ign checkout ./my-project   # Generate to specific directory
-ign checkout sub_dir        # Generate to subdirectory
-ign checkout . --dry-run    # Preview without writing files
-ign checkout . --verbose    # Show detailed processing info
-```
-
-**Requires:** `.ign-config/ign-var.json` must exist (run `ign init` first).
-
-**Flags:**
-
-| Flag | Short | Description |
-|------|-------|-------------|
-| `--force` | `-f` | Overwrite existing files |
-| `--dry-run` | `-d` | Show what would be generated without writing |
-| `--verbose` | `-v` | Show detailed processing information |
-
-**File handling:**
-
-| Condition | Action |
-|-----------|--------|
-| File does not exist | Create |
-| File exists | Skip (do not overwrite) |
-| File exists + `--force` | Overwrite |
+| `.ign/` does not exist | Create `.ign/` and prompt for variables |
+| `.ign/` exists | Error (use --force to reinitialize) |
+| `.ign/` exists + `--force` | Backup existing config, reinitialize |
 
 ### `ign template check [PATH]`
 
@@ -179,38 +151,87 @@ ign template check -r -v        # Recursive with verbose output
 | `--recursive` | `-r` | Recursively check subdirectories |
 | `--verbose` | `-v` | Show detailed validation info |
 
+### `ign template collect-vars [PATH]`
+
+Collect variables from templates and update ign.json.
+
+```bash
+ign template collect-vars           # Current directory
+ign template collect-vars ./my-template
+ign template collect-vars -r        # Recursive scan
+ign template collect-vars --dry-run # Preview changes
+ign template collect-vars --merge   # Only add new variables
+```
+
+**Flags:**
+
+| Flag | Short | Description |
+|------|-------|-------------|
+| `--recursive` | `-r` | Recursively scan subdirectories |
+| `--dry-run` | | Preview changes without writing |
+| `--merge` | | Only add new variables, preserve existing |
+
+### `ign template new [PATH]`
+
+Create a new template scaffold.
+
+```bash
+ign template new                    # Create in ./my-template
+ign template new ./my-template
+ign template new ./my-go-app --type go
+ign template new --force ./existing-dir
+```
+
+**Flags:**
+
+| Flag | Short | Description |
+|------|-------|-------------|
+| `--type` | `-t` | Scaffold type (default, go, web) |
+| `--force` | `-f` | Overwrite existing files |
+
 ### `ign version`
 
 Show version information.
 
 ```bash
-ign version          # Full version info
-ign version --short  # Version number only
-ign version --json   # JSON format output
+ign version
 ```
 
-## Configuration Directory
+## Template Repository Structure
 
-`.ign-config/` contains:
-
-```
-.ign-config/
-  ign-var.json         # Template reference and variable values
-  license-header.txt   # Optional files for @file: references
-```
-
-### ign-var.json Structure
+Templates use `ign.json` to define metadata and variables:
 
 ```json
 {
-  "template": {
-    "url": "github.com/owner/templates/go-basic",
-    "ref": "main"
-  },
+  "name": "my-template",
+  "version": "1.0.0",
+  "description": "Template description",
+  "author": "",
+  "repository": "",
+  "license": "MIT",
+  "tags": [],
   "variables": {
-    "app_name": "my-app",
-    "port": 8080,
-    "debug": false
+    "PROJECT_NAME": {
+      "type": "string",
+      "description": "Project name",
+      "required": true,
+      "example": "my-project"
+    },
+    "PORT": {
+      "type": "int",
+      "description": "Server port",
+      "default": 8080
+    },
+    "ENABLE_FEATURE": {
+      "type": "bool",
+      "description": "Enable optional feature",
+      "default": false
+    }
+  },
+  "settings": {
+    "preserve_executable": false,
+    "ignore_patterns": [".git", ".DS_Store"],
+    "include_dotfiles": false
   }
 }
 ```
@@ -236,14 +257,14 @@ Requires GitHub authentication via either:
 
 ```bash
 gh auth login
-ign init github.com/private/repo
+ign checkout github.com/private/repo
 ```
 
 2. `GITHUB_TOKEN` environment variable
 
 ```bash
 export GITHUB_TOKEN=ghp_xxx
-ign init github.com/owner/private-repo
+ign checkout github.com/owner/private-repo
 ```
 
 ## Development Environment
