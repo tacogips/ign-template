@@ -42,11 +42,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1766474709,
-        "narHash": "sha256-rY5QpEtymUaRPxVED/glKEVTzOF3tOSlKK5WjchnN50=",
+        "lastModified": 1766476242,
+        "narHash": "sha256-x8IXpTp5eiktSPzXqvf0ZIsEOFoGnOtjxOrlr07Tcf4=",
         "owner": "tacogips",
         "repo": "ign",
-        "rev": "a53e738599343f5532bffe6746426cd5b8c205fb",
+        "rev": "b3e4152d2387e7fce0c332d9ac2f8557b0aaff07",
         "type": "github"
       },
       "original": {
