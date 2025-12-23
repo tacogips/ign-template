@@ -22,7 +22,7 @@
     },
     "MODULE_PATH": {
       "type": "string",
-      "description": "Variable MODULE_PATH",
+      "description": "Go module path (e.g., github.com/username/project)",
       "required": true
     },
     "PROJECT_NAME": {
