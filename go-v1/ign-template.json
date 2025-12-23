@@ -5,45 +5,37 @@
   "author": "tacogips",
   "repository": "https://github.com/tacogips/ign-template",
   "license": "MIT",
-  "tags": [
-    "go",
-    "golang",
-    "nix",
-    "task"
-  ],
+  "tags": ["go", "golang", "nix", "task"],
   "variables": {
     "DESCRIPTION": {
       "type": "string",
-      "description": "Project description",
+      "description": "Variable DESCRIPTION",
       "default": "A Golang project"
     },
     "GO_VERSION": {
       "type": "string",
-      "description": "Go version",
+      "description": "Variable GO_VERSION",
       "default": "1.25.4"
     },
     "HOMEPAGE": {
       "type": "string",
-      "description": "Project homepage URL",
+      "description": "Variable HOMEPAGE",
       "default": "https://github.com/user/repo"
     },
     "MODULE_PATH": {
       "type": "string",
-      "description": "Go module path (e.g., github.com/user/repo)",
+      "description": "Variable MODULE_PATH",
       "required": true
     },
     "PROJECT_NAME": {
       "type": "string",
-      "description": "Project name",
+      "description": "Variable PROJECT_NAME",
       "required": true
     }
   },
   "settings": {
-    "ignore_patterns": [
-      ".git",
-      ".DS_Store"
-    ],
+    "ignore_patterns": [".git", ".DS_Store"],
     "include_dotfiles": true
   },
-  "hash": "ff6f9ad0ad00c4d66d409aede53b900f262f33689256438c804d4aff325b314c"
+  "hash": "d68550d784b99f77d4ea5ea8e7d2959ce3f221832edf184d0f4a83056d857c66"
 }
