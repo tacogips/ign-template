@@ -36,6 +36,11 @@
       "type": "string",
       "description": "Variable PROJECT_NAME",
       "required": true
+    },
+    "VERSION": {
+      "type": "string",
+      "description": "Variable VERSION",
+      "required": true
     }
   },
   "settings": {
@@ -45,5 +50,5 @@
     ],
     "include_dotfiles": true
   },
-  "hash": "d68550d784b99f77d4ea5ea8e7d2959ce3f221832edf184d0f4a83056d857c66"
+  "hash": "4095e5a74c594e430086b38ea0c3eb067b65eab95f45d694c8a55673f08f6d02"
 }
