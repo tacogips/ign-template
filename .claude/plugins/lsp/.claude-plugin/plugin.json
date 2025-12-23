@@ -1,0 +1,8 @@
+{
+  "name": "lsp",
+  "description": "LSP configuration plugin for ign-template",
+  "version": "1.0.0",
+  "author": {
+    "name": "tacogips"
+  }
+}

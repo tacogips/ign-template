@@ -1,0 +1,105 @@
+version: '3'
+
+vars:
+  PLUGINS_DIR: '{{.ROOT_DIR}}/.claude/plugins'
+
+tasks:
+  default:
+    desc: Show available tasks
+    cmds:
+      - task --list
+
+  plugin:list:
+    desc: List all available plugins
+    cmds:
+      - |
+        echo "Available plugins in {{.PLUGINS_DIR}}:"
+        for dir in {{.PLUGINS_DIR}}/*/; do
+          if [ -f "${dir}.claude-plugin/plugin.json" ]; then
+            name=$(basename "$dir")
+            echo "  - $name"
+          fi
+        done
+
+  plugin:add:
+    desc: "Run Claude Code with specified plugin (usage: task plugin:add PLUGIN=lsp)"
+    requires:
+      vars: [PLUGIN]
+    cmds:
+      - claude --plugin-dir {{.PLUGINS_DIR}}/{{.PLUGIN}}
+
+  plugin:add:all:
+    desc: Run Claude Code with all plugins loaded
+    cmds:
+      - |
+        args=""
+        for dir in {{.PLUGINS_DIR}}/*/; do
+          if [ -f "${dir}.claude-plugin/plugin.json" ]; then
+            args="$args --plugin-dir $dir"
+          fi
+        done
+        claude $args
+
+  plugin:add:all:resume:
+    desc: Run Claude Code with all plugins loaded and resume last conversation
+    cmds:
+      - |
+        args=""
+        for dir in {{.PLUGINS_DIR}}/*/; do
+          if [ -f "${dir}.claude-plugin/plugin.json" ]; then
+            args="$args --plugin-dir $dir"
+          fi
+        done
+        claude $args --resume
+
+  plugin:check:
+    desc: "Verify plugin structure (usage: task plugin:check PLUGIN=lsp)"
+    requires:
+      vars: [PLUGIN]
+    vars:
+      PLUGIN_DIR: '{{.PLUGINS_DIR}}/{{.PLUGIN}}'
+    cmds:
+      - |
+        echo "Checking plugin structure..."
+        echo "Plugin root: {{.PLUGIN_DIR}}"
+        echo ""
+        if [ -f "{{.PLUGIN_DIR}}/.claude-plugin/plugin.json" ]; then
+          echo "[OK] .claude-plugin/plugin.json exists"
+          cat {{.PLUGIN_DIR}}/.claude-plugin/plugin.json
+        else
+          echo "[ERROR] .claude-plugin/plugin.json not found"
+          exit 1
+        fi
+        echo ""
+        echo "Plugin directories:"
+        for dir in commands agents skills hooks; do
+          if [ -d "{{.PLUGIN_DIR}}/$dir" ]; then
+            echo "[OK] $dir/ exists"
+          else
+            echo "[--] $dir/ not found (optional)"
+          fi
+        done
+        echo ""
+        echo "Config files:"
+        for file in .mcp.json .lsp.json; do
+          if [ -f "{{.PLUGIN_DIR}}/$file" ]; then
+            echo "[OK] $file exists"
+          else
+            echo "[--] $file not found (optional)"
+          fi
+        done
+
+  plugin:check:all:
+    desc: Verify all plugins structure
+    cmds:
+      - |
+        for dir in {{.PLUGINS_DIR}}/*/; do
+          if [ -d "$dir" ]; then
+            name=$(basename "$dir")
+            echo "========================================"
+            echo "Plugin: $name"
+            echo "========================================"
+            task plugin:check PLUGIN="$name"
+            echo ""
+          fi
+        done
