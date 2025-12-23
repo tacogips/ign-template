@@ -5,22 +5,13 @@
   "author": "tacogips",
   "repository": "https://github.com/tacogips/ign-template",
   "license": "MIT",
-  "tags": ["go", "golang", "nix", "task"],
+  "tags": [
+    "go",
+    "golang",
+    "nix",
+    "task"
+  ],
   "variables": {
-    "PROJECT_NAME": {
-      "type": "string",
-      "description": "Project name",
-      "help": "Used for binary name, directory names, and package references",
-      "required": true,
-      "example": "my-app"
-    },
-    "MODULE_PATH": {
-      "type": "string",
-      "description": "Go module path",
-      "help": "The import path for your Go module (e.g., github.com/username/project)",
-      "required": true,
-      "example": "github.com/username/my-app"
-    },
     "DESCRIPTION": {
       "type": "string",
       "description": "Project description",
@@ -39,6 +30,20 @@
       "help": "License identifier for your project (e.g., MIT, Apache-2.0, GPL-3.0)",
       "default": "MIT"
     },
+    "MODULE_PATH": {
+      "type": "string",
+      "description": "Go module path",
+      "help": "The import path for your Go module (e.g., github.com/username/project)",
+      "required": true,
+      "example": "github.com/username/my-app"
+    },
+    "PROJECT_NAME": {
+      "type": "string",
+      "description": "Project name",
+      "help": "Used for binary name, directory names, and package references",
+      "required": true,
+      "example": "my-app"
+    },
     "USE_TASK": {
       "type": "bool",
       "description": "Include Taskfile.yml",
@@ -47,11 +52,11 @@
     }
   },
   "settings": {
-    "preserve_executable": false,
     "ignore_patterns": [
       ".git",
       ".DS_Store"
     ],
     "include_dotfiles": true
-  }
+  },
+  "hash": "3a6fd664a4687998d6c05fa8f3e73d3e9388b1e627a6e2bde806e861ceb96a6b"
 }

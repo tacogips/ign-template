@@ -194,7 +194,7 @@ ign template check [PATH]      # Validate template files for syntax errors
   -r, --recursive              # Check subdirectories recursively
   -v, --verbose                # Show detailed validation info
 
-ign template collect-vars [PATH]  # Collect variables from templates and update ign.json
+ign template update [PATH]     # Collect variables from templates and update ign.json with hash
   --dry-run                    # Preview changes without writing
   --merge                      # Only add new variables, preserve existing
   -r, --recursive              # Recursively scan subdirectories
@@ -202,6 +202,14 @@ ign template collect-vars [PATH]  # Collect variables from templates and update 
 ign template new [PATH]        # Create a new template scaffold
   -t, --type string            # Scaffold type (default, go, web)
   -f, --force                  # Overwrite existing files
+```
+
+**Project Update (for generated projects)**
+```bash
+ign update [output-path]       # Update project from template changes
+  -d, --dry-run                # Preview what files would be generated
+  -f, --force                  # Overwrite existing files
+  -v, --verbose                # Show detailed processing information
 ```
 
 **Global Flags**
