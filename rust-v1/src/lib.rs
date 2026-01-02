@@ -1,4 +1,4 @@
-//! @ign-var:PROJECT_NAME@ - @ign-var:DESCRIPTION:A Rust project@
+//! @ign-var:PROJECT_NAME@ - @ign-var:DESCRIPTION@
 //!
 //! This crate provides the core functionality for the @ign-var:PROJECT_NAME@ project.
 

@@ -1,7 +1,7 @@
 /**
  * @ign-var:PROJECT_NAME@ - Main entry point
  *
- * @ign-var:DESCRIPTION:A TypeScript project@
+ * @ign-var:DESCRIPTION@
  */
 
 import { greet } from "./lib";

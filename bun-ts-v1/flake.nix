@@ -1,6 +1,6 @@
 {
 
-  description = "@ign-var:DESCRIPTION:A TypeScript project@";
+  description = "@ign-var:DESCRIPTION@";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/release-24.11";

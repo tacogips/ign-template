@@ -15,12 +15,12 @@
   "variables": {
     "AUTHOR_EMAIL": {
       "type": "string",
-      "description": "Author email for Cargo.toml",
+      "description": "Author email for Cargo.toml (only used if HAS_AUTHOR is true)",
       "default": ""
     },
     "AUTHOR_NAME": {
       "type": "string",
-      "description": "Author name for Cargo.toml",
+      "description": "Author name for Cargo.toml (only used if HAS_AUTHOR is true)",
       "default": ""
     },
     "DESCRIPTION": {
@@ -32,6 +32,11 @@
       "type": "string",
       "description": "Rust edition (2021, 2024)",
       "default": "2021"
+    },
+    "HAS_AUTHOR": {
+      "type": "bool",
+      "description": "Whether to include author information in Cargo.toml",
+      "default": false
     },
     "HOMEPAGE": {
       "type": "string",
@@ -67,5 +72,5 @@
     ],
     "include_dotfiles": true
   },
-  "hash": "4d1d243733ac51fb52afdeffd682138b58dfb4e5214655db0c8fc04ef13dbd8f"
+  "hash": "95ba7d4ec90ec591fd0cf8469155c46624d09fdba19a216e130b7d927de93b9e"
 }

@@ -14,18 +14,23 @@
   "variables": {
     "AUTHOR_EMAIL": {
       "type": "string",
-      "description": "Author email for package.json",
+      "description": "Author email for package.json (only used if HAS_AUTHOR is true)",
       "default": ""
     },
     "AUTHOR_NAME": {
       "type": "string",
-      "description": "Author name for package.json",
+      "description": "Author name for package.json (only used if HAS_AUTHOR is true)",
       "default": ""
     },
     "DESCRIPTION": {
       "type": "string",
       "description": "Project description",
       "default": "A TypeScript project"
+    },
+    "HAS_AUTHOR": {
+      "type": "bool",
+      "description": "Whether to include author information in package.json",
+      "default": false
     },
     "HOMEPAGE": {
       "type": "string",
@@ -57,5 +62,5 @@
     ],
     "include_dotfiles": true
   },
-  "hash": "c8120b14786e64735817a1c9fb0ed8df9b03c4b9ce958a9159d885ea051d318a"
+  "hash": "05bc4483dbcdb14b6cd8c189d7725f52871e25d51a5b159c936fee3b2a1fb8cf"
 }

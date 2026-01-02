@@ -1,4 +1,4 @@
-//! @ign-var:PROJECT_NAME@ - @ign-var:DESCRIPTION:A Rust project@
+//! @ign-var:PROJECT_NAME@ - @ign-var:DESCRIPTION@
 //!
 //! This is the main entry point for the @ign-var:PROJECT_NAME@ binary.
 

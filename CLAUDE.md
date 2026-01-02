@@ -228,8 +228,9 @@ ign templates use `@ign-` prefix for directives to avoid conflicts with programm
 **Variables**
 ```
 @ign-var:NAME@                           # Required variable
-@ign-var:NAME:default_value@             # Variable with default
-@ign-var:NAME:string:default@            # Typed variable (string, int, bool)
+@ign-var:NAME=default_value@             # Variable with default (use = for default)
+@ign-var:NAME:TYPE@                      # Typed variable (TYPE: string, int, bool)
+@ign-var:NAME:TYPE=default@              # Type + default value
 ```
 
 **Conditionals**
@@ -242,6 +243,7 @@ ign templates use `@ign-` prefix for directives to avoid conflicts with programm
   Content shown if VAR is falsy
 @ign-endif@
 ```
+Note: VAR must be a boolean type variable. String variables cannot be used in conditionals.
 
 **File Inclusion**
 ```

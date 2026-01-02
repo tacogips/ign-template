@@ -1,7 +1,7 @@
 {
   "name": "@ign-var:PROJECT_NAME@",
   "version": "@ign-var:VERSION:0.1.0@",
-  "description": "@ign-var:DESCRIPTION:A TypeScript project@",
+  "description": "@ign-var:DESCRIPTION@",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -23,7 +23,7 @@
     "type": "git",
     "url": "@ign-var:REPOSITORY:https://github.com/user/repo@"
   },
-@ign-if:AUTHOR_NAME@
+@ign-if:HAS_AUTHOR@
   "author": "@ign-var:AUTHOR_NAME@ <@ign-var:AUTHOR_EMAIL@>",
 @ign-endif@
   "license": "MIT",
