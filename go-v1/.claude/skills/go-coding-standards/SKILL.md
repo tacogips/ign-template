@@ -47,6 +47,7 @@ For comprehensive guidance, see:
 - [Project Layout Conventions](./project-layout.md) - Standard layout, layered architecture
 - [Concurrency Patterns](./concurrency.md) - Goroutines, channels, sync primitives
 - [Interface Design](./interfaces-design.md) - Composition, small interfaces, mocking
+- [Security Guidelines](./security.md) - Credential protection, path sanitization, sensitive data handling
 
 ## Code Style
 

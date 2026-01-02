@@ -48,6 +48,7 @@ For comprehensive guidance, see:
 - [Type Safety Best Practices](./type-safety.md) - Newtype pattern, type state, lifetimes
 - [Project Layout Conventions](./project-layout.md) - Cargo workspace, module structure
 - [Async Programming Patterns](./async-patterns.md) - tokio, async/await, channels
+- [Security Guidelines](./security.md) - Credential protection, path sanitization, sensitive data handling
 
 ## Clippy Configuration
 

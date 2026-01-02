@@ -67,6 +67,7 @@ Read the following files in order:
 3. `.claude/skills/rust-coding-standards/type-safety.md` - Newtype pattern, type state, lifetimes
 4. `.claude/skills/rust-coding-standards/project-layout.md` - Cargo workspace, module structure
 5. `.claude/skills/rust-coding-standards/async-patterns.md` - tokio, async/await, channels
+6. `.claude/skills/rust-coding-standards/security.md` - Credential protection, path sanitization
 
 These guidelines contain:
 - Modern Rust patterns (2021 edition)
@@ -221,7 +222,11 @@ When writing Rust code:
 
 ### MANDATORY Rules
 
-12. **Path hygiene** [MANDATORY]: Development machine-specific paths must NOT be included in code. When writing paths as examples in comments, use generalized paths (e.g., `/home/user/project` instead of `/home/john/my-project`). When referencing project-specific paths, always use relative paths (e.g., `./src/service` instead of `/home/user/project/src/service`)
-13. **Credential and environment variable protection** [MANDATORY]: Environment variable values from the development environment must NEVER be included in code. If user instructions contain credential content or values, those must NEVER be included in any output. "Output" includes: source code, commit messages, GitHub comments (issues, PR body), and any other content that may be transmitted outside this machine.
+**CRITICAL**: All output files must follow security guidelines defined in `.claude/skills/rust-coding-standards/security.md`.
+
+- **Path hygiene** [MANDATORY]: Development machine-specific paths must NOT be included in code. When writing paths as examples in comments, use generalized paths (e.g., `/home/user/project` instead of `/home/john/my-project`). When referencing project-specific paths, always use relative paths (e.g., `./src/service` instead of `/home/user/project/src/service`)
+- **Credential and environment variable protection** [MANDATORY]: Environment variable values from the development environment must NEVER be included in code. If user instructions contain credential content or values, those must NEVER be included in any output. "Output" includes: source code, commit messages, GitHub comments (issues, PR body), and any other content that may be transmitted outside this machine.
+- **SSH and cryptocurrency keys** [MANDATORY]: SSH private keys and cryptocurrency private keys/seed phrases must NEVER be included in any output.
+- **Private repository URLs** [MANDATORY]: GitHub private repository URLs are treated as credential information. Only include if user explicitly requests.
 
 Always prioritize clarity, simplicity, and maintainability over clever solutions.
