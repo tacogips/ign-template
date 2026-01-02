@@ -14,42 +14,42 @@
   "variables": {
     "AUTHOR_EMAIL": {
       "type": "string",
-      "description": "Author email for package.json (only used if HAS_AUTHOR is true)",
-      "default": ""
+      "description": "Variable AUTHOR_EMAIL",
+      "required": true
     },
     "AUTHOR_NAME": {
       "type": "string",
-      "description": "Author name for package.json (only used if HAS_AUTHOR is true)",
-      "default": ""
+      "description": "Variable AUTHOR_NAME",
+      "required": true
     },
     "DESCRIPTION": {
       "type": "string",
-      "description": "Project description",
-      "default": "A TypeScript project"
+      "description": "Variable DESCRIPTION",
+      "required": true
     },
     "HAS_AUTHOR": {
       "type": "bool",
-      "description": "Whether to include author information in package.json",
-      "default": false
+      "description": "Variable HAS_AUTHOR",
+      "required": true
     },
     "HOMEPAGE": {
       "type": "string",
-      "description": "Project homepage URL",
+      "description": "Variable HOMEPAGE",
       "default": "https://github.com/user/repo"
     },
     "PROJECT_NAME": {
       "type": "string",
-      "description": "The name of the TypeScript project (used in package.json)",
+      "description": "Variable PROJECT_NAME",
       "required": true
     },
     "REPOSITORY": {
       "type": "string",
-      "description": "Project repository URL",
+      "description": "Variable REPOSITORY",
       "default": "https://github.com/user/repo"
     },
     "VERSION": {
       "type": "string",
-      "description": "Initial project version",
+      "description": "Variable VERSION",
       "default": "0.1.0"
     }
   },
@@ -62,5 +62,5 @@
     ],
     "include_dotfiles": true
   },
-  "hash": "6bc0401ac5714d8b4ed16c5831c2cbb58e27a7b48da1e9c046fbf275976429ee"
+  "hash": "3efd913a7a1154cf3fe9f22e194f2d1b2dced51cd662e2618be6675d2d174c32"
 }

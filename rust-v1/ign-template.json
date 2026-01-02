@@ -15,52 +15,52 @@
   "variables": {
     "AUTHOR_EMAIL": {
       "type": "string",
-      "description": "Author email for Cargo.toml (only used if HAS_AUTHOR is true)",
-      "default": ""
+      "description": "Variable AUTHOR_EMAIL",
+      "required": true
     },
     "AUTHOR_NAME": {
       "type": "string",
-      "description": "Author name for Cargo.toml (only used if HAS_AUTHOR is true)",
-      "default": ""
+      "description": "Variable AUTHOR_NAME",
+      "required": true
     },
     "DESCRIPTION": {
       "type": "string",
-      "description": "Project description",
+      "description": "Variable DESCRIPTION",
       "default": "A Rust project"
     },
     "EDITION": {
-      "type": "string",
-      "description": "Rust edition (2021, 2024)",
-      "default": "2021"
+      "type": "int",
+      "description": "Variable EDITION",
+      "default": 2021
     },
     "HAS_AUTHOR": {
       "type": "bool",
-      "description": "Whether to include author information in Cargo.toml",
-      "default": false
+      "description": "Variable HAS_AUTHOR",
+      "required": true
     },
     "HOMEPAGE": {
       "type": "string",
-      "description": "Project homepage URL",
+      "description": "Variable HOMEPAGE",
       "default": "https://github.com/user/repo"
     },
     "PROJECT_NAME": {
       "type": "string",
-      "description": "The name of the Rust project (used in Cargo.toml and binary name)",
+      "description": "Variable PROJECT_NAME",
       "required": true
     },
     "REPOSITORY": {
       "type": "string",
-      "description": "Project repository URL",
+      "description": "Variable REPOSITORY",
       "default": "https://github.com/user/repo"
     },
     "RUST_VERSION": {
       "type": "string",
-      "description": "Rust toolchain version",
+      "description": "Variable RUST_VERSION",
       "default": "1.83.0"
     },
     "VERSION": {
       "type": "string",
-      "description": "Initial project version",
+      "description": "Variable VERSION",
       "default": "0.1.0"
     }
   },
@@ -72,5 +72,5 @@
     ],
     "include_dotfiles": true
   },
-  "hash": "19a6e9c9efa578ae000c9c865b11a7840ee82555c2bac96080fffd07d6911d14"
+  "hash": "fa534b5adb24a22bf106238576223801544df71725dda19d2645425ae8b79436"
 }

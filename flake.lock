@@ -42,11 +42,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1766506134,
-        "narHash": "sha256-+DCocil+BVusoMYpMtvYZ7QyQ88JWahT7HRQ2QtLvkg=",
+        "lastModified": 1767345860,
+        "narHash": "sha256-4fNHiyHCeUdusxrW7AU4FcKUMWW/qP/go0Y4YJfUf7M=",
         "owner": "tacogips",
         "repo": "ign",
-        "rev": "82bed105471fc486cc76013eec2706dc15d6158b",
+        "rev": "d3cde910dd12a3bd345c86d1b930dccf6579e89f",
         "type": "github"
       },
       "original": {
@@ -73,11 +73,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1766410818,
-        "narHash": "sha256-ruVneSx6wFy5PMw1ow3BE+znl653TJ6+eeNUj4B/9y8=",
+        "lastModified": 1767273430,
+        "narHash": "sha256-kDpoFwQ8GLrPiS3KL+sAwreXrph2KhdXuJzo5+vSLoo=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "3a7affa77a5a539afa1c7859e2c31abdb1aeadf3",
+        "rev": "76eec3925eb9bbe193934987d3285473dbcfad50",
         "type": "github"
       },
       "original": {
