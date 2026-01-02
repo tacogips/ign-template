@@ -1,0 +1,71 @@
+{
+  "name": "rust-v1",
+  "version": "1.0.0",
+  "description": "Rust project template with Nix flake and fenix toolchain",
+  "author": "tacogips",
+  "repository": "https://github.com/tacogips/ign-template",
+  "license": "MIT",
+  "tags": [
+    "rust",
+    "nix",
+    "fenix",
+    "crane",
+    "task"
+  ],
+  "variables": {
+    "AUTHOR_EMAIL": {
+      "type": "string",
+      "description": "Author email for Cargo.toml",
+      "default": ""
+    },
+    "AUTHOR_NAME": {
+      "type": "string",
+      "description": "Author name for Cargo.toml",
+      "default": ""
+    },
+    "DESCRIPTION": {
+      "type": "string",
+      "description": "Project description",
+      "default": "A Rust project"
+    },
+    "EDITION": {
+      "type": "string",
+      "description": "Rust edition (2021, 2024)",
+      "default": "2021"
+    },
+    "HOMEPAGE": {
+      "type": "string",
+      "description": "Project homepage URL",
+      "default": "https://github.com/user/repo"
+    },
+    "PROJECT_NAME": {
+      "type": "string",
+      "description": "The name of the Rust project (used in Cargo.toml and binary name)",
+      "required": true
+    },
+    "REPOSITORY": {
+      "type": "string",
+      "description": "Project repository URL",
+      "default": "https://github.com/user/repo"
+    },
+    "RUST_VERSION": {
+      "type": "string",
+      "description": "Rust toolchain version",
+      "default": "1.83.0"
+    },
+    "VERSION": {
+      "type": "string",
+      "description": "Initial project version",
+      "default": "0.1.0"
+    }
+  },
+  "settings": {
+    "ignore_patterns": [
+      ".git",
+      ".DS_Store",
+      "target"
+    ],
+    "include_dotfiles": true
+  },
+  "hash": "4d1d243733ac51fb52afdeffd682138b58dfb4e5214655db0c8fc04ef13dbd8f"
+}
