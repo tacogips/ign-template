@@ -1,13 +1,13 @@
 [package]
 name = "@ign-var:PROJECT_NAME@"
-version = "@ign-var:VERSION:0.1.0@"
-edition = "@ign-var:EDITION:2021@"
+version = "@ign-var:VERSION=0.1.0@"
+edition = "@ign-var:EDITION=2021@"
 description = "@ign-var:DESCRIPTION@"
 @ign-if:HAS_AUTHOR@
 authors = ["@ign-var:AUTHOR_NAME@ <@ign-var:AUTHOR_EMAIL@>"]
 @ign-endif@
-homepage = "@ign-var:HOMEPAGE:https://github.com/user/repo@"
-repository = "@ign-var:REPOSITORY:https://github.com/user/repo@"
+homepage = "@ign-var:HOMEPAGE=https://github.com/user/repo@"
+repository = "@ign-var:REPOSITORY=https://github.com/user/repo@"
 license = "MIT"
 readme = "README.md"
 

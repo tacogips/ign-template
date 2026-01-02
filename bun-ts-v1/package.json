@@ -1,6 +1,6 @@
 {
   "name": "@ign-var:PROJECT_NAME@",
-  "version": "@ign-var:VERSION:0.1.0@",
+  "version": "@ign-var:VERSION=0.1.0@",
   "description": "@ign-var:DESCRIPTION@",
   "type": "module",
   "main": "dist/index.js",
@@ -18,10 +18,10 @@
     "format:check": "prettier --check \"src/**/*.ts\"",
     "clean": "rm -rf dist"
   },
-  "homepage": "@ign-var:HOMEPAGE:https://github.com/user/repo@",
+  "homepage": "@ign-var:HOMEPAGE=https://github.com/user/repo@",
   "repository": {
     "type": "git",
-    "url": "@ign-var:REPOSITORY:https://github.com/user/repo@"
+    "url": "@ign-var:REPOSITORY=https://github.com/user/repo@"
   },
 @ign-if:HAS_AUTHOR@
   "author": "@ign-var:AUTHOR_NAME@ <@ign-var:AUTHOR_EMAIL@>",
