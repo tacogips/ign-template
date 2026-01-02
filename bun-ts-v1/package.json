@@ -25,7 +25,7 @@
     "url": "@ign-var:REPOSITORY=https://github.com/user/repo@"
   },
 @ign-if:HAS_AUTHOR@
-  "author": "@ign-var:AUTHOR_NAME@ <@ign-var:AUTHOR_EMAIL@>",
+  "author": "@ign-var:AUTHOR_NAME=@ <@ign-var:AUTHOR_EMAIL=@>",
 @ign-endif@
   "license": "MIT",
   "trustedDependencies": [],
