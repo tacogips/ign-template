@@ -1,0 +1,61 @@
+{
+  "name": "bun-ts-v1",
+  "version": "1.0.0",
+  "description": "TypeScript project template with Bun runtime and Nix flake",
+  "author": "tacogips",
+  "repository": "https://github.com/tacogips/ign-template",
+  "license": "MIT",
+  "tags": [
+    "typescript",
+    "bun",
+    "nix",
+    "task"
+  ],
+  "variables": {
+    "AUTHOR_EMAIL": {
+      "type": "string",
+      "description": "Author email for package.json",
+      "default": ""
+    },
+    "AUTHOR_NAME": {
+      "type": "string",
+      "description": "Author name for package.json",
+      "default": ""
+    },
+    "DESCRIPTION": {
+      "type": "string",
+      "description": "Project description",
+      "default": "A TypeScript project"
+    },
+    "HOMEPAGE": {
+      "type": "string",
+      "description": "Project homepage URL",
+      "default": "https://github.com/user/repo"
+    },
+    "PROJECT_NAME": {
+      "type": "string",
+      "description": "The name of the TypeScript project (used in package.json)",
+      "required": true
+    },
+    "REPOSITORY": {
+      "type": "string",
+      "description": "Project repository URL",
+      "default": "https://github.com/user/repo"
+    },
+    "VERSION": {
+      "type": "string",
+      "description": "Initial project version",
+      "default": "0.1.0"
+    }
+  },
+  "settings": {
+    "ignore_patterns": [
+      ".git",
+      ".DS_Store",
+      "node_modules",
+      "dist"
+    ],
+    "include_dotfiles": true
+  },
+  "hash": "c8120b14786e64735817a1c9fb0ed8df9b03c4b9ce958a9159d885ea051d318a"
+}
