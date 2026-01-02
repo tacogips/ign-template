@@ -122,7 +122,7 @@ feat: implement user authentication system
    Enables secure user access control across the application
 
 6. Unresolved TODOs:
-   - [ ] src/auth/index.ts:45: Add rate limiting for login attempts
+   - [ ] src/auth/auth.ts:45: Add rate limiting for login attempts
    - [ ] src/routes/auth.ts:78: Implement password reset functionality
    - [ ] tests/: Add integration tests for authentication flow
 ```
@@ -148,7 +148,7 @@ This is @ign-var:PROJECT_NAME@ - a TypeScript project with Bun runtime and Nix f
 ├── tsconfig.json      # TypeScript configuration (maximum strictness)
 ├── .envrc             # direnv configuration
 ├── src/               # Source code
-│   ├── index.ts       # Entry point
+│   ├── main.ts        # Entry point
 │   ├── lib.ts         # Library code
 │   └── lib.test.ts    # Test files
 └── .gitignore         # Git ignore patterns
