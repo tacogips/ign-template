@@ -235,7 +235,7 @@ The ts-coding subagent **actually implements the code**, not just provides guida
 3. Create/modify TypeScript files using Edit/Write tools
 4. Run `prettier` to format code
 5. Run `bun run typecheck` to verify type correctness
-6. Run `bun test` to run tests
+6. Run `bun run test` (Vitest) to run tests
 7. Return results as **diff format**
 
 ### Required Prompt Format
@@ -275,7 +275,7 @@ The subagent returns a structured response including:
 - Summary of what was implemented
 - Completion criteria status (checklist)
 - Files changed with **file path and line numbers** (final code, not diff)
-- Test results (`bun test`)
+- Test results (`vitest run`)
 - Notes and follow-up items
 
 **On Failure:**
@@ -284,7 +284,7 @@ The subagent returns a structured response including:
 - Partial files changed (same file:line format)
 - Recommended next steps
 
-**Note**: The subagent will iterate on build/test failures until they pass. It runs `bun run typecheck` and `bun test` in sequence, fixing any issues before returning.
+**Note**: The subagent will iterate on build/test failures until they pass. It runs `bun run typecheck` and `vitest run` in sequence, fixing any issues before returning.
 
 ## MANDATORY: Automatic Testing After Code Modifications
 

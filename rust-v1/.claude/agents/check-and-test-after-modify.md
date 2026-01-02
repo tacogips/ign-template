@@ -19,14 +19,14 @@ The main agent should provide context about modifications in the prompt. This in
    - Example: "Modified user service to use new repository pattern"
    - Example: "Refactored repository interface for Organization model"
 
-2. **Modified Modules**: List of modules/crates that were modified
-   - Example: "Modified modules: src/usecase, src/repository"
-   - Example: "Modified module: src/handler"
+2. **Modified Layers**: List of Clean Architecture layers that were modified
+   - Example: "Modified layers: src/domain, src/application"
+   - Example: "Modified layer: src/adapter/persistence"
 
 ### Optional Information:
 
 3. **Modified Files**: Specific files changed (helps identify test requirements)
-   - Example: "Modified files: src/usecase/user_service.rs"
+   - Example: "Modified files: src/application/usecases/create_user.rs"
    - Helps determine which tests to run
 
 4. **Custom Test Instructions**: Specific test requirements or constraints
@@ -38,13 +38,13 @@ The main agent should provide context about modifications in the prompt. This in
 ### Recommended Prompt Format:
 
 ```
-Modified modules: src/usecase, src/repository
+Modified layers: src/application, src/adapter
 
-Summary: Changed user service to use Elasticsearch service instead of direct repository access.
+Summary: Changed CreateUserUseCase to use new repository implementation.
 
 Modified files:
-- src/usecase/user_service.rs
-- src/repository/user_repository.rs
+- src/application/usecases/create_user.rs
+- src/adapter/persistence/postgres/user_repository.rs
 
 Test instructions: Run both unit tests and integration tests.
 ```
@@ -52,9 +52,9 @@ Test instructions: Run both unit tests and integration tests.
 ### Minimal Prompt Format:
 
 ```
-Modified modules: src/usecase
+Modified layers: src/application
 
-Summary: Updated user search logic.
+Summary: Updated CreateUserUseCase logic.
 ```
 
 ### Handling Input:
@@ -295,14 +295,17 @@ cargo build
 
 ### Determining Which Tests to Run
 
-1. **For regular module modifications**: Run tests in the modified module
-   - Example: Changes in `src/usecase/` -> Run `cargo test usecase::`
+1. **For domain layer modifications**: Run all tests (domain affects everything)
+   - Example: Changes in `src/domain/` -> Run `cargo test`
 
-2. **For core/shared code modifications**: Run broader tests
-   - Example: Changes in `src/models/` -> Run `cargo test`
+2. **For application layer modifications**: Run application and adapter tests
+   - Example: Changes in `src/application/usecases/` -> Run `cargo test application::`
 
-3. **For handler modifications**: Run handler tests plus integration tests if available
-   - Example: Changes in `src/handler/` -> Run `cargo test handler::`
+3. **For adapter layer modifications**: Run adapter tests plus integration tests
+   - Example: Changes in `src/adapter/persistence/` -> Run `cargo test adapter::`
+
+4. **For infrastructure layer modifications**: Run infrastructure and integration tests
+   - Example: Changes in `src/infrastructure/server/` -> Run `cargo test infrastructure::`
 
 ## Reporting Format
 
