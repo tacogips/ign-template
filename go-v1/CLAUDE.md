@@ -152,93 +152,14 @@ This is @ign-var:PROJECT_NAME@ - a Golang project with Nix flake development env
 - `gotools` - Additional Go development tools
 - `task` - Task runner (go-task)
 
-## Coding Standards
-- Follow standard Go conventions and idioms
-- Use `gofmt` for code formatting
-- Write clear, concise comments for exported functions
-- Keep functions focused and single-purpose
-- Avoid over-engineering - implement only what's requested
-
-### MANDATORY Rules
-
-- **Path hygiene** [MANDATORY]: Development machine-specific paths must NOT be included in code. When writing paths as examples in comments, use generalized paths (e.g., `/home/user/project` instead of `/home/john/my-project`). When referencing project-specific paths, always use relative paths (e.g., `./internal/service` instead of `/home/user/project/internal/service`)
-- **Credential and environment variable protection** [MANDATORY]: Environment variable values from the development environment must NEVER be included in code. If user instructions contain credential content or values, those must NEVER be included in any output. "Output" includes: source code, commit messages, GitHub comments (issues, PR body), and any other content that may be transmitted outside this machine.
-
 ## Go Code Development
-**IMPORTANT**: When writing Go code, you (the LLM model) MUST use the specialized go-coding sub agent located at `.claude/agents/go-coding.md`.
 
-Use the Task tool with the go-coding agent for:
-- Writing new Go code
-- Refactoring existing Go code
-- Implementing Go packages and modules
-- Following Standard Go Project Layout
-- Implementing layered architecture (Clean Architecture, Hexagonal Architecture, etc.)
+**IMPORTANT**: When writing Go code, you (the LLM model) MUST use the specialized agents:
 
-The go-coding agent has comprehensive knowledge of:
-- Standard Go Project Layout conventions
-- Go best practices and idioms
-- Layered architecture patterns
-- CLI/TUI application structures
-- Package management with go modules
+1. **go-coding agent** (`.claude/agents/go-coding.md`): For writing, refactoring, and implementing Go code
+2. **check-and-test-after-modify agent** (`.claude/agents/check-and-test-after-modify.md`): MUST be invoked automatically after ANY Go file modifications
 
-### What go-coding Subagent Does
-
-The go-coding subagent **actually implements the code**, not just provides guidance. It will:
-
-1. Read the reference document to understand requirements
-2. Analyze existing codebase structure
-3. Create/modify Go files using Edit/Write tools
-4. Run `go mod tidy` to sync dependencies
-5. Run `go build` and `go test` to verify implementation
-6. Return results as **diff format**
-
-### Required Prompt Format
-
-When invoking the go-coding subagent via Task tool, the `prompt` parameter MUST include the following information. The subagent will return an error and refuse to proceed if any required field is missing.
-
-**Required Fields:**
-
-1. **Purpose**: What goal or problem does this implementation solve?
-2. **Reference Document**: Which specification, design document, or requirements to follow?
-3. **Implementation Target**: What specific feature, function, or component to implement?
-4. **Completion Criteria**: What conditions define "implementation complete"?
-
-**Example Task Tool Invocation:**
-
-```
-Task tool parameters:
-  subagent_type: go-coding
-  prompt: |
-    Purpose: Implement the user service for @ign-var:PROJECT_NAME@
-    Reference Document: /docs/spec.md (Section: User Management)
-    Implementation Target: Create internal/usecase/user_service.go with CRUD operations
-    Completion Criteria:
-      - UserService implements all CRUD methods
-      - Returns appropriate errors for edge cases
-      - Unit tests cover main scenarios
-      - go mod tidy runs without errors
-```
-
-**Do NOT invoke go-coding without all required fields.** The subagent will reject incomplete requests.
-
-### Response Format from go-coding
-
-The subagent returns a structured response including:
-
-**On Success:**
-- Summary of what was implemented
-- Completion criteria status (checklist)
-- Files changed with **file path and line numbers** (final code, not diff)
-- Test results (`go test ./... -v`)
-- Notes and follow-up items
-
-**On Failure:**
-- Reason for failure
-- Partial progress made
-- Partial files changed (same file:line format)
-- Recommended next steps
-
-**Note**: The subagent will iterate on build/test failures until they pass. It runs `go build`, `go test`, and `go vet` in sequence, fixing any issues before returning.
+**Coding Standards**: Refer to `.claude/skills/go-coding-standards/` for Go coding conventions, project layout, error handling, concurrency patterns, and interface design.
 
 ## Task Management
 - Use `task` command for build automation
