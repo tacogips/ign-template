@@ -143,43 +143,6 @@
         };
       in
       {
-        packages = {
-          ign = pkgs.buildGoModule {
-            pname = "ign";
-            version = "0.1.0";
-
-            src = ./.;
-
-            vendorHash = "sha256-7K17JaXFsjf163g5PXCb5ng2gYdotnZ2IDKk8KFjNj0=";
-
-            subPackages = [ "cmd/ign" ];
-
-            ldflags = [
-              "-s"
-              "-w"
-              "-X main.version=${self.rev or "dev"}"
-            ];
-
-            meta = with pkgs.lib; {
-              description = "A template-based code generation CLI tool";
-              homepage = "https://github.com/tacogips/ign";
-              license = licenses.mit;
-              maintainers = [ ];
-            };
-          };
-
-          default = self.packages.${system}.ign;
-        };
-
-        apps = {
-          ign = {
-            type = "app";
-            program = "${self.packages.${system}.ign}/bin/ign";
-          };
-
-          default = self.apps.${system}.ign;
-        };
-
         devShells.default = pkgs.mkShell {
           nativeBuildInputs = with pkgs; [
             go
