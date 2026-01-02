@@ -27,9 +27,10 @@
   "author": "@ign-var:AUTHOR_NAME@ <@ign-var:AUTHOR_EMAIL@>",
 @ign-endif@
   "license": "MIT",
+  "trustedDependencies": [],
   "devDependencies": {
-    "@types/bun": "latest",
-    "typescript": "^5.7.0",
-    "prettier": "^3.4.0"
+    "@types/bun": "1.1.14",
+    "typescript": "5.7.2",
+    "prettier": "3.4.2"
   }
 }

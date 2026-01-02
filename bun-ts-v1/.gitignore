@@ -5,7 +5,7 @@ node_modules/
 dist/
 *.tsbuildinfo
 
-# Bun
+# Bun (binary lockfile - we use text lockfile bun.lock instead)
 bun.lockb
 
 # Environment files
