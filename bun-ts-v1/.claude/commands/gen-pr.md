@@ -1,8 +1,6 @@
 ---
 allowed-tools: Bash,Read,Grep,Glob
 description: Generate or update a GitHub pull request with comprehensive description
-user-invocable: true
-argument-template: "$ARGUMENTS"
 ---
 
 Use the `generate-pr` agent to create or update a GitHub pull request with comprehensive analysis and documentation.
