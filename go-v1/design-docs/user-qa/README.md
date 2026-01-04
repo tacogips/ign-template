@@ -15,7 +15,8 @@ Store questions, pending decisions, and items awaiting user approval.
 
 ## Current Items
 
-(No pending items)
+- [qa-example.md](./qa-example.md) - Example: Database Selection (template example)
+- [pending-example.md](./pending-example.md) - Example: CLI Output Format (template example)
 
 ## Adding New Items
 
