@@ -13,10 +13,25 @@ Apply this skill when:
 ## Purpose
 
 Implementation plans bridge the gap between design documents (what to build) and actual implementation (how to build). They provide:
-- Clear deliverables without code
-- Trait and function specifications
-- Dependency mapping for concurrent execution
+- Clear deliverables with Rust type definitions
+- Simple status tracking tables
+- Checklist-based completion criteria
 - Progress tracking across sessions
+
+## Plan Granularity
+
+**IMPORTANT**: Implementation plans and spec files do NOT need 1:1 mapping.
+
+| Mapping | When to Use |
+|---------|-------------|
+| **1:N** (one spec -> multiple plans) | Large specs should be split into smaller, focused units |
+| **N:1** (multiple specs -> one plan) | Related specs sharing dependencies can be combined |
+| **1:1** (one spec -> one plan) | Well-bounded features with clear scope |
+
+**Recommended granularity**:
+- Each plan should be completable in 1-3 sessions
+- Each plan should have 3-10 subtasks
+- Maximize parallelizable subtasks
 
 ## Output Location
 
@@ -52,7 +67,7 @@ Each implementation plan file MUST include:
 # <Feature Name> Implementation Plan
 
 **Status**: Planning | Ready | In Progress | Completed
-**Design Reference**: design-docs/specs/<file>.md#<section>
+**Design Reference**: design-docs/<file>.md#<section>
 **Created**: YYYY-MM-DD
 **Last Updated**: YYYY-MM-DD
 ```
@@ -62,126 +77,178 @@ Each implementation plan file MUST include:
 - Summary of what is being implemented
 - Scope boundaries (what is NOT included)
 
-### 3. Implementation Overview
-- High-level approach description
-- Key architectural decisions for implementation
-- Dependencies on other features/systems
+### 3. Modules and Types
 
-### 4. Deliverables
+List each module with its Rust type definitions. **USE ACTUAL RUST CODE** for traits, structs, enums, and function signatures - not prose descriptions.
 
-Each deliverable MUST specify:
-- File path (where the code will live)
-- Purpose (what this file/module does)
-- Exports (functions, traits, structs with their purposes)
-- Dependencies (what it depends on)
-- Dependents (what depends on it)
-
-**NO CODE in deliverables** - only specifications.
-
-Example:
 ```markdown
-### Deliverable: src/parser/variable.rs
+## Modules
 
-**Purpose**: Parse template variables from input strings
+### 1. Core Traits
 
-**Exports**:
-| Name | Type | Purpose | Used By |
-|------|------|---------|---------|
-| `parse_variables` | fn | Extract all @ign-var:NAME@ patterns | TemplateProcessor |
-| `Variable` | struct | Represents a parsed variable | Parser, Renderer |
-| `ParseError` | enum | Error type for parse failures | Error handlers |
+#### src/interfaces/filesystem.rs
 
-**Dependencies**:
-- `src/types/template.rs` - Base template types
+**Status**: NOT_STARTED
 
-**Dependents**:
-- `src/processor/template.rs` - Uses parse_variables
+```rust
+pub trait FileSystem: Send + Sync {
+    fn read_file(&self, path: &Path) -> Result<Vec<u8>>;
+    fn write_file(&self, path: &Path, content: &[u8]) -> Result<()>;
+    fn exists(&self, path: &Path) -> Result<bool>;
+    fn watch(&self, path: &Path) -> Result<impl Stream<Item = WatchEvent>>;
+}
+
+#[derive(Debug, Clone)]
+pub struct WatchEvent {
+    pub event_type: WatchEventType,
+    pub path: PathBuf,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum WatchEventType {
+    Create,
+    Modify,
+    Delete,
+}
 ```
 
-### 5. Subtasks
+**Checklist**:
+- [ ] Define FileSystem trait
+- [ ] Define WatchEvent struct
+- [ ] Define WatchEventType enum
+- [ ] Export from lib.rs
+- [ ] Unit tests
+```
 
-Break implementation into subtasks that can be:
-- Executed independently (for concurrent implementation)
-- Tracked for progress
-- Assigned completion criteria
+### 4. Status Tracking Table
+
+Use simple tables for overview tracking:
 
 ```markdown
-## Subtasks
+## Module Status
 
-### Task 1: Core Parser Implementation
-**ID**: TASK-001
-**Status**: Not Started | In Progress | Completed
-**Parallelizable**: Yes | No (depends on TASK-XXX)
-**Deliverables**: src/parser/variable.rs
-**Completion Criteria**:
-- [ ] parse_variables function implemented
-- [ ] Variable struct defined
-- [ ] Unit tests written and passing
-- [ ] Handles edge cases (empty input, nested patterns)
+| Module | File Path | Status | Tests |
+|--------|-----------|--------|-------|
+| FileSystem trait | `src/interfaces/filesystem.rs` | NOT_STARTED | - |
+| ProcessManager trait | `src/interfaces/process.rs` | NOT_STARTED | - |
+| Mock implementations | `src/test/mocks/*.rs` | NOT_STARTED | - |
+```
+
+### 5. Dependencies
+
+Simple table showing what depends on what:
+
+```markdown
+## Dependencies
+
+| Feature | Depends On | Status |
+|---------|------------|--------|
+| Phase 2: Repository | Phase 1: Traits | BLOCKED |
+| Phase 3: Core Services | Phase 1, Phase 2 | BLOCKED |
 ```
 
 ### 6. Completion Criteria
 
-Overall feature completion requirements:
-- All subtasks completed
-- Integration tests pass
-- Documentation updated
-- Code review completed
+Simple checklist:
+
+```markdown
+## Completion Criteria
+
+- [ ] All modules implemented
+- [ ] All tests passing
+- [ ] cargo build passes
+- [ ] cargo clippy passes
+- [ ] Integration verified
+```
 
 ### 7. Progress Log
 
 Track session-by-session progress:
+
 ```markdown
 ## Progress Log
 
 ### Session: YYYY-MM-DD HH:MM
-**Tasks Completed**: TASK-001, TASK-002
-**Tasks In Progress**: TASK-003
+**Tasks Completed**: Module 1, Module 2
+**Tasks In Progress**: Module 3
 **Blockers**: None
 **Notes**: Discovered edge case in variable parsing
 ```
 
 ## Content Guidelines
 
-### What to Include
-- File paths and module structure
+### INCLUDE Rust Code
+
+**ALWAYS** include actual Rust code for:
+- Trait definitions
+- Struct definitions
+- Enum definitions
+- Type aliases
 - Function signatures (name, parameters, return types)
-- Trait definitions (name, purpose, methods)
-- Struct/enum definitions (name, purpose, public fields)
-- Dependency relationships
-- Completion criteria
 
-### What NOT to Include
-- Actual implementation code
-- Internal implementation details
-- Algorithm implementations
-- Private function implementations
+Example:
+```markdown
+```rust
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct SessionGroup {
+    /// Format: YYYYMMDD-HHMMSS-{slug}
+    pub id: String,
+    pub name: String,
+    pub status: GroupStatus,
+    pub sessions: Vec<GroupSession>,
+    pub config: GroupConfig,
+    pub created_at: DateTime<Utc>,
+}
 
-### Signature Format
-
-For functions:
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum GroupStatus {
+    Created,
+    Running,
+    Paused,
+    Completed,
+    Failed,
+}
 ```
-fn function_name(param1: Type1, param2: Type2) -> Result<ReturnType, Error>
-  Purpose: What this function does
-  Called by: Which modules/functions call this
-```
-
-For traits:
-```
-trait TraitName
-  Purpose: What this trait represents
-  Methods:
-    - fn method_name(&self, params) -> ReturnType - description
-  Implemented by: Which types implement this trait
 ```
 
-For structs:
+### DO NOT Include
+
+- Implementation logic (function bodies)
+- Private functions
+- Algorithm details
+- Excessive prose descriptions
+
+### Format Comparison
+
+**GOOD** (Rust-first):
+```markdown
+#### src/interfaces/clock.rs
+
+```rust
+pub trait Clock: Send + Sync {
+    fn now(&self) -> DateTime<Utc>;
+    fn timestamp(&self) -> String;
+    async fn sleep(&self, duration: Duration);
+}
 ```
-struct StructName
-  Purpose: What this struct represents
-  Fields:
-    - field_name: Type - description (pub fields only)
-  Used by: Which modules use this struct
+
+**Checklist**:
+- [ ] Define Clock trait
+- [ ] Export from lib.rs
+```
+
+**BAD** (Prose-heavy):
+```markdown
+**Exports**:
+| Name | Type | Purpose | Called By |
+|------|------|---------|-----------|
+| `Clock` | trait | Time operations | Caching, logging |
+
+**Function Signatures**:
+now() -> DateTime<Utc>
+  Purpose: Get current date/time
+  Called by: Logger, Cache
 ```
 
 ## Parallelization Rules
@@ -191,26 +258,23 @@ Subtasks can be parallelized when:
 2. No shared file modifications
 3. No order-dependent side effects
 
-Mark dependencies explicitly:
-```markdown
-**Parallelizable**: No (depends on TASK-001, TASK-002)
-```
+Mark dependencies explicitly in the status table.
 
 ## Workflow Integration
 
 ### Creating a Plan
 1. Read the design document
 2. Identify feature boundaries
-3. Break into deliverables
-4. Define subtasks with dependencies
+3. Define Rust traits, structs, and enums
+4. List modules with status tracking
 5. Set completion criteria
 6. Create plan file in `impl-plans/active/`
 
 ### During Implementation
-1. Update task status as work progresses
+1. Update module status as work progresses
 2. Add progress log entries per session
 3. Note blockers and decisions
-4. Update completion criteria checkboxes
+4. Check off completion criteria
 
 ### Completing a Plan
 1. Verify all completion criteria met
@@ -220,12 +284,12 @@ Mark dependencies explicitly:
 
 ## Quick Reference
 
-| Section | Required | Purpose |
-|---------|----------|---------|
-| Header | Yes | Status, references, dates |
-| Design Reference | Yes | Link to design doc |
-| Overview | Yes | High-level approach |
-| Deliverables | Yes | File/module specifications |
-| Subtasks | Yes | Parallelizable work units |
-| Completion Criteria | Yes | Definition of done |
-| Progress Log | Yes | Session tracking |
+| Section | Required | Format |
+|---------|----------|--------|
+| Header | Yes | Markdown metadata |
+| Design Reference | Yes | Link + summary |
+| Modules | Yes | Rust code blocks + checklist |
+| Status Table | Yes | Simple table |
+| Dependencies | Yes | Simple table |
+| Completion Criteria | Yes | Checklist |
+| Progress Log | Yes | Session entries |

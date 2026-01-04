@@ -1,7 +1,7 @@
 # <Feature Name> Implementation Plan
 
 **Status**: Planning | Ready | In Progress | Completed
-**Design Reference**: design-docs/specs/<file>.md#<section>
+**Design Reference**: design-docs/<file>.md
 **Created**: YYYY-MM-DD
 **Last Updated**: YYYY-MM-DD
 
@@ -9,7 +9,7 @@
 
 ## Design Document Reference
 
-**Source**: [Link to design document section]
+**Source**: design-docs/<file>.md
 
 ### Summary
 
@@ -25,152 +25,90 @@ Brief description of the feature being implemented from the design document.
 
 ---
 
-## Implementation Overview
+## Modules
 
-### Approach
+### 1. Core Interfaces
 
-High-level description of the implementation approach.
+#### internal/interfaces/example.go
 
-### Key Decisions
+**Status**: NOT_STARTED
 
-- Decision 1: Rationale
-- Decision 2: Rationale
+```go
+type Example interface {
+    Process(ctx context.Context, input Input) (*Output, error)
+    Validate(input Input) error
+}
 
-### Dependencies
+type ExampleConfig struct {
+    Option1 string
+    Option2 int
+}
+```
 
-| Dependency | Type | Status |
-|------------|------|--------|
-| Other feature/system | Required/Optional | Available/Pending |
+**Checklist**:
+- [ ] Define Example interface
+- [ ] Define ExampleConfig struct
+- [ ] Export from interfaces package
+- [ ] Unit tests
 
 ---
 
-## Deliverables
+### 2. Implementation
 
-### Deliverable 1: internal/path/to/file.go
+#### internal/example/manager.go
 
-**Purpose**: What this file/module does
+**Status**: NOT_STARTED
 
-**Exports**:
+```go
+type Manager struct {
+    config *ExampleConfig
+    repo   Repository
+}
 
-| Name | Type | Purpose | Called By |
-|------|------|---------|-----------|
-| `FunctionName` | func | What it does | Package that calls it |
-| `InterfaceName` | interface | What it represents | Packages that use it |
-| `StructName` | struct | What it provides | Packages that instantiate it |
+func NewManager(config *ExampleConfig, repo Repository) *Manager
 
-**Function Signatures**:
-
-```
-FunctionName(param1 Type1, param2 Type2) (ReturnType, error)
-  Purpose: What this function does
-  Called by: Package/function that calls this
-```
-
-**Interface Definition**:
-
-```
-InterfaceName
-  Purpose: What this interface represents
-  Methods:
-    - MethodName(params) (returns) - description
-  Implemented by: Types that implement this interface
+func (m *Manager) Create(ctx context.Context, opts CreateOptions) (*Example, error)
+func (m *Manager) Get(ctx context.Context, id string) (*Example, error)
+func (m *Manager) List(ctx context.Context, filter *Filter) ([]*Example, error)
+func (m *Manager) Update(ctx context.Context, id string, updates Updates) (*Example, error)
+func (m *Manager) Delete(ctx context.Context, id string) error
 ```
 
-**Struct Definition**:
-
-```
-StructName
-  Purpose: What this struct represents
-  Fields:
-    - FieldName Type - description (exported fields only)
-  Used by: Packages that use this struct
-```
-
-**Dependencies**:
-- `internal/other/module.go` - What it provides
-
-**Dependents**:
-- `internal/consumer/module.go` - How it uses this
+**Checklist**:
+- [ ] Implement Manager struct
+- [ ] Implement NewManager constructor
+- [ ] Implement CRUD methods
+- [ ] Unit tests
+- [ ] Integration tests
 
 ---
 
-### Deliverable 2: internal/path/to/another.go
+## Module Status
 
-(Same structure as Deliverable 1)
-
----
-
-## Subtasks
-
-### TASK-001: <Task Name>
-
-**Status**: Not Started | In Progress | Completed
-**Parallelizable**: Yes | No (depends on TASK-XXX)
-**Deliverables**: List of deliverable files
-**Estimated Effort**: Small | Medium | Large
-
-**Description**:
-What needs to be done in this task.
-
-**Completion Criteria**:
-- [ ] Criterion 1
-- [ ] Criterion 2
-- [ ] Unit tests written and passing
-- [ ] go build passes
-- [ ] go test passes
+| Module | File Path | Status | Tests |
+|--------|-----------|--------|-------|
+| Example interface | `internal/interfaces/example.go` | NOT_STARTED | - |
+| Manager | `internal/example/manager.go` | NOT_STARTED | - |
 
 ---
 
-### TASK-002: <Task Name>
+## Dependencies
 
-**Status**: Not Started
-**Parallelizable**: No (depends on TASK-001)
-**Deliverables**: List of deliverable files
-**Estimated Effort**: Medium
-
-**Description**:
-What needs to be done in this task.
-
-**Completion Criteria**:
-- [ ] Criterion 1
-- [ ] Criterion 2
-
----
-
-## Task Dependency Graph
-
-```
-TASK-001 (Core Types)
-    |
-    v
-TASK-002 (Parser) -----> TASK-004 (Integration)
-    |                         ^
-    v                         |
-TASK-003 (Renderer) ----------+
-```
-
-(Use ASCII art or describe dependencies textually)
+| Feature | Depends On | Status |
+|---------|------------|--------|
+| This feature | Foundation layer | Available |
+| HTTP API | This feature | BLOCKED |
 
 ---
 
 ## Completion Criteria
 
-### Required for Completion
-
-- [ ] All subtasks marked as Completed
+- [ ] All modules implemented
 - [ ] All unit tests passing
-- [ ] Integration tests passing (if applicable)
-- [ ] go build passes without errors
-- [ ] go vet passes without warnings
-- [ ] Code follows project coding standards
-- [ ] Documentation updated (if applicable)
-
-### Verification Steps
-
-1. Run `go build ./...`
-2. Run `go test ./...`
-3. Run `go vet ./...`
-4. Review implementation against design document
+- [ ] All integration tests passing
+- [ ] go build passes
+- [ ] go vet passes
+- [ ] Code follows project standards
 
 ---
 
@@ -178,39 +116,7 @@ TASK-003 (Renderer) ----------+
 
 ### Session: YYYY-MM-DD HH:MM
 
-**Author**: (session identifier)
-**Duration**: Xh
-
-**Tasks Worked On**:
-- TASK-001: Status update
-- TASK-002: Status update
-
-**Completed This Session**:
-- Item 1
-- Item 2
-
-**Blockers**:
-- None | Description of blocker
-
-**Decisions Made**:
-- Decision: Rationale
-
-**Notes**:
-- Any relevant observations
-
----
-
-## Notes
-
-### Open Questions
-
-- Question 1?
-- Question 2?
-
-### Technical Debt
-
-- Items to address later
-
-### Future Enhancements
-
-- Potential improvements outside current scope
+**Tasks Completed**: (list)
+**Tasks In Progress**: (list)
+**Blockers**: None
+**Notes**: (any observations)

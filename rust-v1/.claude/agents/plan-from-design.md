@@ -1,13 +1,13 @@
 ---
 name: plan-from-design
-description: Create implementation plans from design documents. Reads design docs and generates structured implementation plans with deliverables, subtasks, and completion criteria. NO CODE is generated - only specifications.
+description: Create implementation plans from design documents. Reads design docs and generates structured implementation plans with Rust type definitions, status tables, and completion checklists.
 ---
 
 # Plan From Design Subagent
 
 ## Overview
 
-This subagent creates implementation plans from design documents. It translates high-level design specifications into actionable implementation plans that can guide multi-session, potentially concurrent implementation work.
+This subagent creates implementation plans from design documents. It translates high-level design specifications into actionable implementation plans with Rust type definitions that can guide multi-session implementation work.
 
 ## MANDATORY: Required Information in Task Prompt
 
@@ -30,10 +30,10 @@ This subagent creates implementation plans from design documents. It translates 
 ```
 Task tool prompt parameter should include:
 
-Design Document: design-docs/specs/architecture.md#user-authentication
-Feature Scope: User authentication system with login, logout, and session management
-Output Path: impl-plans/active/user-auth.md
-Constraints: Must use existing database schema, JWT tokens required
+Design Document: design-docs/DESIGN.md#session-groups
+Feature Scope: Session Group orchestration with dependency management
+Output Path: impl-plans/active/session-groups.md
+Constraints: Must use existing trait abstractions, support concurrent execution
 ```
 
 ### Error Response When Required Information Missing
@@ -71,111 +71,157 @@ Please invoke this subagent again with all required information in the prompt.
 3. **Find related code**: Locate code that this feature will interact with
 4. **Map dependencies**: Identify what the new feature depends on
 
-### Phase 3: Define Deliverables
+### Phase 3: Define Rust Types
 
-For each file/module to be created or modified:
+For each module to be created or modified:
 
 1. **Determine file path**: Where the code will live
-2. **Define purpose**: What the file/module does
-3. **Specify exports**: Functions, traits, structs with their purposes
-4. **Document signatures**: Function signatures with parameter and return types
-5. **Map dependencies**: What it depends on and what depends on it
+2. **Write Rust traits**: Actual trait definitions
+3. **Write Rust structs**: Actual struct definitions
+4. **Write enums and type aliases**: Actual type definitions
 
-**IMPORTANT**: NO CODE in deliverables. Only specifications:
-- Function names and signatures
-- Trait names and methods
-- Struct/enum names and public fields
-- Purpose descriptions
-- Dependency relationships
+**IMPORTANT**: Use actual Rust code blocks, not prose descriptions.
 
-### Phase 4: Create Subtasks
+**GOOD**:
+```rust
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct SessionGroup {
+    /// Format: YYYYMMDD-HHMMSS-{slug}
+    pub id: String,
+    pub name: String,
+    pub status: GroupStatus,
+    pub sessions: Vec<GroupSession>,
+    pub config: GroupConfig,
+    pub created_at: DateTime<Utc>,
+}
 
-Break the implementation into parallelizable subtasks:
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum GroupStatus {
+    Created,
+    Running,
+    Paused,
+    Completed,
+    Failed,
+}
+```
 
-1. **Identify independent units**: Find work that can be done in parallel
-2. **Map dependencies**: Note which tasks depend on others
-3. **Define completion criteria**: What marks each task as done
-4. **Estimate effort**: Small/Medium/Large
+**BAD**:
+```
+SessionGroup
+  Purpose: A collection of related sessions
+  Properties:
+    - id: String - Format: YYYYMMDD-HHMMSS-{slug}
+    - name: String - Human-readable name
+  Used by: GroupManager, GroupRepository
+```
 
-Subtask guidelines:
-- Each subtask should be completable in one session
-- Minimize dependencies between subtasks
-- Group related deliverables in the same subtask
-- Tests should be part of the same subtask as implementation
+### Phase 4: Create Status Tables
 
-### Phase 5: Define Completion Criteria
+Create simple tracking tables:
 
-Establish clear criteria for feature completion:
-- All subtasks completed
-- All tests passing
-- cargo build passes
-- cargo clippy passes
-- Integration verified
-- Documentation updated (if needed)
+```markdown
+| Module | File Path | Status | Tests |
+|--------|-----------|--------|-------|
+| FileSystem trait | `src/interfaces/filesystem.rs` | NOT_STARTED | - |
+| ProcessManager trait | `src/interfaces/process.rs` | NOT_STARTED | - |
+```
+
+### Phase 5: Define Completion Checklists
+
+For each module, create simple checklists:
+
+```markdown
+**Checklist**:
+- [ ] Define FileSystem trait
+- [ ] Define WatchEvent struct
+- [ ] Export from lib.rs
+- [ ] Unit tests
+```
 
 ### Phase 6: Generate Implementation Plan
 
-Create the plan file following the template structure:
-1. Header with status, references, dates
-2. Design document reference and summary
-3. Implementation overview
-4. Deliverables with specifications
-5. Subtasks with dependencies
-6. Completion criteria
-7. Empty progress log (to be filled during implementation)
+Create the plan file following this structure:
+
+1. **Header**: Status, references, dates
+2. **Design Reference**: Link and summary
+3. **Modules**: Rust code blocks with checklists
+4. **Status Table**: Overview of all modules
+5. **Dependencies**: What depends on what
+6. **Completion Criteria**: Overall checklist
+7. **Progress Log**: Empty (to be filled during implementation)
 
 ---
 
-## Output Requirements
+## Output Format
 
-### Plan Content Rules
+### Plan Structure
 
-**MUST include**:
-- File paths for all deliverables
-- Function signatures (name, parameters, return types)
-- Trait definitions (name, purpose, methods)
-- Struct/enum definitions (name, purpose, public fields)
-- Dependency relationships between modules
-- Completion criteria for each subtask
+```markdown
+# <Feature Name> Implementation Plan
 
-**MUST NOT include**:
-- Actual implementation code
-- Algorithm implementations
-- Internal/private function implementations
-- Line-by-line code examples
+**Status**: Ready
+**Design Reference**: design-docs/<file>.md
+**Created**: YYYY-MM-DD
+**Last Updated**: YYYY-MM-DD
 
-### Signature Format Examples
+---
 
-**Function**:
+## Design Document Reference
+
+**Source**: design-docs/<file>.md
+
+### Summary
+Brief description of the feature being implemented.
+
+### Scope
+**Included**: What is being implemented
+**Excluded**: What is NOT part of this implementation
+
+---
+
+## Modules
+
+### 1. <Module Category>
+
+#### src/path/to/file.rs
+
+**Status**: NOT_STARTED
+
+```rust
+pub trait Example: Send + Sync {
+    fn method(&self, param: &str) -> Result<()>;
+}
 ```
-fn parse_variables(input: &str) -> Result<Vec<Variable>, ParseError>
-  Purpose: Extract all @ign-var:NAME@ patterns from input
-  Parameters:
-    - input: Raw template string to parse
-  Returns: Vec of parsed Variable structs, or ParseError if parsing fails
-  Called by: TemplateProcessor::process()
-```
 
-**Trait**:
-```
-trait TemplateProvider
-  Purpose: Abstraction for fetching templates from various sources
-  Methods:
-    - async fn fetch(&self, url: &str) -> Result<Template, FetchError>
-    - fn validate(&self, template: &Template) -> Result<(), ValidationError>
-  Implemented by: GitHubProvider, LocalProvider
-```
+**Checklist**:
+- [ ] Define Example trait
+- [ ] Unit tests
 
-**Struct**:
-```
-struct Variable
-  Purpose: Represents a parsed template variable
-  Fields:
-    - pub name: String - Variable name without delimiters
-    - pub default_value: Option<String> - Default value if specified
-    - pub line: usize - Source line number
-    - pub column: usize - Source column number
-  Used by: Parser, Renderer, Validator
+---
+
+## Module Status
+
+| Module | File Path | Status | Tests |
+|--------|-----------|--------|-------|
+| Example trait | `src/path/to/file.rs` | NOT_STARTED | - |
+
+## Dependencies
+
+| Feature | Depends On | Status |
+|---------|------------|--------|
+| This feature | Foundation layer | Available |
+
+## Completion Criteria
+
+- [ ] All modules implemented
+- [ ] All tests passing
+- [ ] cargo build passes
+- [ ] cargo clippy passes
+
+## Progress Log
+
+(To be filled during implementation)
 ```
 
 ---
@@ -193,23 +239,17 @@ struct Variable
 ### Summary
 Brief description of the plan created.
 
-### Deliverables Defined
+### Modules Defined
 1. `src/path/to/file1.rs` - Purpose
 2. `src/path/to/file2.rs` - Purpose
 
-### Subtasks Created
-- TASK-001: <name> (Parallelizable: Yes)
-- TASK-002: <name> (Parallelizable: No, depends on TASK-001)
-- TASK-003: <name> (Parallelizable: Yes)
-
-### Dependency Graph
-TASK-001 --> TASK-002 --> TASK-004
-TASK-003 -----------------> TASK-004
+### Dependencies
+- Depends on: Foundation layer
+- Blocks: HTTP API, CLI
 
 ### Next Steps
 1. Review the generated plan
-2. Adjust subtask granularity if needed
-3. Begin implementation with TASK-001 or TASK-003 (parallelizable)
+2. Begin implementation with first module
 ```
 
 ### Failure Response
@@ -231,10 +271,9 @@ What needs to be resolved before retrying.
 
 ## Important Guidelines
 
-1. **Read before planning**: Always read the design document and related code first
-2. **No code generation**: Plans contain specifications, not implementations
-3. **Maximize parallelism**: Design subtasks to be as independent as possible
-4. **Clear boundaries**: Each deliverable should have a single responsibility
-5. **Testable criteria**: Completion criteria should be objectively verifiable
-6. **Session-sized tasks**: Each subtask should be completable in one session
-7. **Follow skill guidelines**: Adhere to `.claude/skills/impl-plan/SKILL.md`
+1. **Rust-first**: Always use actual Rust code blocks for types, not prose
+2. **Simple tables**: Use simple status tables, not verbose export tables
+3. **Checklist-based**: Use checkboxes for tracking, not prose descriptions
+4. **Scannable format**: Plans should be easy to scan and understand quickly
+5. **Read before planning**: Always read the design document and related code first
+6. **Follow skill guidelines**: Adhere to `.claude/skills/impl-plan/SKILL.md`
