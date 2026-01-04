@@ -175,6 +175,16 @@ This is @ign-var:PROJECT_NAME@ - a Rust project with Nix flake development envir
 
 **Cargo Output Configuration**: When running cargo commands, use `CARGO_TERM_QUIET=true` to reduce noise. For nextest, use `NEXTEST_STATUS_LEVEL=fail NEXTEST_FAILURE_OUTPUT=immediate-final NEXTEST_HIDE_PROGRESS_BAR=1`.
 
+## Design Documentation
+
+**IMPORTANT**: When creating design documents, you (the LLM model) MUST follow the design-doc skill.
+
+**Skill Reference**: Refer to `.claude/skills/design-doc/SKILL.md` for design document guidelines, templates, and naming conventions.
+
+**Output Location**: All design documents MUST be saved to `design-docs/` directory (NOT `docs/`).
+
+**Design References**: See `design-docs/references/README.md` for all external references and design materials.
+
 ## Task Management
 - Use `task` command for build automation
 - Define tasks in `Taskfile.yml` (to be created as needed)

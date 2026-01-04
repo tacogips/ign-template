@@ -161,6 +161,16 @@ This is @ign-var:PROJECT_NAME@ - a Golang project with Nix flake development env
 
 **Coding Standards**: Refer to `.claude/skills/go-coding-standards/` for Go coding conventions, project layout, error handling, concurrency patterns, and interface design.
 
+## Design Documentation
+
+**IMPORTANT**: When creating design documents, you (the LLM model) MUST follow the design-doc skill.
+
+**Skill Reference**: Refer to `.claude/skills/design-doc/SKILL.md` for design document guidelines, templates, and naming conventions.
+
+**Output Location**: All design documents MUST be saved to `design-docs/` directory (NOT `docs/`).
+
+**Design References**: See `design-docs/references/README.md` for all external references and design materials.
+
 ## Task Management
 - Use `task` command for build automation
 - Define tasks in `Taskfile.yml` (to be created as needed)
