@@ -75,7 +75,7 @@ This workflow orchestrates multiple specialized agents:
 3. **review-multiple-target**: Analyzes cross-file consistency and posts PR comments for integration issues
 4. **go-coding-guideline**: Provides Go coding guidelines for compliance verification
 5. **apply-pr-review-chunk**: Implements fixes per module/package using PR comment URLs
-6. **generate-pr**: Creates or updates the review fixes PR
+6. **git-pr**: Creates or updates the review fixes PR
 
 ## Key Outputs
 

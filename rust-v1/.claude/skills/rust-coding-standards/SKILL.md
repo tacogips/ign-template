@@ -1,3 +1,9 @@
+---
+name: rust-coding-standards
+description: Use when writing, reviewing, or refactoring Rust code. Provides type safety patterns, error handling, project layout, and async programming guidelines.
+allowed-tools: Read, Grep, Glob
+---
+
 # Rust Coding Standards
 
 This skill provides modern Rust coding guidelines and best practices for this project.

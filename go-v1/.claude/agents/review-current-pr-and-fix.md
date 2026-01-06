@@ -572,14 +572,14 @@ Remember:
 4. **Get original PR URL:**
    - Extract from Step 1 (PR URL field)
 
-5. **Create or Update PR using generate-pr agent:**
+5. **Create or Update PR using git-pr agent:**
 
    **For CREATE mode:**
 
-   Use Task tool with subagent_type='Plan' to delegate to generate-pr agent:
+   Use Task tool with subagent_type='Plan' to delegate to git-pr agent:
 
    ```
-   Create a PR for review fixes using the generate-pr agent.
+   Create a PR for review fixes using the git-pr agent.
 
    Context:
    - Base branch: {ORIGINAL_BRANCH}
@@ -589,7 +589,7 @@ Remember:
    {review_comment_urls_list}
 
    Task:
-   Call the generate-pr agent (.claude/agents/generate-pr.md) with the following information:
+   Call the git-pr agent (.claude/agents/git-pr.md) with the following information:
    - Pass base branch as: {ORIGINAL_BRANCH}
    - Pass original PR URL in issue URLs list
    - Pass all review comment URLs in the description section
@@ -606,10 +606,10 @@ Remember:
 
    **For UPDATE mode:**
 
-   Use Task tool with subagent_type='Plan' to delegate to generate-pr agent:
+   Use Task tool with subagent_type='Plan' to delegate to git-pr agent:
 
    ```
-   Update existing PR for review fixes using the generate-pr agent.
+   Update existing PR for review fixes using the git-pr agent.
 
    Context:
    - Current review branch: {FINAL_REVIEW_BRANCH}
@@ -618,7 +618,7 @@ Remember:
    {additional_review_comment_urls_list}
 
    Task:
-   Call the generate-pr agent (.claude/agents/generate-pr.md) with:
+   Call the git-pr agent (.claude/agents/git-pr.md) with:
    - Original PR URL in issue URLs list
    - Additional review comment URLs in the description section
    - No state change (preserve current state)

@@ -20,7 +20,7 @@ $ARGUMENTS
 
 ## Instructions
 
-Invoke the `plan-from-design` subagent using the Task tool.
+Invoke the `impl-plan` subagent using the Task tool.
 
 ### Argument Parsing
 
@@ -44,7 +44,7 @@ Generate the output path based on feature name:
 
 ```
 Task tool parameters:
-  subagent_type: plan-from-design
+  subagent_type: impl-plan
   prompt: |
     Design Document: <parsed-design-doc-path>
     Feature Scope: <parsed-or-derived-feature-scope>
@@ -55,19 +55,19 @@ Task tool parameters:
 
 **Basic usage with design doc path**:
 ```
-/gen-impl-plan design-docs/specs/architecture.md#user-authentication
+/impl-plan design-docs/specs/architecture.md#user-authentication
 ```
 Creates: `impl-plans/active/user-authentication.md`
 
 **With explicit feature name**:
 ```
-/gen-impl-plan design-docs/specs/architecture.md auth-system
+/impl-plan design-docs/specs/architecture.md auth-system
 ```
 Creates: `impl-plans/active/auth-system.md`
 
 **Full section reference**:
 ```
-/gen-impl-plan design-docs/specs/command.md#cli-options cli-options
+/impl-plan design-docs/specs/command.md#cli-options cli-options
 ```
 Creates: `impl-plans/active/cli-options.md`
 
@@ -81,11 +81,11 @@ Creates: `impl-plans/active/cli-options.md`
 
 If no arguments provided, respond with usage instructions:
 ```
-Usage: /gen-impl-plan <design-doc-path> [feature-name]
+Usage: /impl-plan <design-doc-path> [feature-name]
 
 Examples:
-  /gen-impl-plan design-docs/specs/architecture.md#auth
-  /gen-impl-plan design-docs/specs/command.md cli-parser
+  /impl-plan design-docs/specs/architecture.md#auth
+  /impl-plan design-docs/specs/command.md cli-parser
 
 The design document path is required. Feature name is optional.
 ```

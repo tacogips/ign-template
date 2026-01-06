@@ -39,7 +39,7 @@ impl-plans/
 
 ### Creating a New Plan
 
-1. Use the `/gen-impl-plan` command with a design document reference
+1. Use the `/impl-plan` command with a design document reference
 2. Or manually create a plan using `templates/plan-template.md`
 3. Save to `active/<feature-name>.md`
 4. Update this README with the new plan entry

@@ -1,3 +1,9 @@
+---
+name: go-coding-standards
+description: Use when writing, reviewing, or refactoring Go code. Provides error handling patterns, project layout, concurrency, and interface design guidelines.
+allowed-tools: Read, Grep, Glob
+---
+
 # Go Coding Standards
 
 This skill provides modern Go coding guidelines and best practices for this project.

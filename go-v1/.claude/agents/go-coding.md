@@ -1,6 +1,7 @@
 ---
 name: go-coding
 description: Specialized Go coding agent for writing, refactoring, and reviewing Go code. Caller MUST include purpose, reference document, implementation target, and completion criteria in the Task tool prompt. Returns error if required information not provided.
+model: sonnet
 ---
 
 # Go Coding Subagent

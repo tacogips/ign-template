@@ -1,6 +1,7 @@
 ---
 name: rust-coding
 description: Specialized Rust coding agent for writing, refactoring, and reviewing Rust code. Caller MUST include purpose, reference document, implementation target, and completion criteria in the Task tool prompt. Returns error if required information not provided.
+model: sonnet
 ---
 
 # Rust Coding Subagent
