@@ -197,10 +197,10 @@ specs/*.md          active/*.md              agent            Update
 
 ### Creating Implementation Plans
 
-Use the `/gen-impl-plan` command or `plan-from-design` agent to create implementation plans:
+Use the `/impl-plan` command or `impl-plan` agent to create implementation plans:
 
 ```bash
-/gen-impl-plan design-docs/specs/architecture.md#feature-name
+/impl-plan design-docs/specs/architecture.md#feature-name
 ```
 
 **Skill Reference**: Refer to `.claude/skills/impl-plan/SKILL.md` for implementation plan guidelines.
