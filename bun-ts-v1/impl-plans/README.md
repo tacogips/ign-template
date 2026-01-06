@@ -23,6 +23,18 @@ impl-plans/
     └── plan-template.md   # Standard plan template
 ```
 
+## File Size Limits
+
+**IMPORTANT**: Implementation plan files must stay under 400 lines to prevent OOM errors.
+
+| Metric | Limit |
+|--------|-------|
+| Line count | MAX 400 lines |
+| Modules per plan | MAX 8 modules |
+| Tasks per plan | MAX 10 tasks |
+
+Large features are split into multiple related plans with cross-references.
+
 ## Active Plans
 
 | Plan | Status | Design Reference | Last Updated |
@@ -35,6 +47,35 @@ impl-plans/
 |------|-----------|------------------|
 | (No completed plans yet) | - | - |
 
+## Phase Dependencies (for impl-exec-auto)
+
+**IMPORTANT**: This section is used by impl-exec-auto to determine which plans to load.
+Only plans from eligible phases should be read to minimize context loading.
+
+### Phase Status
+
+| Phase | Status | Depends On |
+|-------|--------|------------|
+| 1 | NOT_STARTED | - |
+| 2 | BLOCKED | Phase 1 |
+| 3 | BLOCKED | Phase 2 |
+
+### Phase to Plans Mapping
+
+```
+PHASE_TO_PLANS = {
+  1: [
+    # Add Phase 1 plan files here
+  ],
+  2: [
+    # Add Phase 2 plan files here
+  ],
+  3: [
+    # Add Phase 3 plan files here
+  ]
+}
+```
+
 ## Workflow
 
 ### Creating a New Plan
@@ -43,6 +84,7 @@ impl-plans/
 2. Or manually create a plan using `templates/plan-template.md`
 3. Save to `active/<feature-name>.md`
 4. Update this README with the new plan entry
+5. **IMPORTANT**: If plan exceeds 400 lines, split into multiple files
 
 ### Working on a Plan
 
@@ -65,3 +107,4 @@ impl-plans/
 - Plans specify interfaces, functions, and file structures
 - Subtasks should be as independent as possible for parallel execution
 - Always update progress log after each session
+- **Keep each plan file under 400 lines** - split if necessary
