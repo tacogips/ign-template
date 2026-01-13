@@ -59,7 +59,7 @@ Command arguments from the slash command:
 
 ## PR Creation/Update Process
 
-### Step 0: Check for uncommitted changes
+### Step 1: Check for uncommitted changes
 
 **CRITICAL**: Must verify no uncommitted changes before proceeding.
 
@@ -69,7 +69,7 @@ Command arguments from the slash command:
    - List ALL uncommitted files with status indicators
    - Instruct user to use `/gen-commit` first
    - **EXIT immediately** - do not proceed
-3. If clean: Continue to Step 0.5
+3. If clean: Continue to Step 2
 
 **Error message format**:
 ```
@@ -99,7 +99,41 @@ The /gen-commit command will:
    - You can then proceed with PR creation
 ```
 
-### Step 0.5: Check for unpushed commits and push
+### Step 2: Detect and fix obvious typos
+
+**PURPOSE**: Automatically fix obvious typos in the codebase before creating/updating PR.
+
+1. **Scan for typos in changed files**:
+   - Get list of changed files: `git diff <base-branch>..HEAD --name-only`
+   - For each file, read the content and check for obvious typos
+   - Focus on: comments, string literals, variable/function names, documentation
+
+2. **Types of typos to detect and fix**:
+   - Common spelling mistakes (e.g., "recieve" -> "receive", "occured" -> "occurred")
+   - Doubled words (e.g., "the the" -> "the")
+   - Common programming typos (e.g., "fucntion" -> "function", "retrun" -> "return")
+   - Obvious misspellings in comments and documentation
+
+3. **Auto-fix process**:
+   - If typos are found:
+     - Fix each typo in the affected files using Edit tool
+     - Stage all fixed files: `git add <fixed-files>`
+     - Create a commit with message: `fix: correct obvious typos`
+     - Display summary of fixes made:
+       ```
+       Fixed typos:
+       - path/to/file1.ts: "recieve" -> "receive" (line 42)
+       - path/to/file2.ts: "occured" -> "occurred" (line 15)
+       ```
+   - If no typos found: Continue silently to Step 3
+
+4. **Limitations**:
+   - Only fix obvious, unambiguous typos
+   - Do NOT change intentional naming conventions
+   - Do NOT modify code logic or structure
+   - Skip binary files and generated files
+
+### Step 3: Check for unpushed commits and push
 
 **CRITICAL**: Must ensure remote is up-to-date before PR operations.
 
@@ -124,9 +158,9 @@ The /gen-commit command will:
    - Suggest possible reasons (conflicts, auth, network)
    - **EXIT immediately** - do not proceed
 
-5. If no unpushed commits: Continue silently to Step 1
+5. If no unpushed commits: Continue silently to Step 4
 
-### Step 1: Detect mode (Create vs Update)
+### Step 4: Detect mode (Create vs Update)
 
 Run `gh pr view --json number,title,body,baseRefName,url` to check if PR exists:
 - If PR exists: **Update Mode**
