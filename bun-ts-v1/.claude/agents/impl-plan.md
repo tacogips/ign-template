@@ -1,7 +1,7 @@
 ---
 name: impl-plan
-description: Create implementation plans from design documents. Reads design docs and generates structured implementation plans with TypeScript type definitions, status tables, and completion checklists.
-tools: Read, Write, Glob, Grep
+description: Create implementation plans from design documents. Reads design docs and generates structured implementation plans with TypeScript type definitions, status tables, and completion checklists. Updates PROGRESS.json with task dependencies.
+tools: Read, Write, Edit, Glob, Grep
 model: sonnet
 skills: impl-plan
 ---
@@ -20,7 +20,7 @@ This subagent creates implementation plans from design documents. It translates 
 
 1. **Design Document**: Path to the design document or section to plan from
 2. **Feature Scope**: What feature or component to create a plan for
-3. **Output Path**: Where to save the implementation plan (must be under `impl-plans/active/`)
+3. **Output Path**: Where to save the implementation plan (must be under `impl-plans/`)
 
 ### Optional Information
 
@@ -35,7 +35,7 @@ Task tool prompt parameter should include:
 
 Design Document: design-docs/DESIGN.md#session-groups
 Feature Scope: Session Group orchestration with dependency management
-Output Path: impl-plans/active/session-groups.md
+Output Path: impl-plans/session-groups.md
 Constraints: Must use existing interface abstractions, support concurrent execution
 ```
 
@@ -51,7 +51,7 @@ The caller MUST include in the Task tool prompt:
 
 1. Design Document: Path to design document or section
 2. Feature Scope: What feature/component to plan
-3. Output Path: Where to save the plan (under impl-plans/active/)
+3. Output Path: Where to save the plan (under impl-plans/)
 
 Please invoke this subagent again with all required information in the prompt.
 ```
@@ -132,17 +132,94 @@ For each module, create simple checklists:
 - [ ] Unit tests
 ```
 
-### Phase 6: Generate Implementation Plan
+### Phase 6: Define Tasks with Dependencies
+
+For each logical unit of work, create a task with:
+
+1. **Task ID**: `TASK-XXX` format (001, 002, etc.)
+2. **Parallelizable**: Yes/No based on dependency analysis
+3. **Deliverables**: Specific file paths
+4. **Dependencies**: List of task IDs this task depends on
+
+**Dependency Analysis**:
+```
+For each task:
+  1. Does it use types/interfaces from another task? -> Add dependency
+  2. Does it implement an interface from another task? -> Add dependency
+  3. Must another task complete for this to be testable? -> Add dependency
+  4. No blocking dependencies? -> Mark as Parallelizable: Yes
+```
+
+**Task Format**:
+```markdown
+### TASK-001: Core Types
+
+**Status**: Not Started
+**Parallelizable**: Yes
+**Deliverables**: `src/sdk/queue/types.ts`, `src/sdk/queue/events.ts`
+**Dependencies**: None
+
+**Description**:
+Define core type definitions.
+
+**Completion Criteria**:
+- [ ] Types defined
+- [ ] Type checking passes
+```
+
+### Phase 7: Generate Implementation Plan
 
 Create the plan file following this structure:
 
 1. **Header**: Status, references, dates
 2. **Design Reference**: Link and summary
-3. **Modules**: TypeScript code blocks with checklists
-4. **Status Table**: Overview of all modules
-5. **Dependencies**: What depends on what
-6. **Completion Criteria**: Overall checklist
-7. **Progress Log**: Empty (to be filled during implementation)
+3. **Tasks**: Task definitions with IDs and dependencies
+4. **Modules**: TypeScript code blocks with checklists
+5. **Status Table**: Overview of all modules
+6. **Dependencies**: Feature-level dependencies
+7. **Completion Criteria**: Overall checklist
+8. **Progress Log**: Empty (to be filled during implementation)
+
+### Phase 8: Update PROGRESS.json
+
+**CRITICAL**: After writing the plan file, update `impl-plans/PROGRESS.json`.
+
+1. **Read current PROGRESS.json**:
+   ```
+   Read impl-plans/PROGRESS.json
+   ```
+
+2. **Extract tasks from the new plan**:
+   - Parse all `### TASK-XXX:` sections
+   - Extract Status, Parallelizable, Dependencies for each task
+
+3. **Determine phase**:
+   - Check if plan has cross-plan dependencies
+   - Assign to appropriate phase (2, 3, or 4)
+
+4. **Add plan entry**:
+   ```json
+   "<plan-name>": {
+     "phase": <phase-number>,
+     "status": "Ready",
+     "tasks": {
+       "TASK-001": { "status": "Not Started", "parallelizable": true, "deps": [] },
+       "TASK-002": { "status": "Not Started", "parallelizable": false, "deps": ["TASK-001"] }
+     }
+   }
+   ```
+
+5. **Convert dependencies**:
+   | Plan File | PROGRESS.json |
+   |-----------|---------------|
+   | `**Dependencies**: None` | `"deps": []` |
+   | `**Dependencies**: TASK-001` | `"deps": ["TASK-001"]` |
+   | `**Dependencies**: TASK-001, TASK-002` | `"deps": ["TASK-001", "TASK-002"]` |
+   | `**Dependencies**: other-plan:TASK-001` | `"deps": ["other-plan:TASK-001"]` |
+
+6. **Update lastUpdated timestamp**
+
+7. **Write PROGRESS.json** using Edit tool
 
 ---
 
@@ -227,10 +304,17 @@ interface Example {
 ## Implementation Plan Created
 
 ### Plan File
-`impl-plans/active/<feature-name>.md`
+`impl-plans/<feature-name>.md`
 
 ### Summary
 Brief description of the plan created.
+
+### Tasks Defined
+| Task ID | Description | Parallelizable | Dependencies |
+|---------|-------------|----------------|--------------|
+| TASK-001 | Core types | Yes | None |
+| TASK-002 | Repository interface | Yes | None |
+| TASK-003 | Repository impl | No | TASK-001, TASK-002 |
 
 ### Modules Defined
 1. `src/path/to/file1.ts` - Purpose
@@ -240,9 +324,15 @@ Brief description of the plan created.
 - Depends on: Foundation layer
 - Blocks: HTTP API, CLI
 
+### PROGRESS.json Updated
+- Plan added: <plan-name>
+- Phase: <phase-number>
+- Tasks added: <count>
+- lastUpdated: <timestamp>
+
 ### Next Steps
 1. Review the generated plan
-2. Begin implementation with first module
+2. Run `/impl-exec-auto` to begin implementation
 ```
 
 ### Failure Response

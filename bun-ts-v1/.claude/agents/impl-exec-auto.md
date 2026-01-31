@@ -1,110 +1,73 @@
 ---
 name: impl-exec-auto
-description: Automatically select parallelizable tasks from implementation plans based on dependencies and status, then execute them using Claude subtasks.
-tools: Read, Write, Edit, Glob, Grep, Bash, Task, TaskOutput
+description: Analyze implementation plans and return executable tasks list. Main conversation handles orchestration.
+tools: Read, Glob, Grep
 model: sonnet
 skills: exec-impl-plan-ref, ts-coding-standards
 ---
 
-# Auto Task Selection Execution Subagent
+# Auto Task Selection Analysis Subagent
 
 ## Overview
 
-This subagent **automatically** selects and executes tasks from implementation plans with a full implementation-review cycle. It supports two modes:
-- **Cross-Plan Mode**: Analyze ALL active plans and execute across plans
-- **Single-Plan Mode**: Focus on one specific plan
+This subagent **analyzes** implementation plans and returns a list of executable tasks. It does NOT execute tasks - the main conversation handles orchestration.
 
-**MANDATORY FIRST STEP**: Read `.claude/skills/exec-impl-plan-ref/SKILL.md` for common execution patterns, ts-coding invocation format, review cycle guidelines, and response formats.
+**Key Design**: This agent is analysis-only because Claude Code does not support nested subagent spawning (subagents cannot use Task tool).
 
-## Key Constants
+## Workflow
 
 ```
-MAX_REVIEW_ITERATIONS = 3
+1. Read PROGRESS.json (task status overview)
+2. Identify executable tasks (deps satisfied, status "Not Started")
+3. For each executable task, read plan file to get details
+4. Return structured task list to main conversation
+5. Main conversation uses impl-exec-specific to execute tasks
 ```
-
-## Key Difference from impl-exec-specific
-
-| Aspect | impl-exec-auto | impl-exec-specific |
-|--------|---------------------|-------------------------|
-| Task Selection | Automatic based on dependencies | Manual by task ID |
-| Use Case | "Run everything that can run now" | "Run exactly these tasks" |
-| Scope | Cross-plan or single-plan | Single plan only |
-
-## Mode Detection
-
-Parse the Task prompt to determine the mode:
-
-- **Cross-Plan Mode**: Prompt contains "cross-plan auto-select" or no specific plan path
-- **Single-Plan Mode**: Prompt contains a specific plan path
-
----
 
 ## CRITICAL: Use PROGRESS.json to Prevent Context Overflow
 
 **NEVER read all plan files at once.** This causes context overflow (>200K tokens).
 
-Instead, use `impl-plans/PROGRESS.json` which contains:
-- Phase status (COMPLETED, READY, BLOCKED)
-- All task statuses across all plans (~2K tokens)
-- Task dependencies
-
 **Workflow**:
-1. Read `PROGRESS.json` (~2K tokens) to find executable tasks
-2. Read ONLY the specific plan file when executing a task (~10K tokens)
-3. After execution, update BOTH the plan file AND `PROGRESS.json`
+1. Read `impl-plans/PROGRESS.json` (~2K tokens) to find executable tasks
+2. Read ONLY the specific plan files for executable tasks
+3. Return structured analysis
 
 ---
 
-## Execution Workflow Overview
-
-```
-Step 1: Read Skill and PROGRESS.json
-    |
-    v
-Step 2: Identify Executable Tasks from PROGRESS.json
-    |
-    v
-Step 3: For Each Executable Task:
-    |    a. Read the specific plan file (only when needed)
-    |    b. Execute ts-coding
-    |    c. Run tests (check-and-test-after-modify)
-    |    d. Review cycle (ts-review, max 3 iterations)
-    |    e. Update plan file status
-    |    f. Update PROGRESS.json
-    v
-Step 4: Report Results
-```
-
----
-
-## Cross-Plan Mode Workflow
+## Execution Steps
 
 ### Step 1: Read PROGRESS.json
 
-1. Read `.claude/skills/exec-impl-plan-ref/SKILL.md`
-2. Read `impl-plans/PROGRESS.json` (NOT individual plan files!)
+```bash
+Read impl-plans/PROGRESS.json
+```
 
+Structure:
 ```json
-// PROGRESS.json structure (~2K tokens total):
 {
-  "phases": { "1": {"status": "COMPLETED"}, "2": {"status": "READY"}, ... },
+  "lastUpdated": "2026-01-06T16:00:00Z",
+  "phases": {
+    "1": { "status": "COMPLETED" },
+    "2": { "status": "READY" },
+    "3": { "status": "BLOCKED" }
+  },
   "plans": {
     "session-groups-types": {
       "phase": 2,
       "status": "Ready",
       "tasks": {
         "TASK-001": { "status": "Not Started", "parallelizable": true, "deps": [] },
-        "TASK-002": { "status": "Not Started", "parallelizable": true, "deps": [] }
+        "TASK-002": { "status": "Completed", "parallelizable": true, "deps": [] }
       }
-    },
-    ...
+    }
   }
 }
 ```
 
 ### Step 2: Identify Executable Tasks
 
-From PROGRESS.json, find tasks where:
+A task is executable when:
 1. **Phase is READY** (not BLOCKED or COMPLETED)
 2. **Task status = "Not Started"**
 3. **All dependencies are "Completed"**
@@ -135,185 +98,138 @@ for plan_name, plan in progress["plans"].items():
             executable_tasks.append((plan_name, task_id))
 ```
 
-### Step 3: Execute Tasks
+### Step 3: Read Plan Files for Task Details
 
-For each executable task:
+For each executable task, read the plan file and extract:
+- Description (Purpose)
+- Deliverables (Implementation Target)
+- Completion Criteria
 
-1. **Read the specific plan file** (only now, not before)
-   ```
-   impl-plans/active/{plan_name}.md
-   ```
+### Step 4: Return Structured Output
 
-2. **Extract task details** from the plan file:
-   - Deliverables
-   - Completion Criteria
-   - Description
-
-3. **Invoke ts-coding agent** (can use `run_in_background: true` for parallel execution)
-
-4. **Run check-and-test-after-modify**
-
-5. **Run review cycle** (ts-review, up to 3 iterations)
-
-6. **Update plan file** - Change task status to "Completed"
-
-7. **Update PROGRESS.json** - Change task status to "Completed"
-
-### Step 4: Update PROGRESS.json
-
-After each task completes, update `impl-plans/PROGRESS.json`:
-
-```json
-// Before:
-"TASK-001": { "status": "Not Started", "parallelizable": true, "deps": [] }
-
-// After:
-"TASK-001": { "status": "Completed", "parallelizable": true, "deps": [] }
-```
-
-Also update `lastUpdated` timestamp.
-
-### Step 5: Report Results
-
-Report:
-- Tasks executed
-- Review iterations per task
-- Newly unblocked tasks
-- Phase transitions if applicable
+Return the analysis in this exact format:
 
 ---
 
-## Single-Plan Mode Workflow
+## Required Output Format
 
-### Step 1: Read PROGRESS.json and Plan
-
-1. Read `.claude/skills/exec-impl-plan-ref/SKILL.md`
-2. Read `impl-plans/PROGRESS.json`
-3. Read the specified plan file
-
-### Step 2: Identify Executable Tasks
-
-Same logic as cross-plan mode, but filtered to the specific plan.
-
-### Step 3-5: Same as Cross-Plan Mode
-
-Execute tasks, update both plan file and PROGRESS.json, report results.
-
----
-
-## Review Cycle Algorithm (Per Task)
-
-```python
-MAX_REVIEW_ITERATIONS = 3
-
-for task in executable_tasks:
-    # Execute implementation
-    invoke_ts_coding(task)
-    run_check_and_test()
-
-    # Review cycle
-    iteration = 1
-    while iteration <= MAX_REVIEW_ITERATIONS:
-        review_result = invoke_ts_review(task, iteration)
-
-        if review_result.status == "APPROVED":
-            mark_task_completed(task)  # Update both plan and PROGRESS.json
-            break
-
-        if iteration >= MAX_REVIEW_ITERATIONS:
-            mark_task_completed_with_issues(task, review_result.issues)
-            break
-
-        # Fix and re-review
-        invoke_ts_coding_for_fixes(review_result.issues)
-        run_check_and_test()
-        iteration += 1
-```
-
----
-
-## Response Formats
-
-### Cross-Plan Success Response
-
-```
-## Cross-Plan Auto Execution Complete
-
-### Mode
-Cross-plan auto-select (using PROGRESS.json)
+```markdown
+## Executable Tasks Analysis
 
 ### Phase Status
 | Phase | Status |
 |-------|--------|
 | 1 | COMPLETED |
-| 2 | READY (current) |
+| 2 | READY |
 | 3 | BLOCKED |
-| 4 | BLOCKED |
 
-### Tasks Executed
+### Executable Tasks
 
-| Plan | Task | Review Iterations | Result |
-|------|------|-------------------|--------|
-| session-groups-types | TASK-001 | 1 (APPROVED) | Completed |
-| command-queue-types | TASK-001 | 2 (APPROVED) | Completed |
+Total: N tasks ready for execution
 
-### Execution Summary
-- Tasks executed: 2
-- Review cycles: 3 total iterations
-- PROGRESS.json updated: Yes
+#### Task 1: [plan-name]:TASK-XXX
+- **Plan File**: impl-plans/[plan-name].md
+- **Purpose**: [task description]
+- **Deliverables**:
+  - [file path 1]
+  - [file path 2]
+- **Completion Criteria**:
+  - [ ] [criterion 1]
+  - [ ] [criterion 2]
+- **Design Reference**: [design doc path if available]
 
-### Newly Unblocked Tasks
-- session-groups-types:TASK-007 (was waiting on TASK-001)
-- session-groups-runner:TASK-003 (was waiting on TASK-001, TASK-002)
+#### Task 2: [plan-name]:TASK-YYY
+...
 
-### Next Steps
-Run `/impl-exec-auto` again to execute newly unblocked tasks.
+### Blocked Tasks (for reference)
+- [plan-name]:TASK-ZZZ - waiting on TASK-XXX
+- ...
+
+### Recommended Execution Order
+1. [plan-name]:TASK-XXX (foundation task)
+2. [plan-name]:TASK-YYY (no dependencies)
+...
 ```
 
-### No Executable Tasks Response
+---
 
-```
+## No Executable Tasks Response
+
+If no tasks are executable:
+
+```markdown
 ## No Executable Tasks
 
-### Analysis (from PROGRESS.json)
-| Phase | Status | Executable Tasks |
-|-------|--------|------------------|
-| 1 | COMPLETED | - |
-| 2 | READY | 0 (all have unmet deps) |
-| 3 | BLOCKED | Waiting on Phase 2 |
-| 4 | BLOCKED | Waiting on Phase 3 |
+### Phase Status
+| Phase | Status |
+|-------|--------|
+| 1 | COMPLETED |
+| 2 | READY |
+| 3 | BLOCKED |
+
+### Analysis
+All tasks in READY phases have unmet dependencies or are already completed.
 
 ### Blocking Tasks
-The following tasks are blocking progress:
-- session-groups-types:TASK-001 (In Progress)
-- command-queue-core:TASK-003 (waiting on TASK-002)
+- [plan-name]:TASK-XXX (In Progress) - blocking TASK-YYY, TASK-ZZZ
+- [plan-name]:TASK-AAA - waiting on TASK-BBB
 
 ### Recommended Actions
 1. Wait for in-progress tasks to complete
-2. Use `/impl-exec-specific` to run specific tasks
+2. Use `/impl-exec-specific` to manually run specific tasks
+3. Check if any tasks are incorrectly marked
 ```
 
 ---
 
-## IMPORTANT: Always Update PROGRESS.json
+## Important Notes
 
-After ANY task status change:
-1. Edit the task status in `impl-plans/PROGRESS.json`
-2. Update the `lastUpdated` timestamp
-3. Edit the task status in the plan file
+1. **Analysis Only**: This agent does NOT spawn subagents or update files
+2. **Main Orchestrates**: Main conversation uses impl-exec-specific to execute tasks (NOT direct ts-coding spawning)
+3. **PROGRESS.json**: Main conversation updates PROGRESS.json after task completion
+4. **Context Efficient**: Only reads necessary plan files, not all plans
 
-This keeps PROGRESS.json in sync and enables fast cross-plan analysis.
+## Orchestration Protocol: Main Conversation Actions
 
----
+After receiving this agent's output, the **main conversation MUST use impl-exec-specific** to execute tasks.
 
-## Reference
+**DO NOT spawn ts-coding agents directly from the main conversation.**
 
-For common patterns, see `.claude/skills/exec-impl-plan-ref/SKILL.md`:
-- Task Invocation Format
-- Parallel Execution Pattern
-- Result Collection Pattern
-- Dependency Resolution
-- Progress Tracking Format
-- Review Cycle Guidelines
-- Common Response Formats
-- Important Guidelines
+### Main Conversation Workflow
+
+```
+1. Receive executable tasks list from impl-exec-auto
+2. For each plan with executable tasks:
+   a. Invoke impl-exec-specific with task IDs
+      Example: /impl-exec-specific session-groups-runner TASK-008
+   b. impl-exec-specific handles:
+      - ts-coding spawning
+      - check-and-test-after-modify
+      - ts-review cycle (up to 3 iterations)
+      - Plan file status updates
+3. After impl-exec-specific completes:
+   a. Update PROGRESS.json status
+   b. Report completion and newly unblocked tasks
+4. Repeat for remaining executable tasks
+```
+
+### Why impl-exec-specific?
+
+| Approach | Problem |
+|----------|---------|
+| Main spawns ts-coding directly | Main lacks review cycle logic, plan update format |
+| impl-exec-auto spawns ts-coding | Claude Code prohibits nested subagent spawning |
+| **Main invokes impl-exec-specific** | Correct - full implementation cycle handled |
+
+### Example Main Conversation Response
+
+```markdown
+The impl-exec-auto analysis found 9 executable tasks.
+
+Executing via impl-exec-specific:
+
+1. /impl-exec-specific session-groups-runner TASK-008
+2. /impl-exec-specific command-queue-core TASK-005 TASK-006
+3. /impl-exec-specific markdown-parser-core TASK-004
+...
+```
