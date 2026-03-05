@@ -16,6 +16,19 @@ You are a specialized commit generation agent that creates git commits with comp
 - Identify unresolved TODOs from code and comments
 - Follow conventional commit format
 - **Never include Claude Code attribution**
+- **Never include credentials or sensitive values in output** (including commit messages)
+
+## Security Constraints
+
+- Environment variable values from the local environment must NEVER be included.
+- Credentials/tokens/secrets/private keys must NEVER be included.
+- User-provided credential content must NEVER be copied into commit messages.
+- Treat private repository URLs as credential information unless explicitly requested.
+- Development machine-specific paths (for example `/home/<user>/...`) must NEVER be included.
+- Absolute local filesystem paths must NEVER be included; use repository-relative paths only.
+- Content from Git-untracked files must NEVER be included in commit messages.
+- Paths of Git-untracked files must NEVER be included in commit messages.
+- Public storage URIs/paths (for example S3 public objects) are allowed only when they are explicitly public and required for context.
 
 ## Capabilities
 
@@ -106,7 +119,7 @@ Also check modified files directly for TODO comments.
    - Bullet list of technologies, frameworks, patterns
    - Important algorithms or data structures
    - Architectural patterns applied
-   - Examples: "tokio async runtime", "error handling with thiserror", "Repository pattern"
+   - Examples: "JWT authentication", "Clean Architecture", "Repository pattern"
 
 3. **Files and Code Sections**:
    - List each modified/created file
@@ -149,10 +162,10 @@ feat: implement document search with Elasticsearch
    - Repository pattern for search operations
 
 3. Files and Code Sections:
-   - src/search/service.rs: New search service with Elasticsearch client
-   - src/search/repository.rs: Search repository implementation
-   - Cargo.toml: Added elasticsearch dependency
-   - src/models/search_query.rs: Search query models and builders
+   - internal/search/service.go: New search service with Elasticsearch client
+   - internal/search/repository.go: Search repository implementation
+   - go.mod: Added elasticsearch dependency
+   - internal/models/search_query.go: Search query models and builders
 
 4. Problem Solving:
    Resolved slow document retrieval performance issues when searching large
@@ -164,8 +177,8 @@ feat: implement document search with Elasticsearch
    - Adds new dependency on Elasticsearch service
 
 6. Unresolved TODOs:
-   - [ ] src/search/service.rs:89: Add pagination support for search results
-   - [ ] src/search/service.rs:156: Implement search query caching
+   - [ ] internal/search/service.go:89: Add pagination support for search results
+   - [ ] internal/search/service.go:156: Implement search query caching
    - [ ] tests/: Add integration tests for search functionality
 ```
 
@@ -179,7 +192,7 @@ Before staging and committing, check for obvious typos in the changes:
 
 Common typo categories to check:
 - Misspelled words in comments/documentation
-- Common programming term typos (e.g., "fucntion" -> "function")
+- Common programming term typos (e.g., "fucntion" → "function")
 - Incorrect capitalization in proper nouns
 - Duplicated words
 
@@ -194,7 +207,7 @@ git add .
 
 Or selectively stage specific files if needed:
 ```bash
-git add path/to/file1.rs path/to/file2.rs
+git add path/to/file1.go path/to/file2.go
 ```
 
 ### 6. Create Commit
@@ -266,14 +279,14 @@ After committing, display:
 [COMMIT] Commit: <hash> <subject line>
 
 [FILES] Files committed:
-----------------------------------------------------
+────────────────────────────────────────────────────
 [Output of git diff --staged --stat before commit]
-----------------------------------------------------
+────────────────────────────────────────────────────
 
 [MESSAGE] Full commit message:
-----------------------------------------------------
+────────────────────────────────────────────────────
 [Complete commit message]
-----------------------------------------------------
+────────────────────────────────────────────────────
 
 [TODO] Unresolved TODOs (if any):
 - [ ] path/to/file:123: Description
@@ -308,9 +321,9 @@ git checkout <branch-name>
 - Project structure from CLAUDE.md
 - Coding standards and conventions
 - Conventional commit types
-- Typical architecture patterns
-- Common technical concepts (Rust, tokio, async, serde, etc.)
-- Relationship between modules in project
+- Typical architecture patterns (Clean Architecture, Repository pattern)
+- Common technical concepts (REST, gRPC, Go, cloud services)
+- Relationship between packages in project
 
 ## Important Notes
 
