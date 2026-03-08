@@ -20,7 +20,7 @@
     "GO_VERSION": {
       "type": "string",
       "description": "Variable GO_VERSION",
-      "default": "1.25.4"
+      "default": "1.26.1"
     },
     "HOMEPAGE": {
       "type": "string",
@@ -50,5 +50,5 @@
     ],
     "include_dotfiles": true
   },
-  "hash": "3433839efefcbad7378029f7b7137453d54f02d1932e9d183c139b813b07ccf8"
+  "hash": "b2e3f0a07f924f83778980e7671e28481d70726b32d54501e907deb634802787"
 }
