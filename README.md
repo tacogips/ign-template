@@ -49,6 +49,8 @@ nix develop
 direnv allow
 ```
 
+Private environment variables should be managed in `tacogips/kinko` and loaded through `kinko direnv export`; `.envrc.private` is no longer part of the workflow.
+
 ## Issue Reporting
 
 **ign is not yet stable and may have unexpected behavior.** If you encounter any issues:

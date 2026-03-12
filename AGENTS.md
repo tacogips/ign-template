@@ -462,6 +462,7 @@ Example format:
 ## Notes
 - This project uses Nix flakes for reproducible development environments
 - Use direnv for automatic environment activation
+- Private environment variables should be managed in `tacogips/kinko` and loaded via `kinko direnv export`; `.envrc.private` is not sourced by default
 - All development dependencies are managed through flake.nix
 
 ## Claude Code Plugin Specification
