@@ -1,6 +1,6 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to the coding agent when working with code in this repository.
 
 ## Rule of the Responses
 
@@ -8,7 +8,7 @@ You (the LLM model) must always begin your first response in a conversation with
 
 You (the LLM model) must always think and provide output in English, regardless of the language used in the user's input. Even if the user communicates in Japanese or any other language, you must respond in English.
 
-You (the LLM model) must acknowledge that you have read CLAUDE.md and will comply with its contents in your first response.
+You (the LLM model) must acknowledge that you have read AGENTS.md and will comply with its contents in your first response.
 
 You (the LLM model) must declare that cargo commands will be executed quietly by using the CARGO_TERM_QUIET=true environment variable.
 
@@ -32,10 +32,10 @@ When starting a new session, you (the LLM model) should be ready to assist the u
 
 When a user asks to commit changes, automatically proceed with staging and committing the changes without requiring user confirmation.
 
-**IMPORTANT**: Do NOT add any Claude Code attribution or co-authorship information to commit messages. All commits should appear to be made solely by the user. Specifically:
+**IMPORTANT**: Do NOT add any tool attribution or co-authorship information to commit messages. All commits should appear to be made solely by the user. Specifically:
 
-- Do NOT include `Generated with [Claude Code](https://claude.ai/code)`
-- Do NOT include `Co-Authored-By: Claude <noreply@anthropic.com>`
+- Do NOT include `Generated with an AI tool`
+- Do NOT include `Co-Authored-By: AI Assistant <noreply@example.com>`
 - The commit should appear as if the user made it directly
 
 **Automatic Commit Process**: When the user requests a commit, automatically:
@@ -168,10 +168,10 @@ This is @ign-var:PROJECT_NAME@ - a Rust project with Nix flake development envir
 
 **IMPORTANT**: When writing Rust code, you (the LLM model) MUST use the specialized agents:
 
-1. **rust-coding agent** (`.claude/agents/rust-coding.md`): For writing, refactoring, and implementing Rust code
-2. **check-and-test-after-modify agent** (`.claude/agents/check-and-test-after-modify.md`): MUST be invoked automatically after ANY Rust file modifications
+1. **rust-coding agent** (`.agents/agents/rust-coding.md`): For writing, refactoring, and implementing Rust code
+2. **check-and-test-after-modify agent** (`.agents/agents/check-and-test-after-modify.md`): MUST be invoked automatically after ANY Rust file modifications
 
-**Coding Standards**: Refer to `.claude/skills/rust-coding-standards/` for Rust coding conventions, project layout, error handling, type safety, and async patterns.
+**Coding Standards**: Refer to `.agents/skills/rust-coding-standards/` for Rust coding conventions, project layout, error handling, type safety, and async patterns.
 
 **Cargo Output Configuration**: When running cargo commands, use `CARGO_TERM_QUIET=true` to reduce noise. For nextest, use `NEXTEST_STATUS_LEVEL=fail NEXTEST_FAILURE_OUTPUT=immediate-final NEXTEST_HIDE_PROGRESS_BAR=1`.
 
@@ -179,7 +179,7 @@ This is @ign-var:PROJECT_NAME@ - a Rust project with Nix flake development envir
 
 **IMPORTANT**: When creating design documents, you (the LLM model) MUST follow the design-doc skill.
 
-**Skill Reference**: Refer to `.claude/skills/design-doc/SKILL.md` for design document guidelines, templates, and naming conventions.
+**Skill Reference**: Refer to `.agents/skills/design-doc/SKILL.md` for design document guidelines, templates, and naming conventions.
 
 **Output Location**: All design documents MUST be saved to `design-docs/` directory (NOT `docs/`).
 
@@ -206,7 +206,7 @@ Use the `/impl-plan` command or `impl-plan` agent to create implementation plans
 /impl-plan design-docs/specs/architecture.md#feature-name
 ```
 
-**Skill Reference**: Refer to `.claude/skills/impl-plan/SKILL.md` for implementation plan guidelines.
+**Skill Reference**: Refer to `.agents/skills/impl-plan/SKILL.md` for implementation plan guidelines.
 
 **Output Location**: All implementation plans MUST be saved to `impl-plans/` directory.
 
