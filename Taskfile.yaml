@@ -9,6 +9,11 @@ tasks:
     cmds:
       - task --list
 
+  update:
+    desc: Update all ign templates
+    cmds:
+      - task: template-update-all
+
   template-list:
     desc: List all available ign templates
     cmds:

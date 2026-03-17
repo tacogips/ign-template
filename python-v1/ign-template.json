@@ -1,0 +1,76 @@
+{
+  "name": "python-v1",
+  "version": "1.0.0",
+  "description": "Modern Python project template with uv and src layout",
+  "author": "tacogips",
+  "repository": "https://github.com/tacogips/ign-template",
+  "license": "MIT",
+  "tags": [
+    "python",
+    "uv",
+    "nix",
+    "task",
+    "ruff",
+    "pytest"
+  ],
+  "variables": {
+    "AUTHOR_EMAIL": {
+      "type": "string",
+      "description": "Variable AUTHOR_EMAIL",
+      "default": ""
+    },
+    "AUTHOR_NAME": {
+      "type": "string",
+      "description": "Variable AUTHOR_NAME",
+      "default": ""
+    },
+    "DESCRIPTION": {
+      "type": "string",
+      "description": "Variable DESCRIPTION",
+      "default": "A Python project"
+    },
+    "HAS_AUTHOR": {
+      "type": "bool",
+      "description": "Variable HAS_AUTHOR",
+      "required": true
+    },
+    "HOMEPAGE": {
+      "type": "string",
+      "description": "Variable HOMEPAGE",
+      "default": "https://github.com/user/repo"
+    },
+    "PACKAGE_NAME": {
+      "type": "string",
+      "description": "Variable PACKAGE_NAME",
+      "required": true
+    },
+    "PROJECT_NAME": {
+      "type": "string",
+      "description": "Variable PROJECT_NAME",
+      "required": true
+    },
+    "REPOSITORY": {
+      "type": "string",
+      "description": "Variable REPOSITORY",
+      "default": "https://github.com/user/repo"
+    },
+    "VERSION": {
+      "type": "string",
+      "description": "Variable VERSION",
+      "default": "0.1.0"
+    }
+  },
+  "settings": {
+    "ignore_patterns": [
+      ".git",
+      ".DS_Store",
+      ".venv",
+      "dist",
+      "__pycache__",
+      ".pytest_cache",
+      ".ruff_cache"
+    ],
+    "include_dotfiles": true
+  },
+  "hash": "be04c89a18146d693a195fb34f80afa110471cbc5c8147fb37ab3dac0a816d6c"
+}

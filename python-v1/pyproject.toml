@@ -1,0 +1,50 @@
+[build-system]
+requires = ["hatchling>=1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "@ign-var:PROJECT_NAME@"
+version = "@ign-var:VERSION=0.1.0@"
+description = "@ign-var:DESCRIPTION=A Python project@"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+dependencies = []
+@ign-if:HAS_AUTHOR@
+authors = [
+  { name = "@ign-var:AUTHOR_NAME=@", email = "@ign-var:AUTHOR_EMAIL=@" }
+]
+@ign-endif@
+
+[project.urls]
+Homepage = "@ign-var:HOMEPAGE=https://github.com/user/repo@"
+Repository = "@ign-var:REPOSITORY=https://github.com/user/repo@"
+
+[project.scripts]
+"@ign-var:PROJECT_NAME@" = "@ign-var:PACKAGE_NAME@.cli:main"
+
+[dependency-groups]
+dev = [
+  "pytest>=8.3.5",
+  "pytest-cov>=6.0.0",
+  "ruff>=0.11.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/@ign-var:PACKAGE_NAME@"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
