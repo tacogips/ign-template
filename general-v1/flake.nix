@@ -1,6 +1,6 @@
 {
 
-  description = "@ign-var:DESCRIPTION=A Python project@";
+  description = "@ign-var:DESCRIPTION=A general investigation workspace@";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/release-25.11";
@@ -17,24 +17,20 @@
       system:
       let
         pkgs = import nixpkgs { inherit system; };
-        python = pkgs.python312;
       in
       {
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
-            python
-            uv
+            agent-browser
+            playwright-cli
             go-task
-            gh
-            fd
-            gnused
           ];
 
           shellHook = ''
-            echo "Python development environment ready"
-            echo "Python version: $(python --version)"
-            echo "uv version: $(uv --version)"
-            echo "Task version: $(task --version 2>/dev/null || echo 'not available')"
+            echo "General investigation environment ready"
+            echo "agent-browser: $(command -v agent-browser || echo 'not available')"
+            echo "Playwright: $(playwright --version 2>/dev/null || echo 'not available')"
+            echo "Task: $(task --version 2>/dev/null || echo 'not available')"
           '';
         };
       }
