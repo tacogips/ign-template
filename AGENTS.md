@@ -1,4 +1,4 @@
-# CLAUDE.md
+# AGENTS.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
@@ -8,7 +8,7 @@ You (the LLM model) must always begin your first response in a conversation with
 
 You (the LLM model) must always think and provide output in English, regardless of the language used in the user's input. Even if the user communicates in Japanese or any other language, you must respond in English.
 
-You (the LLM model) must acknowledge that you have read CLAUDE.md and will comply with its contents in your first response.
+You (the LLM model) must acknowledge that you have read AGENTS.md and will comply with its contents in your first response.
 
 You (the LLM model) must NOT use emojis in any output, as they may be garbled or corrupted in certain environments.
 
@@ -326,7 +326,7 @@ This helps improve ign for everyone and ensures issues are tracked and resolved 
 - Avoid over-engineering - implement only what's requested
 
 ## Go Code Development
-**IMPORTANT**: When writing Go code, you (the LLM model) MUST use the specialized go-coding sub agent located at `.claude/agents/go-coding.md`.
+**IMPORTANT**: When writing Go code, you (the LLM model) MUST use the specialized go-coding sub agent located at `.agents/agents/go-coding.md`.
 
 Use the Task tool with the go-coding agent for:
 - Writing new Go code
@@ -481,15 +481,15 @@ This section documents the Claude Code plugin system based on official documenta
 | Concept | Description |
 |---------|-------------|
 | **Plugin** | A single extension unit containing commands, agents, skills, hooks, MCP/LSP servers |
-| **Marketplace** | A DIRECTORY containing `.claude-plugin/marketplace.json` that registers multiple plugins |
+| **Marketplace** | A DIRECTORY containing `.agents-plugin/marketplace.json` that registers multiple plugins |
 
 ### Plugin Directory Structure
 
 ```
 my-plugin/                      # Plugin root
-├── .claude-plugin/
+├── .agents-plugin/
 │   └── plugin.json             # Plugin manifest (REQUIRED, ONLY this file here)
-├── commands/                   # Slash commands (at plugin root, NOT in .claude-plugin/)
+├── commands/                   # Slash commands (at plugin root, NOT in .agents-plugin/)
 ├── agents/                     # Custom agents
 ├── skills/                     # Agent Skills
 ├── hooks/                      # Event handlers
@@ -497,7 +497,7 @@ my-plugin/                      # Plugin root
 └── .lsp.json                   # LSP server configurations
 ```
 
-**Important**: Only `plugin.json` goes inside `.claude-plugin/`. All other directories (commands/, agents/, skills/, hooks/) must be at the plugin root level.
+**Important**: Only `plugin.json` goes inside `.agents-plugin/`. All other directories (commands/, agents/, skills/, hooks/) must be at the plugin root level.
 
 ### plugin.json (Plugin Manifest)
 
@@ -514,20 +514,20 @@ my-plugin/                      # Plugin root
 
 ### Marketplace Structure
 
-A marketplace is a **DIRECTORY** that contains `.claude-plugin/marketplace.json`:
+A marketplace is a **DIRECTORY** that contains `.agents-plugin/marketplace.json`:
 
 ```
 marketplace-dir/                # Marketplace directory
-├── .claude-plugin/
+├── .agents-plugin/
 │   └── marketplace.json        # Marketplace definition (REQUIRED location)
 └── plugins/                    # Plugins directory
     └── my-plugin/
-        ├── .claude-plugin/
+        ├── .agents-plugin/
         │   └── plugin.json
         └── .lsp.json
 ```
 
-**marketplace.json (inside .claude-plugin/):**
+**marketplace.json (inside .agents-plugin/):**
 ```json
 {
   "name": "marketplace-name",
@@ -546,22 +546,22 @@ marketplace-dir/                # Marketplace directory
 }
 ```
 
-**Important**: The `source` field is relative to the marketplace directory (where `.claude-plugin/marketplace.json` exists), NOT relative to the repository root.
+**Important**: The `source` field is relative to the marketplace directory (where `.agents-plugin/marketplace.json` exists), NOT relative to the repository root.
 
 ### Project-Scoped Plugin Configuration (Recommended)
 
-For a project with an embedded local marketplace at `.claude/marketplace/`:
+For a project with an embedded local marketplace at `.agents/marketplace/`:
 
 ```
 project/
-├── .claude/
+├── .agents/
 │   ├── settings.json             # Only hooks + enabledPlugins
 │   ├── marketplace/              # Local marketplace DIRECTORY
-│   │   ├── .claude-plugin/
+│   │   ├── .agents-plugin/
 │   │   │   └── marketplace.json  # Marketplace definition
 │   │   └── plugins/
 │   │       └── lsp/
-│   │           ├── .claude-plugin/
+│   │           ├── .agents-plugin/
 │   │           │   └── plugin.json
 │   │           └── .lsp.json
 │   ├── agents/
@@ -570,7 +570,7 @@ project/
 └── ...
 ```
 
-**.claude/marketplace/.claude-plugin/marketplace.json:**
+**.agents/marketplace/.agents-plugin/marketplace.json:**
 ```json
 {
   "name": "local",
@@ -586,14 +586,14 @@ project/
 }
 ```
 
-**.claude/settings.json:**
+**.agents/settings.json:**
 ```json
 {
   "extraKnownMarketplaces": {
     "local": {
       "source": {
         "source": "directory",
-        "path": ".claude/marketplace"
+        "path": ".agents/marketplace"
       }
     }
   },
@@ -620,15 +620,15 @@ project/
 
 ### Plugin Loading Methods
 
-1. **Via .claude/marketplace/ directory (Project Scope, Recommended)**: Place marketplace at `.claude/marketplace/` with `.claude-plugin/marketplace.json` inside
+1. **Via .agents/marketplace/ directory (Project Scope, Recommended)**: Place marketplace at `.agents/marketplace/` with `.agents-plugin/marketplace.json` inside
 2. **Via CLI flag (Development/Testing)**: `claude --plugin-dir ./path/to/plugin`
-3. **Via /plugin command (Interactive)**: `/plugin marketplace add .claude/marketplace` then `/plugin install plugin@marketplace`
+3. **Via /plugin command (Interactive)**: `/plugin marketplace add .agents/marketplace` then `/plugin install plugin@marketplace`
 
 ### Marketplace Source Types
 
 | Type | Example |
 |------|---------|
-| `directory` | `{"source": "directory", "path": ".claude/marketplace"}` (for local project) |
+| `directory` | `{"source": "directory", "path": ".agents/marketplace"}` (for local project) |
 | `github` | `{"source": "github", "repo": "owner/repo"}` |
 | `git` | `{"source": "git", "url": "https://example.com/repo.git"}` |
 | `url` | `{"source": "url", "url": "https://example.com/marketplace.json"}` |
@@ -636,9 +636,9 @@ project/
 
 ### Key Points
 
-- A marketplace is a DIRECTORY containing `.claude-plugin/marketplace.json`, not a standalone JSON file
+- A marketplace is a DIRECTORY containing `.agents-plugin/marketplace.json`, not a standalone JSON file
 - Use `extraKnownMarketplaces` in settings.json with `source: "directory"` for project-scoped marketplaces
 - Plugin `source` paths in marketplace.json are relative to the marketplace directory
 - `enabledPlugins` format is always `"plugin-name@marketplace-name": true`
 - When team members clone the repo, they are prompted to install the marketplace
-- Plugin components (commands/, agents/, etc.) must be at plugin root, not inside `.claude-plugin/`
+- Plugin components (commands/, agents/, etc.) must be at plugin root, not inside `.agents-plugin/`
