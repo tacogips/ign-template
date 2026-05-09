@@ -34,6 +34,7 @@ This is @ign-var:PROJECT_NAME@, a modern Python project managed with `uv`.
 
 ```text
 .
+├── .agents/          # Codex repo-scoped skills
 ├── flake.nix          # Nix flake configuration for Python development
 ├── pyproject.toml     # Project metadata and tool configuration
 ├── .envrc             # direnv configuration
@@ -52,6 +53,32 @@ This is @ign-var:PROJECT_NAME@, a modern Python project managed with `uv`.
 - Format with `uv run ruff format .`
 - Build distributions with `uv build`
 
+## Python Code Development
+
+When writing, reviewing, or refactoring Python code, follow `.agents/skills/python-coding-standards/SKILL.md`.
+
+Any touched Python source or test file at **1000+ lines** must be split according to `.agents/skills/python-coding-standards/SKILL.md` unless the user explicitly excludes that work.
+
+## Design Documentation
+
+When creating or updating design or investigation documents, follow `.agents/skills/design-doc/SKILL.md`.
+
+All design and research artifacts must be stored under `design-docs/`.
+
+## Planning
+
+When turning a design document or research question into a concrete execution plan, follow `.agents/skills/impl-plan/SKILL.md`.
+
+Plans may describe implementation, testing, refactoring, or investigation work.
+
+## Skills
+
+Use these specialized skills when relevant:
+
+1. `.agents/skills/python-coding-standards/SKILL.md`
+2. `.agents/skills/design-doc/SKILL.md`
+3. `.agents/skills/impl-plan/SKILL.md`
+
 ## Coding Standards
 
 - Follow standard Python conventions and idioms
@@ -59,3 +86,4 @@ This is @ign-var:PROJECT_NAME@, a modern Python project managed with `uv`.
 - Keep package code under `src/`
 - Add tests for behavior changes
 - Use `ruff format` and `ruff check` before finishing changes
+- Use `ty check` for static type checking before finishing Python changes

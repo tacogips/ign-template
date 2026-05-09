@@ -29,13 +29,13 @@
     },
     "MODULE_PATH": {
       "type": "string",
-      "description": "Variable MODULE_PATH",
-      "required": true
+      "description": "Defaults to the output directory name; override with a full import path when needed",
+      "default": "{current_dir}"
     },
     "PROJECT_NAME": {
       "type": "string",
-      "description": "Variable PROJECT_NAME",
-      "required": true
+      "description": "Defaults to the output directory name",
+      "default": "{current_dir}"
     },
     "VERSION": {
       "type": "string",
@@ -50,5 +50,5 @@
     ],
     "include_dotfiles": true
   },
-  "hash": "c8bc13d233d7949e72d6ce488606b8a575758c9d2dfcc01ac5f8c930266b0865"
+  "hash": "d7566f0e7b77745b3aea4595d5c5e6c77f0da7e994e300197932a342febb2b55"
 }

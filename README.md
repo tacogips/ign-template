@@ -23,6 +23,7 @@ ign checkout github.com/tacogips/ign-template/go-v1 ./my-project
 | Template | Description |
 |----------|-------------|
 | `go-v1` | Go project with Nix flake, Claude Code configuration |
+| `general-v1` | General investigation workspace with browser tooling and reusable agent skills |
 | `python-v1` | Modern Python project with uv, src layout, Ruff, and pytest |
 
 ## Using Templates
@@ -30,14 +31,17 @@ ign checkout github.com/tacogips/ign-template/go-v1 ./my-project
 ```bash
 # From GitHub
 ign checkout github.com/tacogips/ign-template/go-v1
+ign checkout github.com/tacogips/ign-template/general-v1
 ign checkout github.com/tacogips/ign-template/python-v1
 
 # With output directory
 ign checkout github.com/tacogips/ign-template/go-v1 ./my-project
+ign checkout github.com/tacogips/ign-template/general-v1 ./my-investigation
 ign checkout github.com/tacogips/ign-template/python-v1 ./my-python-project
 
 # Preview without writing files
 ign checkout github.com/tacogips/ign-template/go-v1 --dry-run
+ign checkout github.com/tacogips/ign-template/general-v1 --dry-run
 ign checkout github.com/tacogips/ign-template/python-v1 --dry-run
 ```
 

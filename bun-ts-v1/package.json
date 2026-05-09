@@ -21,9 +21,10 @@
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
     "typecheck": "tsc --noEmit",
-    "lint": "bun run typecheck",
-    "format": "prettier --write \"src/**/*.ts\"",
-    "format:check": "prettier --check \"src/**/*.ts\"",
+    "lint:biome": "biome check . --diagnostic-level=warn",
+    "lint": "biome check . --diagnostic-level=warn && bun run typecheck",
+    "format": "prettier --ignore-unknown --write \"src/**/*.{ts,tsx}\" \"*.{md,json}\"",
+    "format:check": "prettier --ignore-unknown --check \"src/**/*.{ts,tsx}\" \"*.{md,json}\"",
     "clean": "rm -rf dist"
   },
   "homepage": "@ign-var:HOMEPAGE=https://github.com/user/repo@",

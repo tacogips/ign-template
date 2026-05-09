@@ -22,6 +22,7 @@ task sync
 task run
 task test
 task lint
+task typecheck
 task fmt
 task build
 ```

@@ -10,7 +10,7 @@
 # Cargo.lock
 
 ## nix/git
-.pre-commit-config.yaml
+/.pre-commit-config.yaml
 **/.direnv
 **/.env
 **/.envrc.private*

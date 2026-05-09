@@ -3,7 +3,7 @@ requires = ["hatchling>=1.27.0"]
 build-backend = "hatchling.build"
 
 [project]
-name = "@ign-var:PROJECT_NAME@"
+name = "@ign-var:PROJECT_NAME={current_dir}@"
 version = "@ign-var:VERSION=0.1.0@"
 description = "@ign-var:DESCRIPTION=A Python project@"
 readme = "README.md"
@@ -28,6 +28,7 @@ dev = [
   "pytest>=8.3.5",
   "pytest-cov>=6.0.0",
   "ruff>=0.11.0",
+  "ty>=0.0.1a32",
 ]
 
 [tool.hatch.build.targets.wheel]

@@ -1,0 +1,11 @@
+{
+  "extraKnownMarketplaces": {
+    "local": {
+      "source": {
+        "source": "directory",
+        "path": ".agents/marketplace"
+      }
+    }
+  },
+  "enabledPlugins": {}
+}

@@ -41,13 +41,13 @@
     },
     "PACKAGE_NAME": {
       "type": "string",
-      "description": "Variable PACKAGE_NAME",
-      "required": true
+      "description": "Defaults to the output directory name; override if it is not a valid Python package identifier",
+      "default": "{current_dir}"
     },
     "PROJECT_NAME": {
       "type": "string",
-      "description": "Variable PROJECT_NAME",
-      "required": true
+      "description": "Defaults to the output directory name",
+      "default": "{current_dir}"
     },
     "REPOSITORY": {
       "type": "string",
@@ -72,5 +72,5 @@
     ],
     "include_dotfiles": true
   },
-  "hash": "be04c89a18146d693a195fb34f80afa110471cbc5c8147fb37ab3dac0a816d6c"
+  "hash": "a2f75dbdd8859c5cb731015603ad9067c52f2d020ff2ef0f2a842b5eefd1bea2"
 }

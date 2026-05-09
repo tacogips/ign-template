@@ -1,0 +1,35 @@
+{
+  "name": "general-v1",
+  "version": "1.0.0",
+  "description": "General investigation template with Nix flake and reusable agent skills",
+  "author": "tacogips",
+  "repository": "https://github.com/tacogips/ign-template",
+  "license": "MIT",
+  "tags": [
+    "general",
+    "research",
+    "investigation",
+    "nix",
+    "task"
+  ],
+  "variables": {
+    "DESCRIPTION": {
+      "type": "string",
+      "description": "Variable DESCRIPTION",
+      "default": "A general investigation workspace"
+    },
+    "PROJECT_NAME": {
+      "type": "string",
+      "description": "Defaults to the output directory name",
+      "default": "{current_dir}"
+    }
+  },
+  "settings": {
+    "ignore_patterns": [
+      ".git",
+      ".DS_Store"
+    ],
+    "include_dotfiles": true
+  },
+  "hash": "b4fe60c4f9682b688fd72f4c4440ccf54e8ea2183e26dcf112a6d567a804a893"
+}

@@ -173,6 +173,8 @@ This is @ign-var:PROJECT_NAME@ - a Rust project with Nix flake development envir
 
 **Coding Standards**: Refer to `.agents/skills/rust-coding-standards/` for Rust coding conventions, project layout, error handling, type safety, and async patterns.
 
+**Coding Policy**: Any touched Rust source file at **1000+ lines** must be split according to `.agents/skills/rust-coding-standards/SKILL.md` unless the user explicitly excludes that work.
+
 **Cargo Output Configuration**: When running cargo commands, use `CARGO_TERM_QUIET=true` to reduce noise. For nextest, use `NEXTEST_STATUS_LEVEL=fail NEXTEST_FAILURE_OUTPUT=immediate-final NEXTEST_HIDE_PROGRESS_BAR=1`.
 
 ## Design Documentation

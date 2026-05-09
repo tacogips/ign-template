@@ -1,0 +1,3 @@
+interface:
+  display_name: "codex-skill-creator"
+  short_description: "Use when creating or updating Codex-compatible skills. Provides structure, metadata, progressive disclosure rules, and guidance for scripts, references, and assets."

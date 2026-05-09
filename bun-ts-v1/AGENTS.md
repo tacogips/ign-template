@@ -168,7 +168,11 @@ This is @ign-var:PROJECT_NAME@ - a TypeScript project with Bun runtime and Nix f
 1. **ts-coding agent** (`.agents/agents/ts-coding.md`): For writing, refactoring, and implementing TypeScript code
 2. **check-and-test-after-modify agent** (`.agents/agents/check-and-test-after-modify.md`): MUST be invoked automatically after ANY TypeScript file modifications
 
-**Coding Standards**: Refer to `.agents/skills/ts-coding-standards/` for TypeScript coding conventions, project layout, error handling, type safety, and async patterns.
+**Coding Standards**: Refer to `.agents/skills/ts-coding-standards/` for TypeScript coding conventions, project layout, error handling, type safety, async patterns, and Biome lint workflow.
+
+**Review Skill**: Use `.agents/skills/ts-review/SKILL.md` when reviewing TypeScript changes for standards compliance, Biome diagnostics, file size policy, and repository conventions.
+
+**Coding Policy**: Any touched TypeScript source file at **1000+ lines** must be split according to `.agents/skills/ts-coding-standards/SKILL.md` unless the user explicitly excludes that work.
 
 **TypeScript Configuration**: This project uses maximum TypeScript strictness. See `tsconfig.json` for the complete strict configuration.
 

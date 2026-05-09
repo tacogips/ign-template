@@ -39,8 +39,8 @@
     },
     "PROJECT_NAME": {
       "type": "string",
-      "description": "Variable PROJECT_NAME",
-      "required": true
+      "description": "Defaults to the output directory name",
+      "default": "{current_dir}"
     },
     "REPOSITORY": {
       "type": "string",
@@ -62,5 +62,5 @@
     ],
     "include_dotfiles": true
   },
-  "hash": "a917738117fcd2e9a095e5d604373e8bde0c3e978a8ae06db1c6f5a6c5dc3f4f"
+  "hash": "9ea6d3493693a44c7031d770346a06f8f64f7737ce232c5978a00801122db6ff"
 }

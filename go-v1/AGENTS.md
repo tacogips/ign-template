@@ -161,6 +161,8 @@ This is @ign-var:PROJECT_NAME@ - a Golang project with Nix flake development env
 
 **Coding Standards**: Refer to `.agents/skills/go-coding-standards/` for Go coding conventions, project layout, error handling, concurrency patterns, and interface design.
 
+**Coding Policy**: Any touched Go source file at **1000+ lines** must be split according to `.agents/skills/go-coding-standards/SKILL.md` unless the user explicitly excludes that work.
+
 ## Design Documentation
 
 **IMPORTANT**: When creating design documents, you (the LLM model) MUST follow the design-doc skill.

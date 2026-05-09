@@ -2,7 +2,7 @@
 version: '3'
 
 vars:
-  BINARY_NAME: @ign-var:PROJECT_NAME@
+  BINARY_NAME: @ign-var:PROJECT_NAME={current_dir}@
   CMD_PATH: ./cmd/@ign-var:PROJECT_NAME@
 
 tasks:
@@ -47,6 +47,16 @@ tasks:
     desc: Run go vet
     cmds:
       - go vet ./...
+
+  gitleaks:
+    desc: Scan staged changes for secrets before commit
+    cmds:
+      - gitleaks git --pre-commit --redact --staged --verbose
+
+  install-git-hooks:
+    desc: Install the Nix-managed pre-commit hook configuration
+    cmds:
+      - nix develop -c pre-commit install --install-hooks
 
   clean:
     desc: Clean build artifacts

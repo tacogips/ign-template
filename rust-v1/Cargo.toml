@@ -1,5 +1,5 @@
 [package]
-name = "@ign-var:PROJECT_NAME@"
+name = "@ign-var:PROJECT_NAME={current_dir}@"
 version = "@ign-var:VERSION=0.1.0@"
 edition = "@ign-var:EDITION=2021@"
 description = "@ign-var:DESCRIPTION@"

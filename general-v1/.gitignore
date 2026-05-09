@@ -1,0 +1,62 @@
+# This .gitignore file is expanded to the directory where `ign checkout` is executed.
+# It is NOT for the ign-template repository itself.
+
+# Native binaries and build outputs
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+/@ign-var:PROJECT_NAME@
+/bin/
+/dist/
+
+# Coverage and generated reports
+*.out
+
+# Dependencies
+/vendor/
+
+## nix/git
+/.pre-commit-config.yaml
+**/.direnv
+**/.env
+**/.envrc.private*
+**/*.private*
+
+## large files
+**/*.zip
+
+## ide's /meta infos
+**/.vscode
+**/.idea
+**/.~lock*
+**/.DS_Store
+
+## ts/js
+**/node_modules
+
+## zig
+**/zig-out
+**/.zig-cache
+
+## pythons
+**/.venv/
+**/venv/
+**/*.pkl
+**/*.pyc
+**/*.pyo
+**/*.ipynb
+**/__pycache__/
+**/.pytest_cache/
+**/.ipynb_checkpoints/
+**/.python-version
+**/.mypy_cache/
+**/notebook/
+**/.tox/
+**/.pytest_cache/
+
+## tmps
+result
+**/tmp

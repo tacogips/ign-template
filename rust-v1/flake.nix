@@ -14,6 +14,7 @@
       url = "github:ipetkov/crane/v0.17.3";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    git-hooks.url = "github:cachix/git-hooks.nix";
   };
 
   outputs =
@@ -24,6 +25,7 @@
       flake-utils,
       fenix,
       crane,
+      git-hooks,
     }:
     flake-utils.lib.eachDefaultSystem (
       system:
@@ -57,7 +59,20 @@
           nativeBuildInputs = with pkgs; [ pkg-config ];
         };
 
-        devPackages = with pkgs; [
+        preCommitCheck = git-hooks.lib.${system}.run {
+          src = ./.;
+          hooks = {
+            gitleaks = {
+              enable = true;
+              name = "gitleaks";
+              entry = "${pkgs.lib.getExe pkgs.gitleaks} git --pre-commit --redact --staged --verbose";
+              language = "system";
+              pass_filenames = false;
+            };
+          };
+        };
+
+        devPackages = (with pkgs; [
           fd
           gnused
           rust-components
@@ -69,12 +84,15 @@
           taplo
           gh
           go-task
-        ];
+          gitleaks
+        ]) ++ preCommitCheck.enabledPackages;
 
       in
       {
         checks = {
           inherit @ign-var:PROJECT_NAME@-crate;
+
+          pre-commit-check = preCommitCheck;
 
           clippy = craneLib.cargoClippy {
             pname = "@ign-var:PROJECT_NAME@-clippy";
@@ -110,10 +128,13 @@
           buildInputs = commonBuildInputs;
 
           shellHook = ''
+            ${preCommitCheck.shellHook}
+
             echo "Rust development environment ready"
             echo "Rust version: $(rustc --version)"
             echo "Cargo version: $(cargo --version)"
             echo "Task version: $(task --version 2>/dev/null || echo 'not available')"
+            echo "Gitleaks version: $(gitleaks version 2>/dev/null || echo 'not available')"
           '';
         };
       }

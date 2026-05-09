@@ -28,7 +28,7 @@ tasks:
         done
 
   template-update:
-    desc: "Update a specific template (usage: task template-update TEMPLATE=go-v1)"
+    desc: "Update a specific template (usage: task template-update TEMPLATE=<template-name>)"
     requires:
       vars: [TEMPLATE]
     cmds:
@@ -42,10 +42,19 @@ tasks:
         ign template update "$template_dir"
 
   template-update-all:
-    desc: Update all ign templates
+    desc: Update all ign templates discovered from */ign-template.json, including general-v1
     cmds:
       - |
         echo "Updating all templates..."
+        echo "Discovered templates:"
+        for json in {{.TEMPLATES_DIR}}/*/ign-template.json; do
+          if [ -f "$json" ]; then
+            dir=$(dirname "$json")
+            name=$(basename "$dir")
+            echo "  - $name"
+          fi
+        done
+        echo ""
         for json in {{.TEMPLATES_DIR}}/*/ign-template.json; do
           if [ -f "$json" ]; then
             dir=$(dirname "$json")
@@ -60,7 +69,7 @@ tasks:
         echo "All templates updated."
 
   template-check:
-    desc: "Check a specific template for syntax errors (usage: task template-check TEMPLATE=go-v1)"
+    desc: "Check a specific template for syntax errors (usage: task template-check TEMPLATE=<template-name>)"
     requires:
       vars: [TEMPLATE]
     cmds:

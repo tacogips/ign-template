@@ -1,7 +1,7 @@
 version: '3'
 
 vars:
-  PACKAGE_NAME: @ign-var:PACKAGE_NAME@
+  PACKAGE_NAME: @ign-var:PACKAGE_NAME={current_dir}@
 
 tasks:
   default:
@@ -44,6 +44,11 @@ tasks:
     cmds:
       - uv run ruff check .
 
+  typecheck:
+    desc: Run ty type checks
+    cmds:
+      - uv run ty check .
+
   fmt:
     desc: Format code with Ruff
     cmds:
@@ -59,6 +64,16 @@ tasks:
     cmds:
       - uv build
 
+  gitleaks:
+    desc: Scan staged changes for secrets before commit
+    cmds:
+      - gitleaks git --pre-commit --redact --staged --verbose
+
+  install-git-hooks:
+    desc: Install the Nix-managed pre-commit hook configuration
+    cmds:
+      - nix develop -c pre-commit install --install-hooks
+
   clean:
     desc: Remove generated artifacts
     cmds:
@@ -69,5 +84,6 @@ tasks:
     cmds:
       - task: fmt-check
       - task: lint
+      - task: typecheck
       - task: test
       - task: build
