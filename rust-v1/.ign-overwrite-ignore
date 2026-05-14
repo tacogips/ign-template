@@ -1,5 +1,10 @@
 design-docs/
 impl-plans/
+.gitignore
+AGENTS.md
+Cargo.toml
+Taskfile.yml
 flake.lock
 flake.nix
-Cargo.toml
+rust-toolchain.toml
+src/

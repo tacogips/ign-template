@@ -1,4 +1,7 @@
 design-docs/
 impl-plans/
+.gitignore
+AGENTS.md
+Taskfile.yml
 flake.lock
 flake.nix

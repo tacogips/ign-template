@@ -1,5 +1,11 @@
 design-docs/
 impl-plans/
+.gitignore
+AGENTS.md
+Taskfile.yml
+cmd/
 flake.lock
 flake.nix
 go.mod
+internal/
+pkg/

@@ -1,5 +1,12 @@
 design-docs/
 impl-plans/
+.gitignore
+AGENTS.md
+Taskfile.yml
+biome.json
+bunfig.toml
 flake.lock
 flake.nix
 package.json
+src/
+tsconfig.json
