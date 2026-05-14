@@ -5,6 +5,6 @@ ts_files=(src/**/*.ts)
 svelte_files=(client/**/*.svelte)
 files=("${ts_files[@]}" "${svelte_files[@]}")
 if [ ${#files[@]} -gt 0 ]; then
-  bunx prettier --write "${files[@]}"
+  biome format --write "${files[@]}"
 fi
 exit 0

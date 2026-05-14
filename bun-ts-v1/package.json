@@ -23,8 +23,8 @@
     "typecheck": "tsc --noEmit",
     "lint:biome": "biome check . --diagnostic-level=warn",
     "lint": "biome check . --diagnostic-level=warn && bun run typecheck",
-    "format": "prettier --ignore-unknown --write \"src/**/*.{ts,tsx}\" \"*.{md,json}\"",
-    "format:check": "prettier --ignore-unknown --check \"src/**/*.{ts,tsx}\" \"*.{md,json}\"",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
     "clean": "rm -rf dist"
   },
   "homepage": "@ign-var:HOMEPAGE=https://github.com/user/repo@",
@@ -41,7 +41,6 @@
     "@types/bun": "1.1.14",
     "@vitest/ui": "2.1.8",
     "typescript": "5.7.2",
-    "prettier": "3.4.2",
     "vitest": "2.1.8"
   }
 }

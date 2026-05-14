@@ -158,7 +158,7 @@ This is @ign-var:PROJECT_NAME@ - a TypeScript project with Bun runtime and Nix f
 - `bun` - JavaScript/TypeScript runtime and package manager
 - `tsc` - TypeScript compiler
 - `typescript-language-server` - TypeScript language server (LSP)
-- `prettier` - Code formatter
+- `biome` - Code formatter and linter
 - `task` - Task runner (go-task)
 
 ## TypeScript Code Development

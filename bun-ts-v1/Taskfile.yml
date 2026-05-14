@@ -55,7 +55,7 @@ tasks:
       - bun run typecheck
 
   fmt:
-    desc: Format code with prettier
+    desc: Format code with Biome
     cmds:
       - bun run format
 
@@ -65,7 +65,7 @@ tasks:
       - bun run format:check
 
   lint:
-    desc: Run all lints (Biome + format check + typecheck)
+    desc: Run all lints (Biome check + format check + typecheck)
     cmds:
       - biome check . --diagnostic-level=warn
       - task: fmt-check

@@ -97,7 +97,7 @@ Follow this workflow:
 4. **Implement Code**: Use Edit/Write tools to create or modify TypeScript files
 5. **Run Biome**: Execute `biome check . --diagnostic-level=warn` or `bun run lint:biome` (from the repo root; use `nix develop` / flake shell if `biome` is not on PATH)
    - If Biome fails: Fix diagnostics or adjust configuration only when the user explicitly requests it; do not silence legitimate errors
-6. **Run prettier**: Execute `bunx prettier --write "src/**/*.ts"` after making changes (scope to touched files when preferable)
+6. **Run Biome formatter**: Execute `biome format --write` on touched files, or `bun run format` for the full repo, after making changes
 7. **Run typecheck**: Execute `bun run typecheck` to verify type correctness
    - If typecheck fails: Investigate the cause, fix the code, and repeat until typecheck passes
 8. **Run tests**: Execute `vitest run` or `bun run test` to verify tests pass
@@ -218,7 +218,7 @@ When writing TypeScript code:
 8. Keep dependencies minimal
 9. Use standard library and Bun APIs when possible
 10. **Always run `biome check . --diagnostic-level=warn` (or `bun run lint:biome`) after making changes**
-11. **Always run `prettier` after making changes**
+11. **Always run Biome formatting after making changes**
 12. **Ensure typecheck passes without errors**
 
 ### Error Handling Best Practices

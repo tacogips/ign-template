@@ -238,7 +238,7 @@ This is useless because:
 
 1. **TypeScript type check**: `bun run typecheck` or `tsc --noEmit`
    - Fast type check without producing output
-2. **If Taskfile available**: `task typecheck` or `task lint` (lint runs Biome, Prettier check, then typecheck)
+2. **If Taskfile available**: `task typecheck` or `task lint` (lint runs Biome, format check, then typecheck)
 
 ### For Testing
 
@@ -283,8 +283,8 @@ bun run typecheck
 # Direct tsc command
 tsc --noEmit
 
-# Format check (Prettier; Biome formatter is disabled in this repo)
-bunx prettier --check "src/**/*.ts"
+# Format check
+biome format .
 ```
 
 ## Test Execution Guidelines
