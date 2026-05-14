@@ -1,0 +1,4 @@
+design-docs/
+impl-plans/
+flake.lock
+flake.nix
