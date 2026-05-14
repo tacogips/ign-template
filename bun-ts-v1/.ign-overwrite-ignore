@@ -3,10 +3,13 @@ impl-plans/
 .gitignore
 AGENTS.md
 Taskfile.yml
+taskfile.yml
 biome.json
 bunfig.toml
 flake.lock
 flake.nix
 package.json
 src/
+src/lib.ts
+src/main.ts
 tsconfig.json
