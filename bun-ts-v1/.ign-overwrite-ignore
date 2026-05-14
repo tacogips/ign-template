@@ -3,7 +3,6 @@ impl-plans/
 .gitignore
 AGENTS.md
 Taskfile.yml
-taskfile.yml
 biome.json
 bunfig.toml
 flake.lock
