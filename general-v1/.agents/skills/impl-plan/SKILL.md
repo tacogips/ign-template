@@ -41,15 +41,16 @@ Recommended granularity:
 
 ## File Size Limits
 
-Large plan files create avoidable context bloat.
+Large plan files can make agent execution brittle
+and hard to review.
 
 | Metric | Limit |
 |--------|-------|
-| Line count | MAX 400 lines |
+| Line count | MAX 1000 lines |
 | Workstreams per plan | MAX 8 |
 | Tasks per plan | MAX 10 |
 
-If a plan grows beyond these limits, split it by phase or topic.
+If a plan grows beyond these limits, split it by phase or topic. Keep plans readable while allowing realistic implementation detail.
 
 ## Output Location
 

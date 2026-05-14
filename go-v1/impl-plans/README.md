@@ -29,7 +29,7 @@ impl-plans/
 
 | Metric | Limit |
 |--------|-------|
-| Line count | MAX 400 lines |
+| Line count | MAX 1000 lines |
 | Modules per plan | MAX 8 modules |
 | Tasks per plan | MAX 10 tasks |
 
