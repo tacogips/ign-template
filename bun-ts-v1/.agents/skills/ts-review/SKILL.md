@@ -11,14 +11,14 @@ Use this skill after substantive TypeScript edits (or before approving a PR) whe
 ## Prerequisites
 
 1. Read `.agents/skills/ts-coding-standards/SKILL.md` and scan the linked topic files that apply to the change (error handling, types, layout, async, security).
-2. Ensure automated gates were run (or run them now): `biome check . --diagnostic-level=warn` (or `bun run lint:biome`), `bun run typecheck`, `bun run test`, and Biome formatting on touched paths where formatting applies.
+2. Ensure automated gates were run (or run them now): `biome check . --diagnostic-level=warn` (or `bun run lint:biome`), `bun run typecheck`, `bun run test`, and Prettier on touched paths where formatting applies.
 
 ## Compliance with ts-coding workflow
 
 Confirm the implementation matches what the **ts-coding** agent requires:
 
 - **Standards read**: Changes respect strict typing (`no any`, indexed access, optional/`exactOptionalPropertyTypes`), Result/error patterns where appropriate, and project layout conventions.
-- **Execution order**: Lint (Biome) before or alongside typecheck; formatting applied with Biome where the repo formats files.
+- **Execution order**: Lint (Biome) before or alongside typecheck; formatting applied where the repo uses Prettier.
 - **Security**: No machine-specific paths in examples, no env secrets or private URLs in output; follow `.agents/skills/ts-coding-standards/security.md`.
 
 ## Static checks
