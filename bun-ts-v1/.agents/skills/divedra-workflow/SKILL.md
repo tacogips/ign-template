@@ -108,7 +108,7 @@ Agent node payload:
 - Manager steps must reference file-backed nodes; add-on-backed nodes are worker-only.
 - Prefer DRY workflow composition over combined one-off nodes. If behavior can be expressed as reusable primitive nodes chained by `steps[].transitions`, author it that way; for example, model commit-and-push as a git commit step followed by a git push step instead of duplicating commit logic in a separate commit-and-push node.
 - Agent nodes require `executionBackend`, backend-specific `model`, `promptTemplate` or `promptTemplateFile`, and `variables`.
-- Valid `executionBackend` values are `codex-agent`, `claude-code-agent`, `official/openai-sdk`, and `official/anthropic-sdk`.
+- Valid `executionBackend` values are `codex-agent`, `official/openai-sdk`, and `official/anthropic-sdk`.
 - Do not encode backend identifiers in `model`; `model` should be a provider/backend model name.
 - Valid authored `nodeType` values are `agent`, `command`, `container`, and `user-action`. Do not author `nodeType: "addon"`.
 - A cross-workflow transition uses `toWorkflowId`, `toStepId`, and `resumeStepId`; `resumeStepId` must name a step in the current workflow.
@@ -133,7 +133,7 @@ Use object form with explicit version:
 }
 ```
 
-Current built-ins include `divedra/chat-reply-worker`, `divedra/codex-worker`, `divedra/claude-code-worker`, `divedra/x-gateway-read`, `divedra/x-gateway`, `divedra/mail-gateway-read`, `divedra/mail-gateway`, `divedra/git-commit`, and `divedra/git-push`, all version `1`.
+Current built-ins include `divedra/chat-reply-worker`, `divedra/codex-worker`, `divedra/x-gateway-read`, `divedra/x-gateway`, `divedra/mail-gateway-read`, `divedra/mail-gateway`, `divedra/git-commit`, and `divedra/git-push`, all version `1`.
 
 ## External Portability
 

@@ -210,7 +210,6 @@ Do not author `nodeType: "addon"`; it is runtime-owned.
 Valid `executionBackend` values:
 
 - `codex-agent`
-- `claude-code-agent`
 - `official/openai-sdk`
 - `official/anthropic-sdk`
 
@@ -249,7 +248,6 @@ Built-in add-ons:
 
 - `divedra/chat-reply-worker`
 - `divedra/codex-worker`
-- `divedra/claude-code-worker`
 - `divedra/x-gateway-read`
 - `divedra/x-gateway`
 - `divedra/mail-gateway-read`

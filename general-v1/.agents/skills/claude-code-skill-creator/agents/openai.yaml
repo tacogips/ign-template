@@ -1,3 +1,0 @@
-interface:
-  display_name: "claude-code-skill-creator"
-  short_description: "Use when creating or updating Claude Code compatible skills. Provides guidance for SKILL.md structure, frontmatter, project-local placement, and supporting references or scripts."

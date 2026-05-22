@@ -1,5 +1,0 @@
-{
-  "name": "go-lsp",
-  "description": "Go language server (gopls) support for Claude Code",
-  "version": "1.0.0"
-}

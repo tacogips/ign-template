@@ -7,7 +7,7 @@
     {
       "name": "go-lsp",
       "source": "./plugins/lsp",
-      "description": "Go language server (gopls) support for Claude Code",
+      "description": "Go language server (gopls) support for agent tooling",
       "version": "1.0.0"
     }
   ]

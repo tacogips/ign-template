@@ -15,7 +15,6 @@ Current built-ins, version `1`:
 
 - `divedra/chat-reply-worker`
 - `divedra/codex-worker`
-- `divedra/claude-code-worker`
 - `divedra/x-gateway-read`
 - `divedra/x-gateway`
 - `divedra/mail-gateway-read`

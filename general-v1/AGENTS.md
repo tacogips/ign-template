@@ -71,10 +71,9 @@ Plans may describe documents, experiments, browser checks, scripts, or implement
 Use these specialized skills when relevant:
 
 1. `.agents/skills/codex-skill-creator/SKILL.md`
-2. `.agents/skills/claude-code-skill-creator/SKILL.md`
-3. `.agents/skills/coding-policy/SKILL.md`
-4. `.agents/skills/design-doc/SKILL.md`
-5. `.agents/skills/impl-plan/SKILL.md`
+2. `.agents/skills/coding-policy/SKILL.md`
+3. `.agents/skills/design-doc/SKILL.md`
+4. `.agents/skills/impl-plan/SKILL.md`
 
 ## Working Style
 

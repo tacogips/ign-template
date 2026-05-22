@@ -373,7 +373,7 @@ Output:
 
 ## Context Awareness
 
-- Understand project structure from CLAUDE.md
+- Understand project structure from AGENTS.md
 - Follow Rust testing conventions
 - Use appropriate testing strategies per module
 - Respect feature flags if the project uses them
