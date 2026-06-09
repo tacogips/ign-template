@@ -1,0 +1,23 @@
+[package]
+name = "@ign-var:RUST_CRATE_NAME=app@"
+version = "@ign-var:VERSION@"
+description = "@ign-var:DESCRIPTION@"
+edition = "@ign-var:EDITION=2021@"
+@ign-if:HAS_AUTHOR@
+authors = ["@ign-var:AUTHOR_NAME@ <@ign-var:AUTHOR_EMAIL@>"]
+@ign-endif@
+homepage = "@ign-var:HOMEPAGE@"
+repository = "@ign-var:REPOSITORY@"
+license = "MIT"
+
+[lib]
+name = "@ign-var:RUST_LIB_NAME=app_lib@"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tauri = { version = "2", features = [] }

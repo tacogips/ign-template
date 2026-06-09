@@ -1,0 +1,11 @@
+.git/
+.direnv/
+.envrc.private
+node_modules/
+dist/
+target/
+src-tauri/target/
+result
+result-*
+bun.lock
+Cargo.lock

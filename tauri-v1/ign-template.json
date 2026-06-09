@@ -1,0 +1,101 @@
+{
+  "name": "tauri-v1",
+  "version": "1.0.0",
+  "description": "Tauri desktop app template with Bun, Vite, TypeScript, Rust, and Nix flake",
+  "author": "tacogips",
+  "repository": "https://github.com/tacogips/ign-template",
+  "license": "MIT",
+  "tags": [
+    "tauri",
+    "typescript",
+    "rust",
+    "bun",
+    "vite",
+    "nix",
+    "task"
+  ],
+  "variables": {
+    "AUTHOR_EMAIL": {
+      "type": "string",
+      "description": "Variable AUTHOR_EMAIL",
+      "default": ""
+    },
+    "AUTHOR_NAME": {
+      "type": "string",
+      "description": "Variable AUTHOR_NAME",
+      "default": ""
+    },
+    "DESCRIPTION": {
+      "type": "string",
+      "description": "Variable DESCRIPTION",
+      "default": "A Tauri desktop app"
+    },
+    "EDITION": {
+      "type": "int",
+      "description": "Variable EDITION",
+      "default": 2021
+    },
+    "HAS_AUTHOR": {
+      "type": "bool",
+      "description": "Variable HAS_AUTHOR",
+      "required": true
+    },
+    "HOMEPAGE": {
+      "type": "string",
+      "description": "Variable HOMEPAGE",
+      "default": "https://github.com/user/repo"
+    },
+    "PROJECT_NAME": {
+      "type": "string",
+      "description": "Variable PROJECT_NAME",
+      "default": "{current_dir}"
+    },
+    "REPOSITORY": {
+      "type": "string",
+      "description": "Variable REPOSITORY",
+      "default": "https://github.com/user/repo"
+    },
+    "RUST_CRATE_NAME": {
+      "type": "string",
+      "description": "Variable RUST_CRATE_NAME",
+      "default": "app"
+    },
+    "RUST_LIB_NAME": {
+      "type": "string",
+      "description": "Variable RUST_LIB_NAME",
+      "default": "app_lib"
+    },
+    "RUST_VERSION": {
+      "type": "string",
+      "description": "Variable RUST_VERSION",
+      "default": "1.92.0"
+    },
+    "TAURI_IDENTIFIER": {
+      "type": "string",
+      "description": "Variable TAURI_IDENTIFIER",
+      "default": "com.example.app"
+    },
+    "TAURI_PRODUCT_NAME": {
+      "type": "string",
+      "description": "Variable TAURI_PRODUCT_NAME",
+      "default": "Tauri App"
+    },
+    "VERSION": {
+      "type": "string",
+      "description": "Variable VERSION",
+      "default": "0.1.0"
+    }
+  },
+  "settings": {
+    "ignore_patterns": [
+      ".git",
+      ".DS_Store",
+      "node_modules",
+      "dist",
+      "target",
+      "src-tauri/target"
+    ],
+    "include_dotfiles": true
+  },
+  "hash": "4ba6363684e9715b1f2751734ffb92f5c371f315f69c22e4bf50ed7505c7c62d"
+}

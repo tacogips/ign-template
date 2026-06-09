@@ -1,0 +1,33 @@
+{
+  "name": "@ign-var:PROJECT_NAME={current_dir}@",
+  "version": "@ign-var:VERSION=0.1.0@",
+  "description": "@ign-var:DESCRIPTION=A Tauri desktop app@",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "tauri": "tauri"
+  },
+  "homepage": "@ign-var:HOMEPAGE=https://github.com/user/repo@",
+  "repository": {
+    "type": "git",
+    "url": "@ign-var:REPOSITORY=https://github.com/user/repo@"
+  },
+@ign-if:HAS_AUTHOR@
+  "author": "@ign-var:AUTHOR_NAME=@ <@ign-var:AUTHOR_EMAIL=@>",
+@ign-endif@
+  "license": "MIT",
+  "dependencies": {
+    "@tauri-apps/api": "^2.0.0"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.0.0",
+    "@types/bun": "^1.1.14",
+    "prettier": "^3.4.2",
+    "typescript": "~5.6.2",
+    "vite": "^6.0.3"
+  }
+}
