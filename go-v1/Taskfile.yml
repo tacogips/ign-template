@@ -16,6 +16,27 @@ tasks:
     cmds:
       - go build -o {{.BINARY_NAME}} {{.CMD_PATH}}
 
+  build:homebrew:
+    desc: Build standalone Homebrew release archives for the current platform, or pass targets after --
+    cmds:
+      - scripts/build-homebrew-release.sh {{.CLI_ARGS}}
+
+  homebrew:formula:
+    desc: Render Formula/@ign-var:PROJECT_NAME@.rb from dist/homebrew checksums
+    cmds:
+      - scripts/render-homebrew-formula.sh {{.CLI_ARGS}}
+
+  homebrew:tap-formula:
+    desc: Render @ign-var:PROJECT_NAME@ into the default sibling Homebrew tap checkout
+    cmds:
+      - |
+        set -euo pipefail
+        if [ -z "{{.CLI_ARGS}}" ]; then
+          echo "usage: task homebrew:tap-formula -- <version>" >&2
+          exit 2
+        fi
+        scripts/render-homebrew-formula.sh "{{.CLI_ARGS}}" "../homebrew-tap/Formula/@ign-var:PROJECT_NAME@.rb"
+
   run:
     desc: Run the application
     deps: [build]

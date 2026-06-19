@@ -17,15 +17,35 @@
       "description": "Variable DESCRIPTION",
       "default": "A Golang project"
     },
+    "GITHUB_REPOSITORY": {
+      "type": "string",
+      "description": "Variable GITHUB_REPOSITORY",
+      "default": "user/repo"
+    },
     "GO_VERSION": {
       "type": "string",
       "description": "Variable GO_VERSION",
       "default": "1.25.4"
     },
+    "HOMEBREW_FORMULA_CLASS": {
+      "type": "string",
+      "description": "Variable HOMEBREW_FORMULA_CLASS",
+      "default": "App"
+    },
+    "HOMEBREW_TAP": {
+      "type": "string",
+      "description": "Variable HOMEBREW_TAP",
+      "default": "user/tap"
+    },
     "HOMEPAGE": {
       "type": "string",
       "description": "Variable HOMEPAGE",
       "default": "https://github.com/user/repo"
+    },
+    "LICENSE": {
+      "type": "string",
+      "description": "Variable LICENSE",
+      "default": "MIT"
     },
     "MODULE_PATH": {
       "type": "string",
@@ -50,5 +70,5 @@
     ],
     "include_dotfiles": true
   },
-  "hash": "3c698d2181b3fa2dd5e4453bf1df5a87b5d7ffcd3197701aa41785507e80a4ef"
+  "hash": "be7cb1e9132eb6e3d2295c475973e0f3d6e63137f433a362588ee671a5ddfafc"
 }

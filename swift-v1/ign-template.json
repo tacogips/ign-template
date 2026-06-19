@@ -1,0 +1,111 @@
+{
+  "name": "swift-v1",
+  "version": "1.0.0",
+  "description": "Swift Package Manager project template with Nix flake, Taskfile, Homebrew formula releases, and macOS Cask release support",
+  "author": "tacogips",
+  "repository": "https://github.com/tacogips/ign-template",
+  "license": "MIT",
+  "tags": [
+    "swift",
+    "swiftpm",
+    "macos",
+    "homebrew",
+    "cask",
+    "nix",
+    "task"
+  ],
+  "variables": {
+    "DESCRIPTION": {
+      "type": "string",
+      "description": "Project, formula, and cask description.",
+      "default": "A Swift command line tool"
+    },
+    "EXECUTABLE_NAME": {
+      "type": "string",
+      "description": "Installed CLI executable and Homebrew binary name.",
+      "default": "{current_dir}"
+    },
+    "GITHUB_REPOSITORY": {
+      "type": "string",
+      "description": "GitHub owner/repo used for release URLs.",
+      "default": "user/repo"
+    },
+    "HOMEBREW_CASK_TOKEN": {
+      "type": "string",
+      "description": "Homebrew Cask token.",
+      "default": "{current_dir}"
+    },
+    "HOMEBREW_FORMULA_CLASS": {
+      "type": "string",
+      "description": "Ruby Formula class name.",
+      "default": "App"
+    },
+    "HOMEBREW_TAP": {
+      "type": "string",
+      "description": "Default Homebrew tap name.",
+      "default": "user/tap"
+    },
+    "HOMEBREW_TAP_DIR": {
+      "type": "string",
+      "description": "Default sibling Homebrew tap checkout path.",
+      "default": "../homebrew-tap"
+    },
+    "HOMEPAGE": {
+      "type": "string",
+      "description": "Project homepage.",
+      "default": "https://github.com/user/repo"
+    },
+    "LICENSE": {
+      "type": "string",
+      "description": "SPDX license identifier.",
+      "default": "MIT"
+    },
+    "MACOS_VERSION": {
+      "type": "string",
+      "description": "Minimum macOS platform version.",
+      "default": "v14"
+    },
+    "PROJECT_NAME": {
+      "type": "string",
+      "description": "Swift package name. Defaults to the output directory name.",
+      "default": "{current_dir}"
+    },
+    "SWIFT_COMMAND_TYPE": {
+      "type": "string",
+      "description": "Main command type name. Must be a valid Swift identifier.",
+      "default": "AppCommand"
+    },
+    "SWIFT_EXECUTABLE_TARGET": {
+      "type": "string",
+      "description": "SwiftPM executable target name. Must be a valid Swift identifier.",
+      "default": "AppCLI"
+    },
+    "SWIFT_LIBRARY_TARGET": {
+      "type": "string",
+      "description": "SwiftPM library target/module name. Must be a valid Swift identifier.",
+      "default": "AppCore"
+    },
+    "SWIFT_TOOLS_VERSION": {
+      "type": "string",
+      "description": "Swift tools version for Package.swift.",
+      "default": "6.0"
+    },
+    "VERSION": {
+      "type": "string",
+      "description": "Initial project version.",
+      "default": "0.1.0"
+    }
+  },
+  "settings": {
+    "ignore_patterns": [
+      ".git",
+      ".DS_Store",
+      ".build",
+      ".swiftpm",
+      "dist",
+      "release"
+    ],
+    "include_dotfiles": true
+  },
+  "hash": "da8e19a238e5f4b43b3b7b69326a7d45a3522590c346cf0400144c23257ee4dd"
+}

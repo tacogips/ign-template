@@ -152,6 +152,23 @@ This is @ign-var:PROJECT_NAME@ - a Golang project with Nix flake development env
 - `gotools` - Additional Go development tools
 - `task` - Task runner (go-task)
 
+## Release Workflows
+
+Use `.agents/skills/homebrew-release/SKILL.md` when building, publishing, or tap-rendering Homebrew formula releases.
+
+Homebrew helper scripts live under `scripts/`:
+
+- `scripts/build-homebrew-release.sh`
+- `scripts/render-homebrew-formula.sh`
+
+The Taskfile exposes:
+
+```bash
+task build:homebrew -- darwin-arm64 darwin-x64 linux-arm64 linux-x64
+task homebrew:formula -- <version>
+task homebrew:tap-formula -- <version>
+```
+
 ## Go Code Development
 
 **IMPORTANT**: When writing Go code, you (the LLM model) MUST use the specialized agents:
