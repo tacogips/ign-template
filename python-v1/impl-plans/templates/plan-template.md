@@ -24,23 +24,16 @@ Brief description of the feature being implemented.
 
 ### 1. <Module Category>
 
-#### internal/path/to/file.go
+#### src/<package>/module.py
 
 **Status**: NOT_STARTED
 
-```go
-type Example interface {
-    Method(param string) error
-}
-
-type ExampleImpl struct {
-    // fields
-}
-```
+**Public Contract**:
+- `Example.method(value: str) -> None`
 
 **Checklist**:
-- [ ] Define Example interface
-- [ ] Implement ExampleImpl struct
+- [ ] Define public protocol or function contract
+- [ ] Implement module behavior
 - [ ] Unit tests
 
 ---
@@ -49,7 +42,7 @@ type ExampleImpl struct {
 
 | Module | File Path | Status | Tests |
 |--------|-----------|--------|-------|
-| Example interface | `internal/path/to/file.go` | NOT_STARTED | - |
+| Example module | `src/<package>/module.py` | NOT_STARTED | - |
 
 ## Dependencies
 
@@ -61,8 +54,9 @@ type ExampleImpl struct {
 
 - [ ] All modules implemented
 - [ ] All tests passing
-- [ ] go build passes
-- [ ] go vet passes
+- [ ] `uv run pytest` passes
+- [ ] `uv run ruff check .` passes
+- [ ] `uv run ty check .` passes
 
 ## Progress Log
 

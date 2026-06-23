@@ -6,9 +6,12 @@ This directory contains reference materials for system design and implementation
 
 | Name | URL | Description |
 |------|-----|-------------|
-| Go Documentation | https://go.dev/doc/ | Official Go documentation |
-| Effective Go | https://go.dev/doc/effective_go | Go best practices and idioms |
-| Standard Go Project Layout | https://github.com/golang-standards/project-layout | Standard project structure conventions |
+| Python Documentation | https://docs.python.org/3/ | Official Python language and standard library documentation |
+| Python Packaging User Guide | https://packaging.python.org/ | Python packaging standards and project configuration guidance |
+| uv Documentation | https://docs.astral.sh/uv/ | uv package and project management documentation |
+| Ruff Documentation | https://docs.astral.sh/ruff/ | Python linting and formatting documentation |
+| ty Documentation | https://docs.astral.sh/ty/ | Python type checker documentation |
+| pytest Documentation | https://docs.pytest.org/ | Python testing framework documentation |
 
 ## Reference Documents
 
@@ -17,7 +20,7 @@ Reference documents should be organized by topic:
 ```
 references/
 ├── README.md              # This index file
-├── golang/                # Go patterns and practices
+├── python/                # Python patterns and practices
 └── <topic>/               # Other topic-specific references
 ```
 
