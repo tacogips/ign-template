@@ -42,24 +42,43 @@ tasks:
   clippy:
     desc: Run clippy for the Tauri backend
     cmds:
-      - CARGO_TERM_QUIET=true cargo clippy --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings
+      - task: lint-rust
+
+  lint-ts:
+    desc: Run TypeScript lint checks
+    cmds:
+      - bash .agents/scripts/lint-ts.sh
+
+  lint-rust:
+    desc: Run Rust lint checks
+    cmds:
+      - bash .agents/scripts/lint-rust.sh
 
   fmt:
     desc: Format frontend and backend sources
     cmds:
-      - bunx prettier --write "src/**/*.{ts,css}" "vite.config.ts"
+      - bun run format
       - CARGO_TERM_QUIET=true cargo fmt --manifest-path src-tauri/Cargo.toml
 
   fmt-check:
-    desc: Check backend formatting
+    desc: Check frontend and backend formatting
     cmds:
+      - bun run format:check
       - CARGO_TERM_QUIET=true cargo fmt --manifest-path src-tauri/Cargo.toml -- --check
 
   lint:
     desc: Run all lints
     cmds:
+      - task: lint-ts
       - task: fmt-check
-      - task: clippy
+      - task: lint-rust
+
+  verify:
+    desc: Run the full local verification suite
+    cmds:
+      - task: check
+      - task: lint
+      - task: test
 
   gitleaks:
     desc: Scan staged changes for secrets before commit
@@ -79,7 +98,5 @@ tasks:
   ci:
     desc: Run all CI checks
     cmds:
-      - task: check
-      - task: clippy
-      - task: test
+      - task: verify
       - task: build
