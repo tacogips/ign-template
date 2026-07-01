@@ -65,6 +65,7 @@ This is @ign-var:PROJECT_NAME@ - a Tauri desktop application with a Bun, Vite, a
 - `rust-analyzer` - Rust language server
 - `clippy` - Rust linter
 - `rustfmt` - Rust formatter
+- `biome` - Frontend code formatter and linter
 - `task` - Task runner
 - `gitleaks` - Secret scanning
 

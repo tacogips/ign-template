@@ -57,13 +57,12 @@ tasks:
   fmt:
     desc: Format frontend and backend sources
     cmds:
-      - bun run format
+      - bash .agents/scripts/format-ts.sh
       - CARGO_TERM_QUIET=true cargo fmt --manifest-path src-tauri/Cargo.toml
 
   fmt-check:
-    desc: Check frontend and backend formatting
+    desc: Check backend formatting
     cmds:
-      - bun run format:check
       - CARGO_TERM_QUIET=true cargo fmt --manifest-path src-tauri/Cargo.toml -- --check
 
   lint:

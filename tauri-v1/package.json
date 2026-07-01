@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "bun run lint:ts",
-    "lint:ts": "bun run typecheck",
+    "lint:biome": "biome check . --diagnostic-level=warn",
+    "lint:ts": "bun run lint:biome && bun run typecheck",
     "format": "biome format --write src vite.config.ts",
     "format:check": "biome format --check src vite.config.ts",
     "tauri": "tauri"

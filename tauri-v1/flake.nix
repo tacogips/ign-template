@@ -75,6 +75,7 @@
           rustup
         ])
         ++ (with pkgs-unstable; [
+          biome
           bun
           typescript
           typescript-language-server
@@ -92,6 +93,7 @@
             ${preCommitCheck.shellHook}
 
             echo "Tauri development environment ready"
+            echo "Biome version: $(biome --version 2>/dev/null || echo 'not available')"
             echo "Bun version: $(bun --version)"
             echo "Rust version: $(rustc --version)"
             echo "Task version: $(task --version 2>/dev/null || echo 'not available')"
