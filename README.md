@@ -24,6 +24,7 @@ ign checkout github.com/tacogips/ign-template/go-v1 ./my-project
 |----------|-------------|
 | `go-v1` | Go project with Nix flake, Claude Code configuration |
 | `general-v1` | General investigation workspace with browser tooling and reusable agent skills |
+| `ios-app-v1` | SwiftUI iOS app with SwiftPM modules, Xcode project wrapper, simulator checks, and iOS archive/export helpers |
 | `python-v1` | Modern Python project with uv, src layout, Ruff, and pytest |
 | `swift-v1` | SwiftPM project with Nix, Taskfile, Homebrew formula, and macOS Cask release support |
 | `tauri-v1` | Tauri desktop app with Bun, Vite, TypeScript, Rust, and Nix flake |
@@ -34,6 +35,7 @@ ign checkout github.com/tacogips/ign-template/go-v1 ./my-project
 # From GitHub
 ign checkout github.com/tacogips/ign-template/go-v1
 ign checkout github.com/tacogips/ign-template/general-v1
+ign checkout github.com/tacogips/ign-template/ios-app-v1
 ign checkout github.com/tacogips/ign-template/python-v1
 ign checkout github.com/tacogips/ign-template/swift-v1
 ign checkout github.com/tacogips/ign-template/tauri-v1
@@ -41,6 +43,7 @@ ign checkout github.com/tacogips/ign-template/tauri-v1
 # With output directory
 ign checkout github.com/tacogips/ign-template/go-v1 ./my-project
 ign checkout github.com/tacogips/ign-template/general-v1 ./my-investigation
+ign checkout github.com/tacogips/ign-template/ios-app-v1 ./my-ios-app
 ign checkout github.com/tacogips/ign-template/python-v1 ./my-python-project
 ign checkout github.com/tacogips/ign-template/swift-v1 ./my-swift-project
 ign checkout github.com/tacogips/ign-template/tauri-v1 ./my-tauri-app
@@ -48,6 +51,7 @@ ign checkout github.com/tacogips/ign-template/tauri-v1 ./my-tauri-app
 # Preview without writing files
 ign checkout github.com/tacogips/ign-template/go-v1 --dry-run
 ign checkout github.com/tacogips/ign-template/general-v1 --dry-run
+ign checkout github.com/tacogips/ign-template/ios-app-v1 --dry-run
 ign checkout github.com/tacogips/ign-template/python-v1 --dry-run
 ign checkout github.com/tacogips/ign-template/swift-v1 --dry-run
 ign checkout github.com/tacogips/ign-template/tauri-v1 --dry-run

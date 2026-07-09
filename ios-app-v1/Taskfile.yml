@@ -1,0 +1,67 @@
+version: "3"
+
+vars:
+  PROJECT_NAME: @ign-var:PROJECT_NAME={current_dir}@
+  IOS_APP_TARGET: @ign-var:IOS_APP_TARGET=App@
+  # On macOS, Swift builds must use the Xcode toolchain. Drop any Nix
+  # apple-sdk environment if present.
+  SWIFT_ENV_GUARD: |-
+    if [ "$(uname -s)" = "Darwin" ]; then
+      case "${SDKROOT:-}" in /nix/store/*) unset SDKROOT ;; esac
+      case "${DEVELOPER_DIR:-}" in /nix/store/*) unset DEVELOPER_DIR; export DEVELOPER_DIR="$(xcode-select -p)" ;; esac
+    fi
+
+tasks:
+  default:
+    desc: Show available tasks
+    cmds:
+      - task --list
+
+  build:
+    desc: Build the Swift package
+    cmds:
+      - |
+        {{.SWIFT_ENV_GUARD}}
+        swift build
+
+  test:
+    desc: Run Swift tests
+    cmds:
+      - |
+        {{.SWIFT_ENV_GUARD}}
+        swift test
+
+  build:app:
+    desc: Build the iPhone/iPad simulator app bundles
+    cmds:
+      - scripts/build-app-targets.py
+
+  smoke:simulator-app:
+    desc: Install and launch-smoke the iPhone/iPad simulator app bundles
+    cmds:
+      - scripts/smoke-simulator-app.py
+
+  archive:ios-app:
+    desc: Build and validate an unsigned generic iOS Release archive
+    cmds:
+      - scripts/archive-ios-app.py
+
+  archive:ios-app-signed:
+    desc: Build a signed generic iOS Release archive when Apple signing prerequisites are ready
+    cmds:
+      - scripts/archive-ios-app-signed.py
+
+  export:ios-app:
+    desc: Export a signed iOS archive for App Store Connect
+    cmds:
+      - scripts/export-ios-app.py
+
+  lint:
+    desc: Run SwiftLint when available
+    cmds:
+      - swiftlint
+
+  clean:
+    desc: Clean SwiftPM, Xcode, and export artifacts
+    cmds:
+      - rm -rf .build DerivedData dist release

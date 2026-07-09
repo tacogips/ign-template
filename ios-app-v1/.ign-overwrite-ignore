@@ -1,0 +1,14 @@
+# Preserve local Xcode and build state when running `ign update`.
+.build/
+.swiftpm/
+DerivedData/
+**/xcuserdata/
+*.xcworkspace/
+dist/
+release/
+*.xcarchive/
+*.xcresult/
+.envrc.private
+.envrc.private.*
+*.private
+*.log

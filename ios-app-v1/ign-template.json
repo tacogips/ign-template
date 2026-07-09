@@ -1,0 +1,108 @@
+{
+  "name": "ios-app-v1",
+  "version": "1.0.0",
+  "description": "SwiftUI iOS app template with SwiftPM modules, Xcode project wrapper, Nix flake, Taskfile, simulator checks, and iOS archive/export helpers",
+  "author": "tacogips",
+  "repository": "https://github.com/tacogips/ign-template",
+  "license": "MIT",
+  "tags": [
+    "swift",
+    "swiftui",
+    "ios",
+    "swiftpm",
+    "xcode",
+    "nix",
+    "task"
+  ],
+  "variables": {
+    "APP_DESCRIPTION": {
+      "type": "string",
+      "description": "Short project description used in README and docs.",
+      "default": "A SwiftUI iOS app"
+    },
+    "APP_DISPLAY_NAME": {
+      "type": "string",
+      "description": "Human-readable app name shown in documentation.",
+      "default": "{current_dir}"
+    },
+    "BUILD_NUMBER": {
+      "type": "int",
+      "description": "Initial Xcode build number.",
+      "default": 1
+    },
+    "BUNDLE_IDENTIFIER": {
+      "type": "string",
+      "description": "iOS application bundle identifier.",
+      "default": "com.example.app"
+    },
+    "DEVELOPMENT_TEAM": {
+      "type": "string",
+      "description": "Apple Developer Team ID for signed device/archive builds.",
+      "default": "TEAMID"
+    },
+    "IOS_APP_MAIN_TYPE": {
+      "type": "string",
+      "description": "Swift @main App type. Must be a valid Swift identifier.",
+      "default": "AppMain"
+    },
+    "IOS_APP_TARGET": {
+      "type": "string",
+      "description": "Xcode iOS app target name. Must be a valid Swift identifier.",
+      "default": "App"
+    },
+    "IOS_ASSET_CATALOG": {
+      "type": "string",
+      "description": "Asset catalog directory base name.",
+      "default": "AppAssets"
+    },
+    "IOS_DEPLOYMENT_TARGET": {
+      "type": "string",
+      "description": "Minimum iOS deployment target.",
+      "default": "17.0"
+    },
+    "IOS_FEATURE_TARGET": {
+      "type": "string",
+      "description": "SwiftPM feature/UI library target name. Must be a valid Swift identifier.",
+      "default": "AppFeature"
+    },
+    "IOS_PACKAGE_PLATFORM_VERSION": {
+      "type": "int",
+      "description": "SwiftPM iOS platform enum suffix, for example 17 for .iOS(.v17).",
+      "default": 17
+    },
+    "ORGANIZATION_NAME": {
+      "type": "string",
+      "description": "Organization name used in Xcode metadata.",
+      "default": "Example"
+    },
+    "PROJECT_NAME": {
+      "type": "string",
+      "description": "Swift package/project name. Defaults to the output directory name.",
+      "default": "{current_dir}"
+    },
+    "SWIFT_TOOLS_VERSION": {
+      "type": "string",
+      "description": "Swift tools and language version.",
+      "default": "6.0"
+    },
+    "VERSION": {
+      "type": "string",
+      "description": "Initial marketing version.",
+      "default": "0.1.0"
+    }
+  },
+  "settings": {
+    "ignore_patterns": [
+      ".git",
+      ".DS_Store",
+      ".build",
+      ".swiftpm",
+      "DerivedData",
+      "dist",
+      "release",
+      "**/xcuserdata"
+    ],
+    "include_dotfiles": true
+  },
+  "hash": "2f25f4f34f132165040eb42d0d2f473b434e98b4d238502b64aa9bae84f49713"
+}
