@@ -59,6 +59,7 @@ task smoke:simulator-app
 task archive:ios-app
 task archive:ios-app-signed
 task export:ios-app
+task check:ios-ipa
 ```
 
 Run `task --list` for the full task surface.
@@ -78,5 +79,20 @@ This template intentionally does not include macOS release or Homebrew release
 tooling. Do not add Homebrew formula/cask packaging, Mac app release scripts, or
 Mac distribution artifacts unless the project explicitly changes scope.
 
-iOS App Store/TestFlight export is supported through `task archive:ios-app-signed`
-and `task export:ios-app` after Apple signing is configured.
+iOS App Store/TestFlight export is supported through `task archive:ios-app-signed`,
+`task export:ios-app`, and `task check:ios-ipa` after Apple signing is configured.
+
+## App Store and TestFlight Releases
+
+The generated project includes reusable agent skills under `.agents/skills/`:
+
+- `ios-testflight-release`: signed archive, IPA validation, App Store Connect
+  processing, and TestFlight distribution workflow.
+- `ios-app-store-release`: production metadata, privacy, pricing, submission,
+  and live-state workflow.
+- `ios-product-screenshots`: controlled iPhone/iPad storefront screenshot
+  capture and review workflow.
+
+Run `task check:ios-ipa` after export and before uploading the IPA through Xcode
+Organizer, Transporter, or approved App Store Connect automation. Uploading is
+not evidence that Apple has processed the build or distributed it to testers.

@@ -56,6 +56,11 @@ tasks:
     cmds:
       - scripts/export-ios-app.py
 
+  check:ios-ipa:
+    desc: Validate the exported signed IPA before App Store Connect upload
+    cmds:
+      - scripts/check-ios-ipa-readiness.py
+
   lint:
     desc: Run SwiftLint when available
     cmds:
