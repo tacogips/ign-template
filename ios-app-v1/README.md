@@ -9,6 +9,7 @@ This project is a SwiftUI iPhone/iPad app scaffold with:
 - Simulator build and smoke-test scripts.
 - Unsigned and signed iOS archive/export helpers.
 - Nix, direnv, go-task, SwiftLint, and gitleaks development tooling.
+- A pinned Nix dependency graph in `flake.lock` for reproducible shells.
 
 ## Requirements
 
@@ -17,6 +18,7 @@ This project is a SwiftUI iPhone/iPad app scaffold with:
 - Swift @ign-var:SWIFT_TOOLS_VERSION=6.0@ toolchain.
 - `go-task` for repository task commands.
 - Optional: Nix flakes plus direnv for the project development shell.
+- Optional: `kinko` for exporting user-scoped secrets into direnv.
 
 ## Run Locally
 
@@ -25,6 +27,10 @@ Enter the development shell when using Nix:
 ```bash
 nix develop
 ```
+
+The checked-in `flake.lock` pins the Nix inputs. When `kinko` is installed,
+`.envrc` also exports secrets from the current user's vault; no secret values
+belong in this repository.
 
 Build and test the Swift package:
 

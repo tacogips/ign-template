@@ -26,6 +26,7 @@
         runtimePackages =
           with pkgs;
           [
+            gh
             git
             go-task
             python3
@@ -67,14 +68,17 @@
 
         checks.pre-commit-check = preCommitCheck;
 
-        # On Darwin, use mkShellNoCC so Nix apple-sdk setup hooks stay out of
-        # the shell. iOS builds use the selected Xcode toolchain.
+        # On Darwin, use mkShellNoCC so the Nix cc toolchain and its
+        # apple-sdk setup hooks stay out of the shell: the Nix apple-sdk is
+        # incompatible with the Xcode Swift toolchain used for iOS builds.
         devShells.default = (if pkgs.stdenv.isDarwin then pkgs.mkShellNoCC else pkgs.mkShell) {
           packages = devPackages;
 
           shellHook = ''
             ${preCommitCheck.shellHook}
             ${lib.optionalString pkgs.stdenv.isDarwin ''
+              # Swift builds on macOS must use the Xcode toolchain. Drop any
+              # Nix-provided SDK environment before selecting Xcode.
               unset SDKROOT
               if [ -x /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild ]; then
                 export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer
