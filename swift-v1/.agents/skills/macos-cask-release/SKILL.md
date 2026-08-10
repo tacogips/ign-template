@@ -102,3 +102,13 @@ HOMEBREW_NO_GITHUB_API=1 brew audit --cask @ign-var:HOMEBREW_TAP=user/tap@/@ign-
 If `brew audit --online` fails with local GitHub credential errors, use
 `HOMEBREW_NO_GITHUB_API=1` and report that online audit was blocked by local
 credentials, not the Cask syntax.
+
+## Tap API Metadata Gate
+
+After pushing the tap Cask, require the tap's `update-api-metadata.yml`
+workflow to succeed for that commit. Derive the GitHub tap repository from
+`@ign-var:HOMEBREW_TAP=user/tap@`, wait for the matching workflow run, then
+verify `api/cask/@ign-var:HOMEBREW_CASK_TOKEN={current_dir}@.json` from GitHub
+Raw. The JSON release is incomplete unless `.version` equals the release
+version and `.ruby_source_checksum.sha256` equals the SHA-256 of the committed
+Cask Ruby file.

@@ -100,3 +100,13 @@ brew test @ign-var:HOMEBREW_TAP=user/tap@/@ign-var:HOMEBREW_CASK_TOKEN={current_
 
 If online audit fails because of local GitHub credentials or rate limits, run a
 non-online audit and report the limitation.
+
+## Tap API Metadata Gate
+
+After pushing the tap Formula, require the tap's `update-api-metadata.yml`
+workflow to succeed for that commit. Derive the GitHub tap repository from
+`@ign-var:HOMEBREW_TAP=user/tap@`, wait for the matching workflow run, then
+verify `api/formula/@ign-var:HOMEBREW_CASK_TOKEN={current_dir}@.json` from
+GitHub Raw. The JSON release is incomplete unless `.versions.stable` equals the
+release version and `.ruby_source_checksum.sha256` equals the SHA-256 of the
+committed Formula Ruby file.
