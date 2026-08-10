@@ -458,7 +458,10 @@ Example format:
 
 ## Notes
 - This project uses mise for reproducible development environments
-- Run secret-dependent commands through `kinko exec`; never commit secret values.
+- With `mise activate bash` enabled, entering this repository loads its scope-aware
+  kinko environment only when kinko 0.1.10 or newer is installed; otherwise the
+  hook is a no-op. Kinko's leave hook removes the variables. Never commit secret
+  values.
 - All development tools and tasks are managed through mise.toml
 
 ## Claude Code Plugin Specification

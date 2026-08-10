@@ -66,7 +66,11 @@ This repository includes a mise configuration for reproducible tooling and tasks
 mise install
 ```
 
-Run secret-dependent commands through `kinko exec`; never commit secret values.
+With `mise activate bash` enabled, entering this repository automatically
+loads its scope-aware kinko environment when kinko 0.1.10 or newer is installed.
+Without a compatible kinko, the hook is a no-op. Kinko tracks the exported
+variable names and unsets them when leaving the repository. Never commit secret
+values.
 
 ## Issue Reporting
 
