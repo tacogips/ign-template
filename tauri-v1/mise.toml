@@ -1,0 +1,80 @@
+min_version = "2026.8.3"
+
+[tools]
+bun = "latest"
+rust = "@ign-var:RUST_VERSION=1.92.0@"
+rust-analyzer = "latest"
+gitleaks = "latest"
+pre-commit = "latest"
+
+[tasks.default]
+description = "Show available tasks"
+run = "mise tasks ls"
+
+[tasks.install]
+description = "Install frontend dependencies"
+run = "bun install"
+
+[tasks.dev]
+description = "Run the Tauri app in development mode"
+run = "bun run tauri dev"
+
+[tasks.build]
+description = "Build frontend assets and the Tauri desktop binary"
+run = "bun run build && CARGO_TERM_QUIET=true cargo build --release --manifest-path src-tauri/Cargo.toml"
+
+[tasks.tauri-build]
+description = "Build the app through the Tauri CLI"
+run = "CARGO_TERM_QUIET=true bun run tauri build"
+
+[tasks.test]
+description = "Run frontend and backend tests"
+run = "bun run typecheck && CARGO_TERM_QUIET=true cargo test --manifest-path src-tauri/Cargo.toml"
+
+[tasks.check]
+description = "Run frontend typecheck and backend cargo check"
+run = "bun run typecheck && CARGO_TERM_QUIET=true cargo check --manifest-path src-tauri/Cargo.toml"
+
+[tasks.clippy]
+description = "Run clippy for the Tauri backend"
+run = "mise run lint-rust"
+
+[tasks.lint-ts]
+description = "Run TypeScript lint checks"
+run = "bash .agents/scripts/lint-ts.sh"
+
+[tasks.lint-rust]
+description = "Run Rust lint checks"
+run = "bash .agents/scripts/lint-rust.sh"
+
+[tasks.fmt]
+description = "Format frontend and backend sources"
+run = "bash .agents/scripts/format-ts.sh && CARGO_TERM_QUIET=true cargo fmt --manifest-path src-tauri/Cargo.toml"
+
+[tasks.fmt-check]
+description = "Check backend formatting"
+run = "CARGO_TERM_QUIET=true cargo fmt --manifest-path src-tauri/Cargo.toml -- --check"
+
+[tasks.lint]
+description = "Run all lints"
+run = "mise run lint-ts && mise run fmt-check && mise run lint-rust"
+
+[tasks.verify]
+description = "Run the full local verification suite"
+run = "mise run check && mise run lint && mise run test"
+
+[tasks.gitleaks]
+description = "Scan staged changes for secrets"
+run = "gitleaks git --pre-commit --redact --staged --verbose"
+
+[tasks.install-git-hooks]
+description = "Install pre-commit hooks"
+run = "pre-commit install --install-hooks"
+
+[tasks.clean]
+description = "Clean build artifacts"
+run = "rm -rf dist node_modules src-tauri/target target"
+
+[tasks.ci]
+description = "Run all CI checks"
+run = "mise run verify && mise run build"

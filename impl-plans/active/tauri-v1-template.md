@@ -27,8 +27,8 @@ output so an issue can be filed at `https://github.com/tacogips/ign/issues`.
 ## Codex-Agent References
 
 - `AGENTS.md`: English-only output, no emoji, commit policy, and template repository rules.
-- `bun-ts-v1`: Bun, TypeScript, Vite, Nix, Taskfile, metadata, and ign variable conventions.
-- `rust-v1`: Rust metadata, Cargo variable patterns, rust-toolchain, Nix, and Taskfile conventions.
+- `bun-ts-v1`: Bun, TypeScript, Vite, mise, metadata, and ign variable conventions.
+- `rust-v1`: Rust metadata, Cargo variable patterns, and mise conventions.
 - `.agents/skills/template-editing/SKILL.md`: After template edits, run `ign template update` then `ign template check`, and review `ign-template.json` diff.
 - Sibling `chilla` checkout: Structural reference only for Bun/Vite/Tauri/Rust project shape.
 
@@ -70,7 +70,7 @@ output so an issue can be filed at `https://github.com/tacogips/ign/issues`.
 ### TASK-003: Add Tauri/Rust Scaffold
 
 **Status**: Completed
-**Write Scope**: `tauri-v1/Cargo.toml`, `tauri-v1/src-tauri/`, `tauri-v1/rust-toolchain.toml`
+**Write Scope**: `tauri-v1/Cargo.toml`, `tauri-v1/src-tauri/`
 **Depends On**: TASK-001
 **Parallelizable**: Yes, with TASK-002 and TASK-006 only
 
@@ -84,14 +84,14 @@ output so an issue can be filed at `https://github.com/tacogips/ign/issues`.
 ### TASK-004: Add Development Tooling
 
 **Status**: Completed
-**Write Scope**: `tauri-v1/Taskfile.yml`, `tauri-v1/flake.nix`, `tauri-v1/.envrc`
+**Write Scope**: `tauri-v1/mise.toml`
 **Depends On**: TASK-002, TASK-003
 **Parallelizable**: No
 
 **Deliverables**:
-- Add Taskfile commands following existing names: `default`, `build`, `test`, `check`, `fmt`, `fmt-check`, `lint`, and `clean`.
-- Add a Nix development shell with Bun, Rust tooling, Tauri build dependencies, and ign-friendly local setup.
-- Prefer development-shell support over full reproducible Tauri package outputs.
+- Add mise tasks following existing names: `default`, `build`, `test`, `check`, `fmt`, `fmt-check`, `lint`, and `clean`.
+- Add mise-managed Bun and Rust tooling with ign-friendly local tasks.
+- Document native Tauri system-library prerequisites separately from mise-managed tools.
 - Keep command names compatible with frontend and Rust scaffold files.
 
 ### TASK-005: Refresh Ign Template Metadata and Syntax
@@ -164,7 +164,7 @@ Required implementation commands:
 Recommended generated-project smoke checks after ign validation:
 
 - `ign checkout ./tauri-v1 "$TMPDIR/ign-tauri-v1-smoke" --force`
-- `cd "$TMPDIR/ign-tauri-v1-smoke" && task check`
+- `cd "$TMPDIR/ign-tauri-v1-smoke" && mise run check`
 
 If the environment lacks platform GUI dependencies for a full Tauri build, record the exact skipped command and reason. Do not skip `ign template update tauri-v1` or `ign template check tauri-v1`.
 
@@ -220,8 +220,8 @@ After each implementation session or task completion:
 - `ign template check tauri-v1`
 - Render smoke test for `HAS_AUTHOR=false` and `HAS_AUTHOR=true`, with generated JSON parsing for `package.json`, `src-tauri/tauri.conf.json`, `src-tauri/capabilities/default.json`, and `tsconfig.json`
 - `bunx prettier --check "$TMPDIR/tauri-v1-render-no-author/src/**/*.{ts,css}" "$TMPDIR/tauri-v1-render-no-author/vite.config.ts"`
-- `nix develop --command bash -lc 'command -v cargo && CARGO_TERM_QUIET=true cargo fmt --manifest-path "$TMPDIR/tauri-v1-render-no-author/src-tauri/Cargo.toml" -- --check'`
+- `mise exec -- bash -lc 'command -v cargo && CARGO_TERM_QUIET=true cargo fmt --manifest-path "$TMPDIR/tauri-v1-render-no-author/src-tauri/Cargo.toml" -- --check'`
 - `bun install && bun run typecheck`
-- `nix develop --command bash -lc 'CARGO_TERM_QUIET=true cargo fmt --manifest-path src-tauri/Cargo.toml -- --check && CARGO_TERM_QUIET=true cargo check --manifest-path src-tauri/Cargo.toml'`
+- `mise exec -- bash -lc 'CARGO_TERM_QUIET=true cargo fmt --manifest-path src-tauri/Cargo.toml -- --check && CARGO_TERM_QUIET=true cargo check --manifest-path src-tauri/Cargo.toml'`
 
 **Notes**: A direct `ign checkout` smoke test could not be completed because the prompt library did not progress correctly under the available PTY. A rendered-project verification path was used after `ign template check` passed. The initial Rust 1.83 default was raised to chilla's Rust 1.92.0 because current Tauri dependency resolution pulled a transitive crate requiring newer Cargo/Rust 2024 support. A generated RGBA placeholder icon was added because Tauri's compile-time context generation requires `src-tauri/icons/icon.png`.

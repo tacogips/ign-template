@@ -131,24 +131,21 @@ feat: implement user authentication system
 
 ## Project Overview
 
-This is @ign-var:PROJECT_NAME@ - a Rust project with Nix flake development environment support.
+This is @ign-var:PROJECT_NAME@ - a Rust project with mise-managed development environment.
 
 ## Development Environment
 - **Language**: Rust
-- **Build Tool**: Cargo (with go-task for automation)
-- **Environment Manager**: Nix flakes + direnv
-- **Development Shell**: Run `nix develop` or use direnv to activate
-- **Rust Toolchain**: Managed via rust-toolchain.toml and fenix
+- **Build Tool**: Cargo, with mise as the task runner
+- **Environment Manager**: mise
+- **Tool Setup**: Run `mise install`
+- **Rust Toolchain**: Managed by mise
 
 ## Project Structure
 ```
 .
-├── flake.nix          # Nix flake configuration for Rust development
-├── flake.lock         # Locked flake dependencies
+├── mise.toml          # Tool versions and project tasks
 ├── Cargo.toml         # Rust package manifest
 ├── Cargo.lock         # Locked Rust dependencies
-├── rust-toolchain.toml # Rust toolchain specification
-├── .envrc             # direnv configuration
 ├── src/               # Source code
 │   ├── lib.rs         # Library root
 │   └── main.rs        # Binary entry point
@@ -162,7 +159,7 @@ This is @ign-var:PROJECT_NAME@ - a Rust project with Nix flake development envir
 - `clippy` - Rust linter
 - `rustfmt` - Rust formatter
 - `cargo-nextest` - Fast test runner
-- `task` - Task runner (go-task)
+- `mise` - Tool manager and task runner
 
 ## Rust Code Development
 
@@ -259,8 +256,8 @@ When implementing from a plan:
 5. When all tasks complete, move plan to `impl-plans/completed/`
 
 ## Task Management
-- Use `task` command for build automation
-- Define tasks in `Taskfile.yml` (to be created as needed)
+- Use `mise run` for build automation
+- Define tasks in `mise.toml` (to be created as needed)
 
 ## Git Workflow
 - Create meaningful commit messages
@@ -313,8 +310,7 @@ Example subtask format:
 ```
 
 ## Notes
-- This project uses Nix flakes for reproducible development environments
-- Use direnv for automatic environment activation
-- Private environment variables should be managed in `tacogips/kinko` and loaded via `kinko direnv export`; `.envrc.private` is not sourced by default
-- All development dependencies are managed through flake.nix
-- Rust toolchain is managed via rust-toolchain.toml and fenix
+- This project uses mise for reproducible development environments
+- Run secret-dependent commands through `kinko exec`; never commit secret values.
+- All development tools and tasks are managed through mise.toml
+- The Rust toolchain is managed through `mise.toml`

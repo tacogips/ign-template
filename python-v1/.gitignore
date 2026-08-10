@@ -21,11 +21,7 @@
 **/*.tar.gz
 htmlcov/
 
-## nix/git
-/.pre-commit-config.yaml
-**/.direnv
 **/.env
-**/.envrc.private*
 **/*.private*
 
 ## ide's /meta infos
@@ -35,5 +31,6 @@ htmlcov/
 **/.DS_Store
 
 ## tmp and local outputs
-result
 **/tmp
+
+mise.local.toml

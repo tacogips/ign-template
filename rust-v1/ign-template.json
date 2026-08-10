@@ -1,16 +1,13 @@
 {
   "name": "rust-v1",
   "version": "1.0.0",
-  "description": "Rust project template with Nix flake and fenix toolchain",
+  "description": "Rust project template with a mise-managed toolchain",
   "author": "tacogips",
   "repository": "https://github.com/tacogips/ign-template",
   "license": "MIT",
   "tags": [
     "rust",
-    "nix",
-    "fenix",
-    "crane",
-    "task"
+    "mise"
   ],
   "variables": {
     "AUTHOR_EMAIL": {
@@ -72,5 +69,5 @@
     ],
     "include_dotfiles": true
   },
-  "hash": "fe86992ca03df0d38e11e111ca2bc80d4ae3a3b5fa30ec003cff0b9de4713dbc"
+  "hash": "29221abb7a07ae8f21ca87dbfd9db79ab1f05bee5e55cb0e4b4834924d2e670b"
 }

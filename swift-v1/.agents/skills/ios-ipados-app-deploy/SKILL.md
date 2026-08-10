@@ -29,9 +29,9 @@ Apple Developer signing, App Store Connect, TestFlight, and physical devices.
 Identify the repo's actual names before acting:
 
 ```bash
-find . -maxdepth 3 \( -name '*.xcodeproj' -o -name '*.xcworkspace' -o -name 'Package.swift' -o -name 'Taskfile.yml' \) -print
+find . -maxdepth 3 \( -name '*.xcodeproj' -o -name '*.xcworkspace' -o -name 'Package.swift' -o -name 'mise.toml' \) -print
 rg -n 'PRODUCT_BUNDLE_IDENTIFIER|DEVELOPMENT_TEAM|MARKETING_VERSION|CURRENT_PROJECT_VERSION|CFBundleDisplayName|CFBundleName|ITSAppUsesNonExemptEncryption' .
-rg -n 'check:ios|archive:ios|export:ios|testflight|app-store|physical-device|APPLE_|SIGNING_IDENTITY|TEAM_ID' Taskfile.yml scripts .github 2>/dev/null
+rg -n 'check:ios|archive:ios|export:ios|testflight|app-store|physical-device|APPLE_|SIGNING_IDENTITY|TEAM_ID' mise.toml scripts .github 2>/dev/null
 ```
 
 Record:
@@ -109,18 +109,18 @@ The `get` output should be masked or presence-only.
 Prefer project-provided tasks. A good command path is:
 
 ```bash
-task check:ios-signing
-task archive:ios-app-signed
-task export:ios-app
-task check:testflight-readiness
+mise run check:ios-signing
+mise run archive:ios-app-signed
+mise run export:ios-app
+mise run check:testflight-readiness
 ```
 
 If the repo uses signing secrets, wrap only the needed commands:
 
 ```bash
-kinko exec --env IOS_DISTRIBUTION_SIGNING_IDENTITY,APPLE_TEAM_ID -- task check:ios-signing
-kinko exec --env IOS_DISTRIBUTION_SIGNING_IDENTITY,APPLE_TEAM_ID -- task archive:ios-app-signed
-kinko exec --env IOS_DISTRIBUTION_SIGNING_IDENTITY,APPLE_TEAM_ID -- task export:ios-app
+kinko exec --env IOS_DISTRIBUTION_SIGNING_IDENTITY,APPLE_TEAM_ID -- mise run check:ios-signing
+kinko exec --env IOS_DISTRIBUTION_SIGNING_IDENTITY,APPLE_TEAM_ID -- mise run archive:ios-app-signed
+kinko exec --env IOS_DISTRIBUTION_SIGNING_IDENTITY,APPLE_TEAM_ID -- mise run export:ios-app
 ```
 
 If no task exists, use `xcodebuild` with automatic signing and avoid hardcoding
@@ -192,8 +192,8 @@ xcrun devicectl device process launch \
 Prefer a repo task if one exists, for example:
 
 ```bash
-rg -n 'testflight.*device|device.*testflight|devicectl device info apps|devicectl device process launch' Taskfile.yml scripts
-task check:testflight-ipad-device -- '<trusted iPad name>'
+rg -n 'testflight.*device|device.*testflight|devicectl device info apps|devicectl device process launch' mise.toml scripts
+mise run check:testflight-ipad-device -- '<trusted iPad name>'
 ```
 
 A good automated check verifies:

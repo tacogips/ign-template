@@ -16,6 +16,6 @@ Describe the implementation goal.
 
 ## Verification
 
-- [ ] `task build`
-- [ ] `task test`
-- [ ] `task build:app`
+- [ ] `mise run build`
+- [ ] `mise run test`
+- [ ] `mise run build:app`

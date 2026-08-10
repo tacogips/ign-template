@@ -31,7 +31,7 @@ The application requires persistent storage for user data and session management
 PostgreSQL is recommended for production use due to:
 - Strong data integrity guarantees
 - Flexible query capabilities for future requirements
-- Well-supported in Nix and Docker environments
+- Well-supported in mise-managed and Docker environments
 
 ## Decision
 

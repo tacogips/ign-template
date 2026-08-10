@@ -1,7 +1,7 @@
 {
   "name": "general-v1",
   "version": "1.0.0",
-  "description": "General investigation template with Nix flake and reusable agent skills",
+  "description": "General investigation template with mise configuration and reusable agent skills",
   "author": "tacogips",
   "repository": "https://github.com/tacogips/ign-template",
   "license": "MIT",
@@ -9,8 +9,7 @@
     "general",
     "research",
     "investigation",
-    "nix",
-    "task"
+    "mise"
   ],
   "variables": {
     "DESCRIPTION": {
@@ -31,5 +30,5 @@
     ],
     "include_dotfiles": true
   },
-  "hash": "0a1969b6b810de2213c57e52b2a541dcf2d6863a17246b8491e17936f43113b8"
+  "hash": "f4f95349f103b6709138cebf64a1363cdae7be5f34b1e646d46f3a33be745617"
 }

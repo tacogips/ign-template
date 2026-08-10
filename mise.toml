@@ -1,0 +1,73 @@
+min_version = "2026.8.3"
+
+[tools]
+go = "latest"
+golangci-lint = "latest"
+"github:tacogips/ign" = "latest"
+
+[tasks.default]
+description = "Show available tasks"
+run = "mise tasks ls"
+
+[tasks.update]
+description = "Update all ign templates"
+run = "mise run template-update-all"
+
+[tasks.template-list]
+description = "List all available ign templates"
+run = '''
+echo "Available templates:"
+for json in ./*/ign-template.json; do
+  if [ -f "$json" ]; then
+    echo "  - $(basename "$(dirname "$json")")"
+  fi
+done
+'''
+
+[tasks.template-update]
+description = "Update one template (usage: TEMPLATE=<template-name> mise run template-update)"
+run = '''
+: "${TEMPLATE:?Set TEMPLATE to a template directory name}"
+template_dir="./$TEMPLATE"
+if [ ! -f "$template_dir/ign-template.json" ]; then
+  echo "Error: template '$TEMPLATE' not found (missing ign-template.json)" >&2
+  exit 1
+fi
+ign template update "$template_dir"
+'''
+
+[tasks.template-update-all]
+description = "Update all ign templates"
+run = '''
+for json in ./*/ign-template.json; do
+  if [ -f "$json" ]; then
+    dir=$(dirname "$json")
+    echo "Updating $(basename "$dir")"
+    ign template update "$dir"
+  fi
+done
+'''
+
+[tasks.template-check]
+description = "Check one template (usage: TEMPLATE=<template-name> mise run template-check)"
+run = '''
+: "${TEMPLATE:?Set TEMPLATE to a template directory name}"
+template_dir="./$TEMPLATE"
+if [ ! -f "$template_dir/ign-template.json" ]; then
+  echo "Error: template '$TEMPLATE' not found (missing ign-template.json)" >&2
+  exit 1
+fi
+ign template check "$template_dir" -v
+'''
+
+[tasks.template-check-all]
+description = "Check all ign templates"
+run = '''
+for json in ./*/ign-template.json; do
+  if [ -f "$json" ]; then
+    dir=$(dirname "$json")
+    echo "Checking $(basename "$dir")"
+    ign template check "$dir" -v
+  fi
+done
+'''

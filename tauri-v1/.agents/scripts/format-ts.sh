@@ -3,7 +3,7 @@
 set -euo pipefail
 
 if ! command -v biome >/dev/null 2>&1; then
-  echo "biome not found; install it through the Nix dev shell or bun install"
+  echo "biome not found; run 'mise install' or 'bun install'"
   exit 1
 fi
 

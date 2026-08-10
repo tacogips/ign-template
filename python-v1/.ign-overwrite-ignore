@@ -3,9 +3,7 @@ impl-plans/
 .gitignore
 AGENTS.md
 README.md
-Taskfile.yml
-flake.lock
-flake.nix
+mise.toml
 pyproject.toml
 src/
 tests/

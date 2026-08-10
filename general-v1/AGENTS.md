@@ -20,20 +20,19 @@ You are a professional system architect and investigation partner. You continuou
 
 ## Project Overview
 
-This is `@ign-var:PROJECT_NAME={current_dir}@`, a general-purpose investigation and research workspace managed with Nix flakes and direnv.
+This is `@ign-var:PROJECT_NAME={current_dir}@`, a general-purpose investigation and research workspace managed with mise.
 
 ## Development Environment
 
 - **Primary Use**: Investigation, documentation, browser-based verification, and repeatable research workflows
-- **Environment Manager**: Nix flakes + direnv
-- **Development Shell**: Run `nix develop` or use direnv to activate
+- **Environment Manager**: mise
+- **Tool Setup**: Run `mise install`
 
 ## Project Structure
 
 ```text
 .
-├── flake.nix
-├── .envrc
+├── mise.toml
 ├── .gitignore
 ├── design-docs/
 ├── impl-plans/

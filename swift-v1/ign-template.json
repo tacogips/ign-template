@@ -1,7 +1,7 @@
 {
   "name": "swift-v1",
   "version": "1.0.0",
-  "description": "Swift Package Manager project template with Nix flake, Taskfile, Homebrew formula releases, and macOS Cask release support",
+  "description": "Swift Package Manager project template with mise, Homebrew formula releases, and macOS Cask release support",
   "author": "tacogips",
   "repository": "https://github.com/tacogips/ign-template",
   "license": "MIT",
@@ -11,8 +11,7 @@
     "macos",
     "homebrew",
     "cask",
-    "nix",
-    "task"
+    "mise"
   ],
   "variables": {
     "DESCRIPTION": {
@@ -107,5 +106,5 @@
     ],
     "include_dotfiles": true
   },
-  "hash": "2b1856dd13c12af367d773c0b73f0d63316024bf2a3e3088c41b6824cf06dba2"
+  "hash": "b5ca7d48c287dacee08e661a8b7ef0d87cacf3f2b28a934dcce5979c64eb396e"
 }

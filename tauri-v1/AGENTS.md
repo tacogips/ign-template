@@ -29,19 +29,18 @@ This is @ign-var:PROJECT_NAME@ - a Tauri desktop application with a Bun, Vite, a
 - **Frontend**: TypeScript, Vite, Bun
 - **Desktop Runtime**: Tauri 2
 - **Backend**: Rust
-- **Build Tool**: Cargo and Bun, with go-task for automation
-- **Environment Manager**: Nix flakes + direnv
-- **Development Shell**: Run `nix develop` or use direnv to activate
-- **Rust Toolchain**: Managed via `rust-toolchain.toml`
+- **Build Tool**: Cargo and Bun, with mise as the task runner
+- **Environment Manager**: mise
+- **Tool Setup**: Run `mise install`
+- **Rust Toolchain**: Managed by mise
 
 ## Project Structure
 
 ```text
 .
-├── flake.nix
+├── mise.toml
 ├── package.json
 ├── Cargo.toml
-├── Taskfile.yml
 ├── index.html
 ├── src/
 │   ├── main.ts
@@ -66,7 +65,7 @@ This is @ign-var:PROJECT_NAME@ - a Tauri desktop application with a Bun, Vite, a
 - `clippy` - Rust linter
 - `rustfmt` - Rust formatter
 - `biome` - Frontend code formatter and linter
-- `task` - Task runner
+- `mise` - Tool manager and task runner
 - `gitleaks` - Secret scanning
 
 ## Coding Standards
@@ -79,12 +78,12 @@ This is @ign-var:PROJECT_NAME@ - a Tauri desktop application with a Bun, Vite, a
 ## Common Commands
 
 ```bash
-task install
-task dev
-task check
-task test
-task build
-task lint
+mise run install
+mise run dev
+mise run check
+mise run test
+mise run build
+mise run lint
 ```
 
 ## Git Commit Policy
@@ -95,5 +94,4 @@ Do NOT add tool attribution or co-authorship information to commit messages. All
 
 ## Notes
 
-- Private environment variables should be managed in `tacogips/kinko` and loaded through `kinko direnv export`.
-- `.envrc.private` is not sourced by default.
+- Run secret-dependent commands through `kinko exec`; never commit secret values.

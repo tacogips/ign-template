@@ -20,8 +20,8 @@ The template is a generic scaffold, not a copy of the chilla product. It should 
 - Bun, Vite, TypeScript frontend.
 - Tauri backend under `src-tauri/`.
 - Rust workspace with a backend crate and `tauri.conf.json`.
-- Taskfile commands for development, build, test, check, lint, and clean.
-- Nix development environment that includes Bun, Rust tooling, Tauri build dependencies, and ign-friendly project setup.
+- mise tasks for development, build, test, check, lint, and clean.
+- mise configuration that installs Bun and Rust tooling and exposes ign-friendly project tasks.
 
 The template should not include chilla-specific Markdown viewer, Git viewer, release signing, notarization, custom window chrome, file watcher, media streaming, or product-specific commands unless they are needed for a minimal Tauri scaffold.
 
@@ -33,7 +33,7 @@ The template should not include chilla-specific Markdown viewer, Git viewer, rel
 |----------|------|---------|---------|
 | `PROJECT_NAME` | string | `{current_dir}` | npm package name, generated directory identity, and app-facing default name. |
 | `VERSION` | string | `0.1.0` | npm, Cargo, and Tauri config version. |
-| `DESCRIPTION` | string | `A Tauri desktop app` | package, Cargo, flake, and README description. |
+| `DESCRIPTION` | string | `A Tauri desktop app` | package, Cargo, and README description. |
 | `REPOSITORY` | string | `https://github.com/user/repo` | package metadata and generated docs. |
 | `HOMEPAGE` | string | `https://github.com/user/repo` | package metadata and generated docs. |
 | `AUTHOR_NAME` | string | empty | Optional author metadata. |
@@ -56,8 +56,7 @@ The template should generate a self-contained project similar to:
 .
 ├── AGENTS.md
 ├── Cargo.toml
-├── Taskfile.yml
-├── flake.nix
+├── mise.toml
 ├── index.html
 ├── package.json
 ├── src/
@@ -82,9 +81,9 @@ Optional local workflow folders such as `design-docs/` and `impl-plans/` may be 
 | Reference | Use | Design Decision |
 |-----------|-----|-----------------|
 | `bun-ts-v1/package.json` | Bun scripts and metadata variable style. | Reuse concise scripts and metadata conventions. |
-| `bun-ts-v1/flake.nix` | Bun-focused Nix development shell. | Reuse simple dev-shell style where possible. |
+| `bun-ts-v1/mise.toml` | Bun-focused tool and task configuration. | Reuse concise mise conventions. |
 | `rust-v1/Cargo.toml` | Rust metadata, author conditionals, edition/toolchain variables. | Reuse Cargo variable conventions and separate Rust toolchain variable. |
-| `rust-v1/Taskfile.yml` | Task runner conventions. | Keep task names predictable: `default`, `build`, `test`, `check`, `fmt`, `fmt-check`, `lint`, `clean`. |
+| `rust-v1/mise.toml` | Task runner conventions. | Keep task names predictable: `default`, `build`, `test`, `check`, `fmt`, `fmt-check`, `lint`, `clean`. |
 | `chilla/package.json` | Tauri, Bun, Vite, TypeScript script shape. | Use Tauri/Bun/Vite structure but avoid chilla-only dependencies. |
 | `chilla/src-tauri/Cargo.toml` | Tauri v2 Cargo layout. | Use Tauri v2 crate layout and minimal dependencies. |
 | `chilla/src-tauri/tauri.conf.json` | Tauri build config, dev URL, frontend dist. | Reuse build flow and dev port shape; avoid chilla-specific window/security choices unless needed. |
@@ -124,7 +123,7 @@ After validation, review the diff for `tauri-v1/ign-template.json` and confirm t
 
 - Tauri, npm package, Cargo package, Rust lib target, and bundle identifier naming rules differ; invalid defaults can produce generated projects that fail to build.
 - Copying chilla dependencies too broadly can make the template heavy and product-specific.
-- Nix GUI dependencies for Linux and Darwin can be complex; the first implementation should prefer a development shell that supports local build/check commands before adding full reproducible package outputs.
+- Native Tauri GUI dependencies vary by operating system and remain explicit platform prerequisites outside mise.
 - Rust 1.83 is too old for current Tauri dependency resolution because transitive crates may require Cargo/Rust 2024 support; the template therefore follows chilla's Rust 1.92.0 default.
 - README currently omits some existing template roots; the tauri-v1 README update should stay focused while not removing existing listed templates.
 

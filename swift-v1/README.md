@@ -5,9 +5,9 @@
 ## Development
 
 ```bash
-nix develop
-task build
-task test
+mise install
+mise run build
+mise run test
 swift run @ign-var:EXECUTABLE_NAME={current_dir}@ --help
 ```
 
@@ -27,19 +27,19 @@ needed, but use identifier-safe values such as `AppCore`, `AppCLI`, and
 Build local formula archives:
 
 ```bash
-task build:homebrew -- darwin-arm64 darwin-x64
+mise run build:homebrew -- darwin-arm64 darwin-x64
 ```
 
 Render a formula after both platform archives exist:
 
 ```bash
-task homebrew:formula -- @ign-var:VERSION=0.1.0@
+mise run homebrew:formula -- @ign-var:VERSION=0.1.0@
 ```
 
 Render directly into the default sibling tap checkout:
 
 ```bash
-task homebrew:tap-formula -- @ign-var:VERSION=0.1.0@
+mise run homebrew:tap-formula -- @ign-var:VERSION=0.1.0@
 ```
 
 Install from the tap after the formula is published:
@@ -57,27 +57,27 @@ Apple signing credentials must stay local and must not be committed.
 Check the build plan:
 
 ```bash
-task build:homebrew-cask -- --dry-run darwin-arm64 darwin-x64
+mise run build:homebrew-cask -- --dry-run darwin-arm64 darwin-x64
 ```
 
 Build with local signing credentials:
 
 ```bash
 kinko exec --env APPLE_SIGNING_IDENTITY,APPLE_ID,APPLE_PASSWORD,APPLE_TEAM_ID -- \
-  task build:homebrew-cask -- darwin-arm64 darwin-x64
+  mise run build:homebrew-cask -- darwin-arm64 darwin-x64
 ```
 
 Render a Cask:
 
 ```bash
-task homebrew:cask -- @ign-var:VERSION=0.1.0@
+mise run homebrew:cask -- @ign-var:VERSION=0.1.0@
 ```
 
 For a tagged release, build, upload, and render the tap Cask:
 
 ```bash
 kinko exec --env APPLE_SIGNING_IDENTITY,APPLE_ID,APPLE_PASSWORD,APPLE_TEAM_ID -- \
-  task release:homebrew-cask-local -- v@ign-var:VERSION=0.1.0@
+  mise run release:homebrew-cask-local -- v@ign-var:VERSION=0.1.0@
 ```
 
 See `packaging/homebrew/README.md` and `.agents/skills/` for release workflows.

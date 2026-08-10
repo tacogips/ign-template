@@ -17,20 +17,20 @@ builds, simulator checks, archives, and App Store/TestFlight export.
 - UI framework: SwiftUI
 - Package manager: Swift Package Manager
 - App project: Xcode iOS app target
-- Build runner: go-task
-- Environment manager: Nix flakes and direnv
+- Build runner: mise
+- Environment manager: mise
 
 ## Commands
 
 ```bash
-task build
-task test
-task build:app
-task smoke:simulator-app
-task archive:ios-app
-task archive:ios-app-signed
-task export:ios-app
-task lint
+mise run build
+mise run test
+mise run build:app
+mise run smoke:simulator-app
+mise run archive:ios-app
+mise run archive:ios-app-signed
+mise run export:ios-app
+mise run lint
 ```
 
 ## Coding Standards

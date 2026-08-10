@@ -1,6 +1,6 @@
 ---
 name: homebrew-release
-description: Use when building, validating, publishing, or tap-rendering Homebrew formula tarball releases for this Swift project, including scripts/build-homebrew-release.sh, scripts/render-homebrew-formula.sh, and task build:homebrew or homebrew:formula commands.
+description: Use when building, validating, publishing, or tap-rendering Homebrew formula tarball releases for this Swift project, including scripts/build-homebrew-release.sh, scripts/render-homebrew-formula.sh, and mise run build:homebrew or homebrew:formula commands.
 ---
 
 # Homebrew Release
@@ -39,23 +39,23 @@ contract.
 Build:
 
 ```bash
-task build
-task test
-task build:homebrew -- darwin-arm64 darwin-x64
+mise run build
+mise run test
+mise run build:homebrew -- darwin-arm64 darwin-x64
 ```
 
 Render locally:
 
 ```bash
 version="$(tr -d '[:space:]' < VERSION)"
-task homebrew:formula -- "$version"
+mise run homebrew:formula -- "$version"
 ```
 
 Render into the default sibling tap:
 
 ```bash
 version="$(tr -d '[:space:]' < VERSION)"
-task homebrew:tap-formula -- "$version"
+mise run homebrew:tap-formula -- "$version"
 ```
 
 For a custom tap path:

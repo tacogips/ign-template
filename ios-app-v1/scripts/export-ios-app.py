@@ -22,7 +22,7 @@ def main() -> int:
   if not Path(xcodebuild).is_file():
     raise SystemExit(f"xcodebuild not found at {xcodebuild}")
   if not (ROOT / ARCHIVE_PATH).is_dir():
-    raise SystemExit(f"Archive not found at {ARCHIVE_PATH}. Run task archive:ios-app-signed first.")
+    raise SystemExit(f"Archive not found at {ARCHIVE_PATH}. Run mise run archive:ios-app-signed first.")
   if not (ROOT / EXPORT_OPTIONS).is_file():
     raise SystemExit(f"Export options plist not found at {EXPORT_OPTIONS}.")
 

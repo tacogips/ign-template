@@ -1,9 +1,7 @@
-## nix/git
-.pre-commit-config.yaml
-**/.direnv
 **/.env
-**/.envrc.private*
 **/*.private*
+.pre-commit-config.yaml
+!*/.pre-commit-config.yaml
 
 ## large files
 **/*.zip
@@ -38,7 +36,8 @@
 **/.pytest_cache/
 
 ## tmps
-result
 **/tmp
 
 ## go binaries
+
+mise.local.toml

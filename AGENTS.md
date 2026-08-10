@@ -137,14 +137,14 @@ ign is a CLI tool for project scaffolding that downloads templates from GitHub r
 
 ### ign Installation
 
-ign is available in the Nix development environment via flake input:
+ign is managed by the repository's mise configuration:
 
 ```bash
-# Enter development shell (ign will be available)
-nix develop
+# Install the declared tools (including ign)
+mise install
 
 # Or run directly without entering shell
-nix run github:tacogips/ign -- --help
+mise exec -- ign --help
 ```
 
 ### ign Workflow
@@ -298,25 +298,22 @@ This helps improve ign for everyone and ensures issues are tracked and resolved 
 
 ## Development Environment
 - **Language**: Go
-- **Build Tool**: go-task (Task runner)
-- **Environment Manager**: Nix flakes + direnv
-- **Development Shell**: Run `nix develop` or use direnv to activate
+- **Task Runner**: mise
+- **Environment Manager**: mise
+- **Tool Setup**: Run `mise install`
 
 ## Project Structure
 ```
 .
-├── flake.nix          # Nix flake configuration for Go development
-├── flake.lock         # Locked flake dependencies
-├── .envrc             # direnv configuration
+├── mise.toml          # Tool versions and repository tasks
 └── .gitignore         # Git ignore patterns
 ```
 
 ## Development Tools Available
 - `go` - Go compiler and toolchain
 - `gopls` - Go language server (LSP)
-- `gotools` - Additional Go development tools
-- `task` - Task runner (go-task)
-- `ign` - Template-based project scaffolding tool (available in nix develop)
+- `mise` - Tool manager and task runner
+- `ign` - Template-based project scaffolding tool (managed by mise)
 
 ## Coding Standards
 - Follow standard Go conventions and idioms
@@ -402,8 +399,8 @@ The subagent returns a structured response including:
 **Note**: The subagent will iterate on build/test failures until they pass. It runs `go build`, `go test`, and `go vet` in sequence, fixing any issues before returning.
 
 ## Task Management
-- Use `task` command for build automation
-- Define tasks in `Taskfile.yml` (to be created as needed)
+- Use `mise run` for build automation
+- Define tasks in `mise.toml` (to be created as needed)
 
 ## Git Workflow
 - Create meaningful commit messages
@@ -460,10 +457,9 @@ Example format:
 ```
 
 ## Notes
-- This project uses Nix flakes for reproducible development environments
-- Use direnv for automatic environment activation
-- Private environment variables should be managed in `tacogips/kinko` and loaded via `kinko direnv export`; `.envrc.private` is not sourced by default
-- All development dependencies are managed through flake.nix
+- This project uses mise for reproducible development environments
+- Run secret-dependent commands through `kinko exec`; never commit secret values.
+- All development tools and tasks are managed through mise.toml
 
 ## Claude Code Plugin Specification
 

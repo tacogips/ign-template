@@ -82,7 +82,7 @@ Summary: Updated CreateUserUseCase logic.
 ## Capabilities
 
 - Run cargo tests and compilation checks
-- Execute Taskfile test and check targets (if available)
+- Execute mise test and check tasks (if available)
 - Filter and run specific test suites or individual tests
 - Parse test output and compilation errors to identify failure patterns
 - Verify that modifications don't break existing functionality or compilation
@@ -99,7 +99,7 @@ If tests or compilation checks fail:
 
 1. **First, verify command correctness**: Re-check this agent's prompt to confirm you are using the correct test/check commands
    - Confirm the commands match the project's conventions
-   - Check if Taskfile targets are available
+   - Check if mise tasks are available
 
 2. **Only proceed to code analysis if commands are correct**: If the error persists after confirming correct commands:
    - Analyze the error output to identify the root cause
@@ -236,7 +236,7 @@ This is useless because:
 2. **Cargo clippy**: `CARGO_TERM_QUIET=true cargo clippy --all-targets -- -D warnings`
    - Catch common issues and potential bugs
    - Treat warnings as errors
-3. **If Taskfile available**: Check for `task check` or `task lint` targets
+3. **If mise tasks are available**: Check for `mise run check` or `mise run lint`
 
 ### For Testing
 
@@ -245,7 +245,7 @@ This is useless because:
 3. **Specific module**: `cargo test module_name::` for module tests
 4. **Verbose output**: `cargo test -- --nocapture` when debugging failures
 5. **With coverage**: `cargo tarpaulin` if requested
-6. **If Taskfile available**: Check for `task test` target
+6. **If mise tasks are available**: Check for `mise run test`
 
 ### Test Commands
 
@@ -377,4 +377,4 @@ Output:
 - Follow Rust testing conventions
 - Use appropriate testing strategies per module
 - Respect feature flags if the project uses them
-- Check for Taskfile targets for project-specific commands
+- Check for mise tasks for project-specific commands

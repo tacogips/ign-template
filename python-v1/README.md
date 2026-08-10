@@ -18,11 +18,11 @@ uv run pytest
 ## Common Commands
 
 ```bash
-task sync
-task run
-task test
-task lint
-task typecheck
-task fmt
-task build
+mise run sync
+mise run run
+mise run test
+mise run lint
+mise run typecheck
+mise run fmt
+mise run build
 ```

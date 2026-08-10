@@ -9,11 +9,7 @@
 # Cargo lock (optional - uncomment if you want to ignore)
 # Cargo.lock
 
-## nix/git
-/.pre-commit-config.yaml
-**/.direnv
 **/.env
-**/.envrc.private*
 **/*.private*
 
 ## large files
@@ -48,10 +44,11 @@
 **/.tox/
 
 ## tmps
-result
 **/tmp
 
 ## Coverage
 *.profraw
 *.profdata
 tarpaulin-report.html
+
+mise.local.toml

@@ -1,0 +1,53 @@
+min_version = "2026.8.3"
+
+[tools]
+python = "3.12"
+ruby = "3.4"
+github-cli = "latest"
+gitleaks = "latest"
+swiftlint = "latest"
+"gem:fastlane" = "latest"
+
+[tasks.default]
+description = "Show available tasks"
+run = "mise tasks ls"
+
+[tasks.build]
+description = "Build the Swift package"
+run = "swift build"
+
+[tasks.test]
+description = "Run Swift tests"
+run = "swift test"
+
+[tasks."build:app"]
+description = "Build the iPhone/iPad simulator app bundles"
+run = "scripts/build-app-targets.py"
+
+[tasks."smoke:simulator-app"]
+description = "Install and launch-smoke the simulator app bundles"
+run = "scripts/smoke-simulator-app.py"
+
+[tasks."archive:ios-app"]
+description = "Build and validate an unsigned generic iOS archive"
+run = "scripts/archive-ios-app.py"
+
+[tasks."archive:ios-app-signed"]
+description = "Build a signed generic iOS archive"
+run = "scripts/archive-ios-app-signed.py"
+
+[tasks."export:ios-app"]
+description = "Export a signed iOS archive for App Store Connect"
+run = "scripts/export-ios-app.py"
+
+[tasks."check:ios-ipa"]
+description = "Validate the exported IPA"
+run = "scripts/check-ios-ipa-readiness.py"
+
+[tasks.lint]
+description = "Run SwiftLint"
+run = "swiftlint"
+
+[tasks.clean]
+description = "Clean SwiftPM, Xcode, and export artifacts"
+run = "rm -rf .build DerivedData dist release"

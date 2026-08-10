@@ -14,13 +14,8 @@ DerivedData/
 dist/
 release/
 
-# Nix and local environment files
 .pre-commit-config.yaml
-result
-result-*
-**/.direnv
 **/.env
-**/.envrc.private*
 **/*.private*
 
 # IDE and OS metadata
@@ -41,3 +36,5 @@ logs/
 # Python cache artifacts
 __pycache__/
 *.py[cod]
+
+mise.local.toml

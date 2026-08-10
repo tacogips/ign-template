@@ -11,8 +11,7 @@
     "ios",
     "swiftpm",
     "xcode",
-    "nix",
-    "task",
+    "mise",
     "testflight",
     "app-store-connect"
   ],
@@ -106,5 +105,5 @@
     ],
     "include_dotfiles": true
   },
-  "hash": "c7ca0b341b7ff5b215ed9673414c2fe7ba03b4a81b544665f472cea23d55ca5f"
+  "hash": "0ff32bf7f93a4c10d293ea97750ba288b7647b0ad211943b1103d377e1dd0426"
 }

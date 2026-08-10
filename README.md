@@ -11,8 +11,8 @@ For detailed usage, installation instructions, and command reference, see the [i
 ## Quick Start
 
 ```bash
-# Install ign
-nix run github:tacogips/ign
+# Install the tools declared by this repository
+mise install
 
 # Use this template
 ign checkout github.com/tacogips/ign-template/go-v1 ./my-project
@@ -22,12 +22,12 @@ ign checkout github.com/tacogips/ign-template/go-v1 ./my-project
 
 | Template | Description |
 |----------|-------------|
-| `go-v1` | Go project with Nix flake, Claude Code configuration |
+| `go-v1` | Go project with mise configuration, Claude Code configuration |
 | `general-v1` | General investigation workspace with browser tooling and reusable agent skills |
 | `ios-app-v1` | SwiftUI iOS app with SwiftPM modules, Xcode project wrapper, simulator checks, and iOS archive/export helpers |
 | `python-v1` | Modern Python project with uv, src layout, Ruff, and pytest |
-| `swift-v1` | SwiftPM project with Nix, Taskfile, Homebrew formula, and macOS Cask release support |
-| `tauri-v1` | Tauri desktop app with Bun, Vite, TypeScript, Rust, and Nix flake |
+| `swift-v1` | SwiftPM project with mise, Homebrew formula, and macOS Cask release support |
+| `tauri-v1` | Tauri desktop app with Bun, Vite, TypeScript, Rust, and mise configuration |
 
 ## Using Templates
 
@@ -59,17 +59,14 @@ ign checkout github.com/tacogips/ign-template/tauri-v1 --dry-run
 
 ## Development Environment
 
-This template includes a Nix flake for reproducible development:
+This repository includes a mise configuration for reproducible tooling and tasks:
 
 ```bash
-# Enter development shell (ign will be available)
-nix develop
-
-# Or use direnv for automatic activation
-direnv allow
+# Install ign and the repository development tools
+mise install
 ```
 
-Private environment variables should be managed in `tacogips/kinko` and loaded through `kinko direnv export`; `.envrc.private` is no longer part of the workflow.
+Run secret-dependent commands through `kinko exec`; never commit secret values.
 
 ## Issue Reporting
 

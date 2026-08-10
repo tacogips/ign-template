@@ -8,26 +8,26 @@ This project is a Tauri desktop app with a Bun, Vite, and TypeScript frontend an
 
 ```bash
 bun install
-task dev
+mise run dev
 ```
 
 ## Common Tasks
 
 ```bash
-task check
-task test
-task build
-task tauri-build
-task lint
+mise run check
+mise run test
+mise run build
+mise run tauri-build
+mise run lint
 ```
 
-## Nix
+## Tool Setup
 
 ```bash
-nix develop
+mise install
 ```
 
-The development shell includes Bun, TypeScript tooling, Rust tooling, Tauri build dependencies, go-task, and gitleaks.
+mise installs Bun, Rust, rust-analyzer, pre-commit, and gitleaks. Install the native Tauri system libraries required by your operating system separately.
 
 ## Metadata
 

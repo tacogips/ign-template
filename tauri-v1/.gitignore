@@ -21,15 +21,9 @@ bun.lockb
 .env
 .env.local
 .env.*.local
-**/.envrc.private*
 **/*.private*
 .private*/
 
-# Nix
-/.pre-commit-config.yaml
-.direnv/
-result
-result-*
 
 # IDE and OS metadata
 .idea/
@@ -53,3 +47,5 @@ coverage/
 
 # Implementation progress lock file
 impl-plans/.progress.lock
+
+mise.local.toml

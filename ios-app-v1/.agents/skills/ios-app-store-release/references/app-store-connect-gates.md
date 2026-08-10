@@ -5,7 +5,7 @@ Use this checklist against the current App Store Connect UI and current official
 ## Candidate and provenance
 
 - Intended marketing version, build number, and bundle identifier are consistent.
-- Signed IPA passes `task check:ios-ipa`.
+- Signed IPA passes `mise run check:ios-ipa`.
 - The exact build has completed App Store Connect processing and TestFlight validation.
 - Intended release changes are committed and pushed; any release tag resolves to that same commit.
 

@@ -8,47 +8,44 @@ This project is a SwiftUI iPhone/iPad app scaffold with:
 - An Xcode iOS app wrapper at `@ign-var:IOS_APP_TARGET=App@.xcodeproj`.
 - Simulator build and smoke-test scripts.
 - Unsigned and signed iOS archive/export helpers.
-- Nix, direnv, go-task, SwiftLint, and gitleaks development tooling.
-- A pinned Nix dependency graph in `flake.lock` for reproducible shells.
+- mise-managed Python, Ruby, Fastlane, SwiftLint, and gitleaks tooling.
 
 ## Requirements
 
 - macOS 14 or later for local iOS development.
 - Xcode with iOS @ign-var:IOS_DEPLOYMENT_TARGET=17.0@ SDK or later.
 - Swift @ign-var:SWIFT_TOOLS_VERSION=6.0@ toolchain.
-- `go-task` for repository task commands.
-- Optional: Nix flakes plus direnv for the project development shell.
-- Optional: `kinko` for exporting user-scoped secrets into direnv.
+- `mise` for installing developer tools and running repository tasks.
+- Optional: `kinko` for injecting user-scoped secrets into individual commands.
 
 ## Run Locally
 
-Enter the development shell when using Nix:
+Install the declared developer tools:
 
 ```bash
-nix develop
+mise install
 ```
 
-The checked-in `flake.lock` pins the Nix inputs. When `kinko` is installed,
-`.envrc` also exports secrets from the current user's vault; no secret values
-belong in this repository.
+For commands that need secrets, run mise through `kinko exec`; no secret values
+belong in this repository or in `mise.toml`.
 
 Build and test the Swift package:
 
 ```bash
-task build
-task test
+mise run build
+mise run test
 ```
 
 Build the iPhone/iPad simulator app bundles:
 
 ```bash
-task build:app
+mise run build:app
 ```
 
 Launch-smoke the simulator app bundles:
 
 ```bash
-task smoke:simulator-app
+mise run smoke:simulator-app
 ```
 
 The Xcode app wrapper is `@ign-var:IOS_APP_TARGET=App@.xcodeproj` with the shared
@@ -57,18 +54,18 @@ The Xcode app wrapper is `@ign-var:IOS_APP_TARGET=App@.xcodeproj` with the share
 ## Useful Commands
 
 ```bash
-task lint
-task build
-task test
-task build:app
-task smoke:simulator-app
-task archive:ios-app
-task archive:ios-app-signed
-task export:ios-app
-task check:ios-ipa
+mise run lint
+mise run build
+mise run test
+mise run build:app
+mise run smoke:simulator-app
+mise run archive:ios-app
+mise run archive:ios-app-signed
+mise run export:ios-app
+mise run check:ios-ipa
 ```
 
-Run `task --list` for the full task surface.
+Run `mise tasks ls` for the full task surface.
 
 ## Package Layout
 
@@ -85,8 +82,8 @@ This template intentionally does not include macOS release or Homebrew release
 tooling. Do not add Homebrew formula/cask packaging, Mac app release scripts, or
 Mac distribution artifacts unless the project explicitly changes scope.
 
-iOS App Store/TestFlight export is supported through `task archive:ios-app-signed`,
-`task export:ios-app`, and `task check:ios-ipa` after Apple signing is configured.
+iOS App Store/TestFlight export is supported through `mise run archive:ios-app-signed`,
+`mise run export:ios-app`, and `mise run check:ios-ipa` after Apple signing is configured.
 
 ## App Store and TestFlight Releases
 
@@ -99,6 +96,6 @@ The generated project includes reusable agent skills under `.agents/skills/`:
 - `ios-product-screenshots`: controlled iPhone/iPad storefront screenshot
   capture and review workflow.
 
-Run `task check:ios-ipa` after export and before uploading the IPA through Xcode
+Run `mise run check:ios-ipa` after export and before uploading the IPA through Xcode
 Organizer, Transporter, or approved App Store Connect automation. Uploading is
 not evidence that Apple has processed the build or distributed it to testers.

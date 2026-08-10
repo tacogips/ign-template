@@ -1,5 +1,5 @@
 {
-  "name": "@ign-var:PROJECT_NAME@",
+  "name": "@ign-var:PROJECT_NAME={current_dir}@",
   "version": "@ign-var:VERSION=0.1.0@",
   "description": "@ign-var:DESCRIPTION@",
   "type": "module",

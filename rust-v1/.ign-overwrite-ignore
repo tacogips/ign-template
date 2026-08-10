@@ -3,8 +3,5 @@ impl-plans/
 .gitignore
 AGENTS.md
 Cargo.toml
-Taskfile.yml
-flake.lock
-flake.nix
-rust-toolchain.toml
+mise.toml
 src/

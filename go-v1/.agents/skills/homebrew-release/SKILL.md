@@ -1,6 +1,6 @@
 ---
 name: homebrew-release
-description: Use when building, validating, publishing, or tap-rendering Homebrew formula releases for this Go project, including scripts/build-homebrew-release.sh, scripts/render-homebrew-formula.sh, Taskfile Homebrew tasks, GitHub Release assets, and tap formula verification.
+description: Use when building, validating, publishing, or tap-rendering Homebrew formula releases for this Go project, including scripts/build-homebrew-release.sh, scripts/render-homebrew-formula.sh, mise Homebrew tasks, GitHub Release assets, and tap formula verification.
 ---
 
 # Homebrew Release
@@ -36,22 +36,22 @@ Expected asset mapping:
 Build:
 
 ```bash
-task test
-task build:homebrew -- darwin-arm64 darwin-x64 linux-arm64 linux-x64
+mise run test
+mise run build:homebrew -- darwin-arm64 darwin-x64 linux-arm64 linux-x64
 ```
 
 Render locally:
 
 ```bash
 version="$(tr -d '[:space:]' < internal/build/VERSION)"
-task homebrew:formula -- "$version"
+mise run homebrew:formula -- "$version"
 ```
 
 Render into the default sibling tap:
 
 ```bash
 version="$(tr -d '[:space:]' < internal/build/VERSION)"
-task homebrew:tap-formula -- "$version"
+mise run homebrew:tap-formula -- "$version"
 ```
 
 ## Publishing

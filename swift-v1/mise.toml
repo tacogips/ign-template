@@ -1,0 +1,70 @@
+min_version = "2026.8.3"
+
+[tools]
+swift = "6.0"
+swiftlint = "latest"
+gitleaks = "latest"
+
+[tasks.default]
+description = "Show available tasks"
+run = "mise tasks ls"
+
+[tasks.build]
+description = "Build the Swift package"
+run = "swift build"
+
+[tasks.run]
+description = "Run the executable"
+run = "swift run @ign-var:EXECUTABLE_NAME={current_dir}@"
+
+[tasks.test]
+description = "Run Swift tests"
+run = "swift test"
+
+[tasks.clean]
+description = "Clean SwiftPM and release artifacts"
+run = "rm -rf .build dist release"
+
+[tasks.lint]
+description = "Run SwiftLint"
+run = "swiftlint"
+
+[tasks."build:homebrew"]
+description = "Build Homebrew formula archives"
+run = "scripts/build-homebrew-release.sh"
+
+[tasks."homebrew:formula"]
+description = "Render the Homebrew formula"
+run = "scripts/render-homebrew-formula.sh"
+
+[tasks."homebrew:tap-formula"]
+description = "Render the formula into the default sibling tap"
+run = '''
+if [ "$#" -eq 0 ]; then
+  echo "usage: mise run homebrew:tap-formula -- <version>" >&2
+  exit 2
+fi
+scripts/render-homebrew-formula.sh "$1" "@ign-var:HOMEBREW_TAP_DIR=../homebrew-tap@/Formula/@ign-var:HOMEBREW_CASK_TOKEN={current_dir}@.rb"
+'''
+
+[tasks."build:homebrew-cask"]
+description = "Build signed and notarized Homebrew Cask DMGs"
+run = "scripts/build-homebrew-cask-release.sh"
+
+[tasks."homebrew:cask"]
+description = "Render the Homebrew cask"
+run = "scripts/render-homebrew-cask.sh"
+
+[tasks."homebrew:tap-cask"]
+description = "Render the cask into the default sibling tap"
+run = '''
+if [ "$#" -eq 0 ]; then
+  echo "usage: mise run homebrew:tap-cask -- <version>" >&2
+  exit 2
+fi
+scripts/render-homebrew-cask.sh "$1" "@ign-var:HOMEBREW_TAP_DIR=../homebrew-tap@/Casks/@ign-var:HOMEBREW_CASK_TOKEN={current_dir}@.rb"
+'''
+
+[tasks."release:homebrew-cask-local"]
+description = "Build, notarize, upload, and render a cask for a release tag"
+run = "scripts/release-homebrew-cask-local.sh"

@@ -14,16 +14,16 @@ Ship the exact signed IPA and distinguish each Apple-controlled state. An export
 3. Run the local checks:
 
    ```bash
-   task test
-   task lint
-   task build:app
-   task smoke:simulator-app
-   task archive:ios-app-signed
-   task export:ios-app
-   task check:ios-ipa
+   mise run test
+   mise run lint
+   mise run build:app
+   mise run smoke:simulator-app
+   mise run archive:ios-app-signed
+   mise run export:ios-app
+   mise run check:ios-ipa
    ```
 
-4. `task archive:ios-app-signed` requires `IOS_APP_APPLE_TEAM_ID` (or `APPLE_TEAM_ID`) and a usable Apple Distribution signing identity. Do not put Apple credentials, team IDs, certificates, provisioning profiles, or private keys in tracked files.
+4. `mise run archive:ios-app-signed` requires `IOS_APP_APPLE_TEAM_ID` (or `APPLE_TEAM_ID`) and a usable Apple Distribution signing identity. Do not put Apple credentials, team IDs, certificates, provisioning profiles, or private keys in tracked files.
 
 ## Upload and process
 
@@ -38,6 +38,6 @@ Record non-secret evidence that the exact build was installed and launched from 
 
 ## Failure diagnosis
 
-- Run `task check:ios-ipa` before diagnosing an `ITMS-90207` executable error. If the IPA has a single app, an arm64 executable, the intended bundle identifier, and a valid signature, the remaining problem is likely upload transport, account authorization, or Apple-side validation.
+- Run `mise run check:ios-ipa` before diagnosing an `ITMS-90207` executable error. If the IPA has a single app, an arm64 executable, the intended bundle identifier, and a valid signature, the remaining problem is likely upload transport, account authorization, or Apple-side validation.
 - Treat an App Store Connect upload response as submission only. It may return before build processing completes.
 - Do not claim TestFlight completion until processing, distribution, and device installation have all been verified.

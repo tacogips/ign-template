@@ -2,11 +2,9 @@ design-docs/
 impl-plans/
 .gitignore
 AGENTS.md
-Taskfile.yml
+mise.toml
 biome.json
 bunfig.toml
-flake.lock
-flake.nix
 package.json
 src/
 src/lib.ts

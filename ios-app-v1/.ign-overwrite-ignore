@@ -8,7 +8,5 @@ dist/
 release/
 *.xcarchive/
 *.xcresult/
-.envrc.private
-.envrc.private.*
 *.private
 *.log

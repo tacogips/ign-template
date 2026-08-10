@@ -1,0 +1,71 @@
+min_version = "2026.8.3"
+
+[tools]
+python = "3.12"
+uv = "latest"
+gitleaks = "latest"
+pre-commit = "latest"
+
+[tasks.default]
+description = "Show available tasks"
+run = "mise tasks ls"
+
+[tasks.sync]
+description = "Sync project dependencies with uv"
+run = "uv sync --dev"
+
+[tasks.lock]
+description = "Refresh uv.lock"
+run = "uv lock"
+
+[tasks.run]
+description = "Run the application"
+run = "uv run python -m @ign-var:PACKAGE_NAME={current_dir}@"
+
+[tasks.test]
+description = "Run tests"
+run = "uv run pytest"
+
+[tasks.test-verbose]
+description = "Run tests with verbose output"
+run = "uv run pytest -vv"
+
+[tasks.test-cov]
+description = "Run tests with coverage"
+run = "uv run pytest --cov=@ign-var:PACKAGE_NAME={current_dir}@ --cov-report=term-missing"
+
+[tasks.lint]
+description = "Run Ruff lint checks"
+run = "uv run ruff check ."
+
+[tasks.typecheck]
+description = "Run ty type checks"
+run = "uv run ty check ."
+
+[tasks.fmt]
+description = "Format code with Ruff"
+run = "uv run ruff format ."
+
+[tasks.fmt-check]
+description = "Check formatting"
+run = "uv run ruff format --check ."
+
+[tasks.build]
+description = "Build the package"
+run = "uv build"
+
+[tasks.gitleaks]
+description = "Scan staged changes for secrets"
+run = "gitleaks git --pre-commit --redact --staged --verbose"
+
+[tasks.install-git-hooks]
+description = "Install pre-commit hooks"
+run = "pre-commit install --install-hooks"
+
+[tasks.clean]
+description = "Remove generated artifacts"
+run = "rm -rf build dist htmlcov .coverage .pytest_cache .ruff_cache src/*.egg-info"
+
+[tasks.ci]
+description = "Run the standard CI checks"
+run = "mise run fmt-check && mise run lint && mise run typecheck && mise run test && mise run build"

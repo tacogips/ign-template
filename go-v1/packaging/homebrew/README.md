@@ -18,12 +18,12 @@ render the formula into the tap checkout:
 scripts/render-homebrew-formula.sh <version> ../homebrew-tap/Formula/@ign-var:PROJECT_NAME={current_dir}@.rb
 ```
 
-For the default Taskfile wrappers:
+For the default mise task wrappers:
 
 ```bash
-task build:homebrew -- darwin-arm64 darwin-x64 linux-arm64 linux-x64
-task homebrew:formula -- <version>
-task homebrew:tap-formula -- <version>
+mise run build:homebrew -- darwin-arm64 darwin-x64 linux-arm64 linux-x64
+mise run homebrew:formula -- <version>
+mise run homebrew:tap-formula -- <version>
 ```
 
 Verify from the tap checkout:

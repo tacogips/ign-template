@@ -42,14 +42,14 @@ swift run @ign-var:EXECUTABLE_NAME={current_dir}@ --version | tail -n 1 | grep -
 Check the release plan:
 
 ```bash
-task build:homebrew-cask -- --dry-run darwin-arm64 darwin-x64
+mise run build:homebrew-cask -- --dry-run darwin-arm64 darwin-x64
 ```
 
 Build signed, notarized, and stapled DMGs:
 
 ```bash
 kinko exec --env APPLE_SIGNING_IDENTITY,APPLE_ID,APPLE_PASSWORD,APPLE_TEAM_ID -- \
-  task build:homebrew-cask -- darwin-arm64 darwin-x64
+  mise run build:homebrew-cask -- darwin-arm64 darwin-x64
 ```
 
 Expected outputs:
@@ -75,7 +75,7 @@ For a pushed `v<version>` tag:
 
 ```bash
 kinko exec --env APPLE_SIGNING_IDENTITY,APPLE_ID,APPLE_PASSWORD,APPLE_TEAM_ID -- \
-  task release:homebrew-cask-local -- v<version>
+  mise run release:homebrew-cask-local -- v<version>
 ```
 
 The wrapper checks the local and remote tag, verifies `VERSION`, uploads both

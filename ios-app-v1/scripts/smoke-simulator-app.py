@@ -45,7 +45,7 @@ def is_booted(udid: str) -> bool:
 def smoke_device(label: str, name: str, app_path: Path, booted_by_script: list[str]) -> None:
   resolved_app_path = ROOT / app_path
   if not resolved_app_path.is_dir():
-    raise SystemExit(f"{label} app bundle not found at {app_path}\nRun: task build:app")
+    raise SystemExit(f"{label} app bundle not found at {app_path}\nRun: mise run build:app")
 
   udid = device_udid(name)
   if not udid:

@@ -8,8 +8,7 @@
   "tags": [
     "python",
     "uv",
-    "nix",
-    "task",
+    "mise",
     "ruff",
     "pytest"
   ],
@@ -72,5 +71,5 @@
     ],
     "include_dotfiles": true
   },
-  "hash": "143d2577230fb79ef604e82f3bb4b2aabd1b1dea7309c831b6ed911bd1969a50"
+  "hash": "1edbab619e49511a5c9cc7fd718f5eba89b42e0b9a4274b633651d2012203e83"
 }

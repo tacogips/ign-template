@@ -129,28 +129,25 @@ feat: implement user authentication system
 
 ## Project Overview
 
-This is @ign-var:PROJECT_NAME@ - a Golang project with Nix flake development environment support.
+This is @ign-var:PROJECT_NAME@ - a Golang project with mise-managed development environment.
 
 ## Development Environment
 - **Language**: Go
-- **Build Tool**: go-task (Task runner)
-- **Environment Manager**: Nix flakes + direnv
-- **Development Shell**: Run `nix develop` or use direnv to activate
+- **Task Runner**: mise
+- **Environment Manager**: mise
+- **Tool Setup**: Run `mise install`
 
 ## Project Structure
 ```
 .
-├── flake.nix          # Nix flake configuration for Go development
-├── flake.lock         # Locked flake dependencies
-├── .envrc             # direnv configuration
+├── mise.toml          # Tool versions and project tasks
 └── .gitignore         # Git ignore patterns
 ```
 
 ## Development Tools Available
 - `go` - Go compiler and toolchain
 - `gopls` - Go language server (LSP)
-- `gotools` - Additional Go development tools
-- `task` - Task runner (go-task)
+- `mise` - Tool manager and task runner
 
 ## Release Workflows
 
@@ -161,12 +158,12 @@ Homebrew helper scripts live under `scripts/`:
 - `scripts/build-homebrew-release.sh`
 - `scripts/render-homebrew-formula.sh`
 
-The Taskfile exposes:
+The mise configuration exposes:
 
 ```bash
-task build:homebrew -- darwin-arm64 darwin-x64 linux-arm64 linux-x64
-task homebrew:formula -- <version>
-task homebrew:tap-formula -- <version>
+mise run build:homebrew -- darwin-arm64 darwin-x64 linux-arm64 linux-x64
+mise run homebrew:formula -- <version>
+mise run homebrew:tap-formula -- <version>
 ```
 
 ## Go Code Development
@@ -262,8 +259,8 @@ When implementing from a plan:
 5. When all tasks complete, move plan to `impl-plans/completed/`
 
 ## Task Management
-- Use `task` command for build automation
-- Define tasks in `Taskfile.yml` (to be created as needed)
+- Use `mise run` for build automation
+- Define tasks in `mise.toml` (to be created as needed)
 
 ## Git Workflow
 - Create meaningful commit messages
@@ -316,7 +313,6 @@ Example subtask format:
 ```
 
 ## Notes
-- This project uses Nix flakes for reproducible development environments
-- Use direnv for automatic environment activation
-- Private environment variables should be managed in `tacogips/kinko` and loaded via `kinko direnv export`; `.envrc.private` is not sourced by default
-- All development dependencies are managed through flake.nix
+- This project uses mise for reproducible development environments
+- Run secret-dependent commands through `kinko exec`; never commit secret values.
+- All development tools and tasks are managed through mise.toml

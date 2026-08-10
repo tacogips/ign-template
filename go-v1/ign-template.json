@@ -8,14 +8,13 @@
   "tags": [
     "go",
     "golang",
-    "nix",
-    "task"
+    "mise"
   ],
   "variables": {
     "DESCRIPTION": {
       "type": "string",
       "description": "Variable DESCRIPTION",
-      "default": "A Golang project"
+      "default": "A Go command line tool"
     },
     "GITHUB_REPOSITORY": {
       "type": "string",
@@ -70,5 +69,5 @@
     ],
     "include_dotfiles": true
   },
-  "hash": "be7cb1e9132eb6e3d2295c475973e0f3d6e63137f433a362588ee671a5ddfafc"
+  "hash": "e06dd2e288f4772f09d7a3c679ab273c9273aa43cc44d4651eb6c073c2d5ccaf"
 }
