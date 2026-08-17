@@ -20,8 +20,6 @@ fi
 rust = "@ign-var:RUST_VERSION=1.83.0@"
 rust-analyzer = "latest"
 taplo = "latest"
-gitleaks = "latest"
-pre-commit = "latest"
 "cargo:cargo-nextest" = "latest"
 "cargo:cargo-audit" = "latest"
 
@@ -88,14 +86,6 @@ run = "cargo doc --no-deps --open"
 [tasks.audit]
 description = "Run security audit"
 run = "cargo audit"
-
-[tasks.gitleaks]
-description = "Scan staged changes for secrets"
-run = "gitleaks git --pre-commit --redact --staged --verbose"
-
-[tasks.install-git-hooks]
-description = "Install pre-commit hooks"
-run = "pre-commit install --install-hooks"
 
 [tasks.ci]
 description = "Run all CI checks"

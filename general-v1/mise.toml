@@ -20,8 +20,6 @@ fi
 node = "24"
 "npm:agent-browser" = "latest"
 "npm:@playwright/test" = "latest"
-gitleaks = "latest"
-pre-commit = "latest"
 
 [tasks.default]
 description = "Show available tasks"
@@ -38,11 +36,3 @@ run = "playwright install chromium"
 [tasks.browser-check]
 description = "Show the available investigation tools"
 run = "agent-browser --help && playwright --version"
-
-[tasks.gitleaks]
-description = "Scan staged changes for secrets"
-run = "gitleaks git --pre-commit --redact --staged --verbose"
-
-[tasks.install-git-hooks]
-description = "Install pre-commit hooks"
-run = "pre-commit install --install-hooks"

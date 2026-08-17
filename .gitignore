@@ -1,8 +1,5 @@
 **/.env
 **/*.private*
-.pre-commit-config.yaml
-!*/.pre-commit-config.yaml
-
 ## large files
 **/*.zip
 

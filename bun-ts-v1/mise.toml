@@ -19,8 +19,6 @@ fi
 [tools]
 bun = "latest"
 biome = "latest"
-gitleaks = "latest"
-pre-commit = "latest"
 
 [tasks.default]
 description = "Show available tasks"
@@ -73,14 +71,6 @@ run = "bun run format:check"
 [tasks.lint]
 description = "Run all lints"
 run = "bun run lint:biome && mise run fmt-check && mise run typecheck"
-
-[tasks.gitleaks]
-description = "Scan staged changes for secrets"
-run = "gitleaks git --pre-commit --redact --staged --verbose"
-
-[tasks.install-git-hooks]
-description = "Install pre-commit hooks"
-run = "pre-commit install --install-hooks"
 
 [tasks.clean]
 description = "Clean build artifacts"

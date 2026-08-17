@@ -27,7 +27,7 @@ mise run lint
 mise install
 ```
 
-mise installs Bun, Rust, rust-analyzer, pre-commit, and gitleaks. Install the native Tauri system libraries required by your operating system separately.
+mise installs Bun, Rust, and rust-analyzer. Install the native Tauri system libraries required by your operating system separately.
 
 ## Metadata
 

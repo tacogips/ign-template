@@ -19,8 +19,6 @@ fi
 [tools]
 go = "@ign-var:GO_VERSION=1.25.4@"
 golangci-lint = "latest"
-gitleaks = "latest"
-pre-commit = "latest"
 "go:golang.org/x/tools/gopls" = "latest"
 "go:golang.org/x/tools/cmd/goimports" = "latest"
 
@@ -73,14 +71,6 @@ run = "go fmt ./..."
 [tasks.vet]
 description = "Run go vet"
 run = "go vet ./..."
-
-[tasks.gitleaks]
-description = "Scan staged changes for secrets"
-run = "gitleaks git --pre-commit --redact --staged --verbose"
-
-[tasks.install-git-hooks]
-description = "Install pre-commit hooks"
-run = "pre-commit install --install-hooks"
 
 [tasks.clean]
 description = "Clean build artifacts"

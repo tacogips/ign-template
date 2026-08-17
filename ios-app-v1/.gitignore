@@ -14,7 +14,6 @@ DerivedData/
 dist/
 release/
 
-.pre-commit-config.yaml
 **/.env
 **/*.private*
 
