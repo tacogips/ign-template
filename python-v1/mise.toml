@@ -17,6 +17,8 @@ fi
 '''
 
 [tools]
+gitleaks = "latest"
+pre-commit = "latest"
 python = "3.12"
 uv = "latest"
 
@@ -75,3 +77,22 @@ run = "rm -rf build dist htmlcov .coverage .pytest_cache .ruff_cache src/*.egg-i
 [tasks.ci]
 description = "Run the standard CI checks"
 run = "mise run fmt-check && mise run lint && mise run typecheck && mise run test && mise run build"
+
+[tasks.install-git-hooks]
+description = "Install mise tools and the repository pre-commit hook"
+run = '''
+mise install
+
+hooks_path=$(git config --local --get core.hooksPath || true)
+if [ "$hooks_path" = ".git/hooks" ]; then
+  git config --local --unset-all core.hooksPath
+  hooks_path=""
+fi
+
+if [ -z "$hooks_path" ]; then
+  mise exec -- pre-commit install
+else
+  mise exec -- pre-commit validate-config .pre-commit-config.yaml
+  echo "Using existing custom Git hooks path: $hooks_path"
+fi
+'''

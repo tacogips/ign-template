@@ -22,6 +22,8 @@ rust-analyzer = "latest"
 taplo = "latest"
 "cargo:cargo-nextest" = "latest"
 "cargo:cargo-audit" = "latest"
+gitleaks = "latest"
+pre-commit = "latest"
 
 [tasks.default]
 description = "Show available tasks"
@@ -90,3 +92,22 @@ run = "cargo audit"
 [tasks.ci]
 description = "Run all CI checks"
 run = "mise run lint && mise run test && mise run build"
+
+[tasks.install-git-hooks]
+description = "Install mise tools and the repository pre-commit hook"
+run = '''
+mise install
+
+hooks_path=$(git config --local --get core.hooksPath || true)
+if [ "$hooks_path" = ".git/hooks" ]; then
+  git config --local --unset-all core.hooksPath
+  hooks_path=""
+fi
+
+if [ -z "$hooks_path" ]; then
+  mise exec -- pre-commit install
+else
+  mise exec -- pre-commit validate-config .pre-commit-config.yaml
+  echo "Using existing custom Git hooks path: $hooks_path"
+fi
+'''

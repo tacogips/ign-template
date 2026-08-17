@@ -23,6 +23,7 @@ github-cli = "latest"
 gitleaks = "latest"
 swiftlint = "latest"
 "gem:fastlane" = "latest"
+pre-commit = "latest"
 
 [tasks.default]
 description = "Show available tasks"
@@ -67,3 +68,22 @@ run = "swiftlint"
 [tasks.clean]
 description = "Clean SwiftPM, Xcode, and export artifacts"
 run = "rm -rf .build DerivedData dist release"
+
+[tasks.install-git-hooks]
+description = "Install mise tools and the repository pre-commit hook"
+run = '''
+mise install
+
+hooks_path=$(git config --local --get core.hooksPath || true)
+if [ "$hooks_path" = ".git/hooks" ]; then
+  git config --local --unset-all core.hooksPath
+  hooks_path=""
+fi
+
+if [ -z "$hooks_path" ]; then
+  mise exec -- pre-commit install
+else
+  mise exec -- pre-commit validate-config .pre-commit-config.yaml
+  echo "Using existing custom Git hooks path: $hooks_path"
+fi
+'''
