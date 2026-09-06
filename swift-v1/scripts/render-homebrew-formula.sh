@@ -86,7 +86,8 @@ class @ign-var:HOMEBREW_FORMULA_CLASS=App@ < Formula
   end
 
   def install
-    bin.install "bin/$product"
+    libexec.install Dir["bin/*"]
+    bin.write_exec_script libexec/"$product"
   end
 
   test do

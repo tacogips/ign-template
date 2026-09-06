@@ -267,9 +267,16 @@ requests, require all of these outcomes for the exact version and build:
 
 - package and binary upload completed;
 - App Store Connect processing completed successfully;
-- the build was assigned to the intended internal group, or automatic internal
-  distribution made it available;
+- the build-to-group relationship was directly verified for the intended
+  internal group, or automatic internal distribution was directly verified to
+  have created that relationship;
 - the processed version/build is newer than every previously uploaded build.
+
+Do not treat `VALID_BINARY`, `VALID`, `BETA_INTERNAL_TESTING`, completed import,
+or a successful upload receipt as proof that testers can access the build.
+Those values describe upload, processing, or build eligibility. Tester access
+is a separate App Store Connect relationship between the exact build and a
+tester group.
 
 If App Store Connect reports that a bundle version must be higher, consider the
 rejected number consumed even when it is not visible in TestFlight. Increment
@@ -289,6 +296,14 @@ After upload:
   automatically delivered to everyone in that internal group.
 - Add the processed build to the intended internal group if automatic
   distribution did not already make it available.
+- Re-read the relationship after any assignment. In the App Store Connect UI,
+  the exact build detail must show `Groups (N)` with the intended group, and the
+  group page should list the exact marketing version and build. An equivalent
+  App Store Connect API relationship response is acceptable. `Groups (0)` or an
+  older newest-visible build means deployment is incomplete.
+- Record whether automatic distribution is enabled for the intended group. If
+  it is disabled, assume every future upload needs explicit assignment; do not
+  infer automatic assignment from any build-processing state.
 - If the app does not implement or use non-exempt encryption beyond Apple's OS
   services, add this to Info.plist for future builds:
 
@@ -335,6 +350,8 @@ For a deploy-through-TestFlight task, report:
 - Bundle ID and App Store Connect listing name.
 - Archive path, IPA path, version/build.
 - Validation/upload result and processing/compliance status.
-- Whether TestFlight internal distribution and device installs are complete.
+- The directly verified tester-group relationship for the exact version/build,
+  including group name, verification time, and automatic-distribution state.
+- Whether TestFlight device installs are complete.
 - Which readiness tasks passed and which manual gates remain.
 - Files changed for signing scripts, metadata, Info.plist, and evidence.

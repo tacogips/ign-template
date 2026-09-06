@@ -196,7 +196,7 @@ print_plan() {
 }
 
 build_target() {
-  local version target release_dir bin_path work_dir archive binary
+  local version target release_dir bin_path work_dir archive binary resource_bundle
   version="$1"
   target="$2"
   release_dir="$3"
@@ -212,6 +212,11 @@ build_target() {
 
   bin_path="$(swift_release_bin_path "$target" | tail -n 1)"
   cp "$bin_path/$product" "$binary"
+  # SwiftPM dependencies locate their resources beside the executable.
+  for resource_bundle in "$bin_path"/*.bundle; do
+    [[ -d "$resource_bundle" ]] || continue
+    cp -R "$resource_bundle" "$work_dir/bin/"
+  done
   chmod 0755 "$binary"
   cp "$repo_root/README.md" "$work_dir/README.md"
 
