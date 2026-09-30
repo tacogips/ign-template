@@ -162,14 +162,14 @@ This is @ign-var:PROJECT_NAME@ - a TypeScript project with Bun runtime and mise-
 
 **IMPORTANT**: When writing TypeScript code, you (the LLM model) MUST use the specialized agents:
 
-1. **ts-coding agent** (`.agents/agents/ts-coding.md`): For writing, refactoring, and implementing TypeScript code
-2. **check-and-test-after-modify agent** (`.agents/agents/check-and-test-after-modify.md`): MUST be invoked automatically after ANY TypeScript file modifications
+1. **ts-coding agent** (`.claude/agents/ts-coding.md`): For writing, refactoring, and implementing TypeScript code
+2. **check-and-test-after-modify agent** (`.claude/agents/check-and-test-after-modify.md`): MUST be invoked automatically after ANY TypeScript file modifications
 
-**Coding Standards**: Refer to `.agents/skills/ts-coding-standards/` for TypeScript coding conventions, project layout, error handling, type safety, async patterns, and Biome lint workflow.
+**Coding Standards**: Refer to `.claude/skills/ts-coding-standards/` (Codex: `.codex/skills/ts-coding-standards/`) for TypeScript coding conventions, project layout, error handling, type safety, async patterns, and Biome lint workflow.
 
-**Review Skill**: Use `.agents/skills/ts-review/SKILL.md` when reviewing TypeScript changes for standards compliance, Biome diagnostics, file size policy, and repository conventions.
+**Review Skill**: Use `.claude/skills/ts-review/SKILL.md` (Codex: `.codex/skills/ts-review/SKILL.md`) when reviewing TypeScript changes for standards compliance, Biome diagnostics, file size policy, and repository conventions.
 
-**Coding Policy**: Any touched TypeScript source file at **1000+ lines** must be split according to `.agents/skills/ts-coding-standards/SKILL.md` unless the user explicitly excludes that work.
+**Coding Policy**: Any touched TypeScript source file at **1000+ lines** must be split according to `.claude/skills/ts-coding-standards/SKILL.md` (Codex: `.codex/skills/ts-coding-standards/SKILL.md`) unless the user explicitly excludes that work.
 
 **TypeScript Configuration**: This project uses maximum TypeScript strictness. See `tsconfig.json` for the complete strict configuration.
 
@@ -177,7 +177,7 @@ This is @ign-var:PROJECT_NAME@ - a TypeScript project with Bun runtime and mise-
 
 **IMPORTANT**: When creating design documents, you (the LLM model) MUST follow the design-doc skill.
 
-**Skill Reference**: Refer to `.agents/skills/design-doc/SKILL.md` for design document guidelines, templates, and naming conventions.
+**Skill Reference**: Refer to `.claude/skills/design-doc/SKILL.md` (Codex: `.codex/skills/design-doc/SKILL.md`) for design document guidelines, templates, and naming conventions.
 
 **Output Location**: All design documents MUST be saved to `design-docs/` directory (NOT `docs/`).
 
@@ -204,7 +204,7 @@ Use the `/impl-plan` command or `impl-plan` agent to create implementation plans
 /impl-plan design-docs/specs/architecture.md#feature-name
 ```
 
-**Skill Reference**: Refer to `.agents/skills/impl-plan/SKILL.md` for implementation plan guidelines.
+**Skill Reference**: Refer to `.claude/skills/impl-plan/SKILL.md` (Codex: `.codex/skills/impl-plan/SKILL.md`) for implementation plan guidelines.
 
 **Output Location**: All implementation plans MUST be saved to `impl-plans/` directory.
 

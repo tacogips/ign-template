@@ -49,11 +49,11 @@ Important defaults:
 
 ## Release Workflows
 
-Use `.agents/skills/homebrew-release/SKILL.md` for Homebrew formula archives and tap formula rendering.
+Use `.claude/skills/homebrew-release/SKILL.md` (Codex: `.codex/skills/homebrew-release/SKILL.md`) for Homebrew formula archives and tap formula rendering.
 
-Use `.agents/skills/macos-cask-release/SKILL.md` for signed and notarized Cask DMGs, GitHub release upload, and tap Cask rendering.
+Use `.claude/skills/macos-cask-release/SKILL.md` (Codex: `.codex/skills/macos-cask-release/SKILL.md`) for signed and notarized Cask DMGs, GitHub release upload, and tap Cask rendering.
 
-Use `.agents/skills/apple-notarization-setup/SKILL.md` when setting up or checking Apple Developer ID credentials. Never print, commit, or summarize secret values.
+Use `.claude/skills/apple-notarization-setup/SKILL.md` (Codex: `.codex/skills/apple-notarization-setup/SKILL.md`) when setting up or checking Apple Developer ID credentials. Never print, commit, or summarize secret values.
 
 ## Git Commit Policy
 

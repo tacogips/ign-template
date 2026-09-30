@@ -80,4 +80,4 @@ kinko exec --env APPLE_SIGNING_IDENTITY,APPLE_ID,APPLE_PASSWORD,APPLE_TEAM_ID --
   mise run release:homebrew-cask-local -- v@ign-var:VERSION=0.1.0@
 ```
 
-See `packaging/homebrew/README.md` and `.agents/skills/` for release workflows.
+See `packaging/homebrew/README.md` and `.claude/skills/` (Claude Code) or `.codex/skills/` (Codex) for release workflows.

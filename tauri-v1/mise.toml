@@ -57,15 +57,15 @@ run = "mise run lint-rust"
 
 [tasks.lint-ts]
 description = "Run TypeScript lint checks"
-run = "bash .agents/scripts/lint-ts.sh"
+run = "bash scripts/lint-ts.sh"
 
 [tasks.lint-rust]
 description = "Run Rust lint checks"
-run = "bash .agents/scripts/lint-rust.sh"
+run = "bash scripts/lint-rust.sh"
 
 [tasks.fmt]
 description = "Format frontend and backend sources"
-run = "bash .agents/scripts/format-ts.sh && CARGO_TERM_QUIET=true cargo fmt --manifest-path src-tauri/Cargo.toml"
+run = "bash scripts/format-ts.sh && CARGO_TERM_QUIET=true cargo fmt --manifest-path src-tauri/Cargo.toml"
 
 [tasks.fmt-check]
 description = "Check backend formatting"

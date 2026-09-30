@@ -36,7 +36,8 @@ This is `@ign-var:PROJECT_NAME={current_dir}@`, a general-purpose investigation 
 ├── .gitignore
 ├── design-docs/
 ├── impl-plans/
-└── .agents/
+├── .claude/          # Claude Code skills, agents, commands, settings
+└── .codex/           # Codex skills
 ```
 
 ## Available Tools
@@ -55,13 +56,13 @@ This is `@ign-var:PROJECT_NAME={current_dir}@`, a general-purpose investigation 
 
 ## Design Documentation
 
-When creating or updating design or research documents, follow `.agents/skills/design-doc/SKILL.md`.
+When creating or updating design or research documents, follow `.claude/skills/design-doc/SKILL.md` (Codex: `.codex/skills/design-doc/SKILL.md`).
 
 All design and research artifacts must be stored under `design-docs/`.
 
 ## Planning
 
-When turning a design document or research question into a concrete plan, follow `.agents/skills/impl-plan/SKILL.md`.
+When turning a design document or research question into a concrete plan, follow `.claude/skills/impl-plan/SKILL.md` (Codex: `.codex/skills/impl-plan/SKILL.md`).
 
 Plans may describe documents, experiments, browser checks, scripts, or implementation work. They are not limited to source code changes.
 
@@ -69,10 +70,10 @@ Plans may describe documents, experiments, browser checks, scripts, or implement
 
 Use these specialized skills when relevant:
 
-1. `.agents/skills/codex-skill-creator/SKILL.md`
-2. `.agents/skills/coding-policy/SKILL.md`
-3. `.agents/skills/design-doc/SKILL.md`
-4. `.agents/skills/impl-plan/SKILL.md`
+1. `.codex/skills/codex-skill-creator/SKILL.md` (Codex only)
+2. `.claude/skills/coding-policy/SKILL.md` (Codex: `.codex/skills/coding-policy/SKILL.md`)
+3. `.claude/skills/design-doc/SKILL.md` (Codex: `.codex/skills/design-doc/SKILL.md`)
+4. `.claude/skills/impl-plan/SKILL.md` (Codex: `.codex/skills/impl-plan/SKILL.md`)
 
 ## Working Style
 
@@ -80,4 +81,4 @@ Use these specialized skills when relevant:
 - Keep notes concise and traceable
 - Use browser automation only when it improves reproducibility
 - Preserve unresolved questions instead of hiding them
-- When writing or reviewing code, follow `.agents/skills/coding-policy/SKILL.md`; any touched source, script, or test file at **1000+ lines** must be split unless the user explicitly excludes that work.
+- When writing or reviewing code, follow `.claude/skills/coding-policy/SKILL.md` (Codex: `.codex/skills/coding-policy/SKILL.md`); any touched source, script, or test file at **1000+ lines** must be split unless the user explicitly excludes that work.

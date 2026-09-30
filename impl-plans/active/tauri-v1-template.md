@@ -29,7 +29,7 @@ output so an issue can be filed at `https://github.com/tacogips/ign/issues`.
 - `AGENTS.md`: English-only output, no emoji, commit policy, and template repository rules.
 - `bun-ts-v1`: Bun, TypeScript, Vite, mise, metadata, and ign variable conventions.
 - `rust-v1`: Rust metadata, Cargo variable patterns, and mise conventions.
-- `.agents/skills/template-editing/SKILL.md`: After template edits, run `ign template update` then `ign template check`, and review `ign-template.json` diff.
+- `.claude/skills/template-editing/SKILL.md`: After template edits, run `ign template update` then `ign template check`, and review `ign-template.json` diff.
 - Sibling `chilla` checkout: Structural reference only for Bun/Vite/Tauri/Rust project shape.
 
 ## Intentional Divergences
@@ -199,7 +199,7 @@ After each implementation session or task completion:
 **Verification Commands Run**:
 - `jq '.' "$RIEL_MAILBOX_DIR/inbox/input.json"`
 - `sed -n '1,260p' design-docs/specs/design-tauri-v1-template.md`
-- `sed -n '1,220p' .agents/skills/template-editing/SKILL.md`
+- `sed -n '1,220p' .claude/skills/template-editing/SKILL.md`
 - `sed -n '1,260p' README.md`
 - `sed -n '1,220p' bun-ts-v1/ign-template.json`
 - `sed -n '1,220p' rust-v1/ign-template.json`

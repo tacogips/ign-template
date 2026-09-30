@@ -87,7 +87,7 @@ iOS App Store/TestFlight export is supported through `mise run archive:ios-app-s
 
 ## App Store and TestFlight Releases
 
-The generated project includes reusable agent skills under `.agents/skills/`:
+The generated project includes reusable agent skills under `.claude/skills/` (Claude Code) and `.codex/skills/` (Codex):
 
 - `ios-testflight-release`: signed archive, IPA validation, App Store Connect
   processing, and TestFlight distribution workflow.

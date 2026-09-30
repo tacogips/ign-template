@@ -151,7 +151,7 @@ This is @ign-var:PROJECT_NAME@ - a Golang project with mise-managed development 
 
 ## Release Workflows
 
-Use `.agents/skills/homebrew-release/SKILL.md` when building, publishing, or tap-rendering Homebrew formula releases.
+Use `.claude/skills/homebrew-release/SKILL.md` (Codex: `.codex/skills/homebrew-release/SKILL.md`) when building, publishing, or tap-rendering Homebrew formula releases.
 
 Homebrew helper scripts live under `scripts/`:
 
@@ -170,18 +170,18 @@ mise run homebrew:tap-formula -- <version>
 
 **IMPORTANT**: When writing Go code, you (the LLM model) MUST use the specialized agents:
 
-1. **go-coding agent** (`.agents/agents/go-coding.md`): For writing, refactoring, and implementing Go code
-2. **check-and-test-after-modify agent** (`.agents/agents/check-and-test-after-modify.md`): MUST be invoked automatically after ANY Go file modifications
+1. **go-coding agent** (`.claude/agents/go-coding.md`): For writing, refactoring, and implementing Go code
+2. **check-and-test-after-modify agent** (`.claude/agents/check-and-test-after-modify.md`): MUST be invoked automatically after ANY Go file modifications
 
-**Coding Standards**: Refer to `.agents/skills/go-coding-standards/` for Go coding conventions, project layout, error handling, concurrency patterns, and interface design.
+**Coding Standards**: Refer to `.claude/skills/go-coding-standards/` (Codex: `.codex/skills/go-coding-standards/`) for Go coding conventions, project layout, error handling, concurrency patterns, and interface design.
 
-**Coding Policy**: Any touched Go source file at **1000+ lines** must be split according to `.agents/skills/go-coding-standards/SKILL.md` unless the user explicitly excludes that work.
+**Coding Policy**: Any touched Go source file at **1000+ lines** must be split according to `.claude/skills/go-coding-standards/SKILL.md` (Codex: `.codex/skills/go-coding-standards/SKILL.md`) unless the user explicitly excludes that work.
 
 ## Design Documentation
 
 **IMPORTANT**: When creating design documents, you (the LLM model) MUST follow the design-doc skill.
 
-**Skill Reference**: Refer to `.agents/skills/design-doc/SKILL.md` for design document guidelines, templates, and naming conventions.
+**Skill Reference**: Refer to `.claude/skills/design-doc/SKILL.md` (Codex: `.codex/skills/design-doc/SKILL.md`) for design document guidelines, templates, and naming conventions.
 
 **Output Location**: All design documents MUST be saved to `design-docs/` directory (NOT `docs/`).
 
@@ -208,7 +208,7 @@ Use the `/impl-plan` command or `impl-plan` agent to create implementation plans
 /impl-plan design-docs/specs/architecture.md#feature-name
 ```
 
-**Skill Reference**: Refer to `.agents/skills/impl-plan/SKILL.md` for implementation plan guidelines.
+**Skill Reference**: Refer to `.claude/skills/impl-plan/SKILL.md` (Codex: `.codex/skills/impl-plan/SKILL.md`) for implementation plan guidelines.
 
 **Output Location**: All implementation plans MUST be saved to `impl-plans/` directory.
 

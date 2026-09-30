@@ -34,7 +34,8 @@ This is @ign-var:PROJECT_NAME@, a modern Python project managed with `uv`.
 
 ```text
 .
-├── .agents/          # Codex repo-scoped skills
+├── .claude/          # Claude Code skills
+├── .codex/           # Codex skills
 ├── mise.toml          # Tool versions and project tasks
 ├── pyproject.toml     # Project metadata and tool configuration
 ├── .gitignore         # Git ignore patterns
@@ -54,19 +55,19 @@ This is @ign-var:PROJECT_NAME@, a modern Python project managed with `uv`.
 
 ## Python Code Development
 
-When writing, reviewing, or refactoring Python code, follow `.agents/skills/python-coding-standards/SKILL.md`.
+When writing, reviewing, or refactoring Python code, follow `.claude/skills/python-coding-standards/SKILL.md` (Codex: `.codex/skills/python-coding-standards/SKILL.md`).
 
-Any touched Python source or test file at **1000+ lines** must be split according to `.agents/skills/python-coding-standards/SKILL.md` unless the user explicitly excludes that work.
+Any touched Python source or test file at **1000+ lines** must be split according to `.claude/skills/python-coding-standards/SKILL.md` (Codex: `.codex/skills/python-coding-standards/SKILL.md`) unless the user explicitly excludes that work.
 
 ## Design Documentation
 
-When creating or updating design or investigation documents, follow `.agents/skills/design-doc/SKILL.md`.
+When creating or updating design or investigation documents, follow `.claude/skills/design-doc/SKILL.md` (Codex: `.codex/skills/design-doc/SKILL.md`).
 
 All design and research artifacts must be stored under `design-docs/`.
 
 ## Planning
 
-When turning a design document or research question into a concrete execution plan, follow `.agents/skills/impl-plan/SKILL.md`.
+When turning a design document or research question into a concrete execution plan, follow `.claude/skills/impl-plan/SKILL.md` (Codex: `.codex/skills/impl-plan/SKILL.md`).
 
 Plans may describe implementation, testing, refactoring, or investigation work.
 
@@ -74,9 +75,9 @@ Plans may describe implementation, testing, refactoring, or investigation work.
 
 Use these specialized skills when relevant:
 
-1. `.agents/skills/python-coding-standards/SKILL.md`
-2. `.agents/skills/design-doc/SKILL.md`
-3. `.agents/skills/impl-plan/SKILL.md`
+1. `.claude/skills/python-coding-standards/SKILL.md` (Codex: `.codex/skills/python-coding-standards/SKILL.md`)
+2. `.claude/skills/design-doc/SKILL.md` (Codex: `.codex/skills/design-doc/SKILL.md`)
+3. `.claude/skills/impl-plan/SKILL.md` (Codex: `.codex/skills/impl-plan/SKILL.md`)
 
 ## Coding Standards
 

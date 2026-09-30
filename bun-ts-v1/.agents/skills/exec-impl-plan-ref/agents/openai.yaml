@@ -1,3 +1,0 @@
-interface:
-  display_name: "exec-impl-plan-ref"
-  short_description: "Use when executing tasks from implementation plans. Provides task selection, parallel execution, progress tracking, and review cycle guidelines."
