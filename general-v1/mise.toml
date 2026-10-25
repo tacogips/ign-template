@@ -17,7 +17,7 @@ fi
 '''
 
 [tools]
-node = "24"
+node = "24.22.1"
 "npm:agent-browser" = "latest"
 "npm:@playwright/test" = "latest"
 gitleaks = "latest"
