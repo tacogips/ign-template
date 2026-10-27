@@ -29,6 +29,11 @@ ign checkout github.com/tacogips/ign-template/go-v1 ./my-project
 | `swift-v1` | SwiftPM project with mise, Homebrew formula, and macOS Cask release support |
 | `tauri-v1` | Tauri desktop app with Bun, Vite, TypeScript, Rust, and mise configuration |
 
+Runtime defaults are pinned to Go `1.27.3`, Node.js `24.22.1`, Bun `1.4.4`,
+and uv `0.13.6`. The Go template shares its `GO_VERSION` default between
+`go.mod`, mise, and template metadata. Override it only with a release that
+includes the required security fixes.
+
 ## Using Templates
 
 ```bash
