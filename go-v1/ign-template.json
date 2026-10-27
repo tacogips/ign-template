@@ -24,7 +24,7 @@
     "GO_VERSION": {
       "type": "string",
       "description": "Variable GO_VERSION",
-      "default": "1.25.4"
+      "default": "1.27.3"
     },
     "HOMEBREW_FORMULA_CLASS": {
       "type": "string",
@@ -69,5 +69,5 @@
     ],
     "include_dotfiles": true
   },
-  "hash": "38044eb63aa9842bd61254fc76e1e1448aa93787755276fbe056a33565f80f91"
+  "hash": "c87ab53d757a896ac42b1a57f28f37592338669fd95582f0f35bb2e4fba765c3"
 }
