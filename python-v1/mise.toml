@@ -20,7 +20,7 @@ fi
 gitleaks = "latest"
 pre-commit = "latest"
 python = "3.12"
-uv = "latest"
+uv = "0.13.6"
 
 [tasks.default]
 description = "Show available tasks"
