@@ -3,6 +3,15 @@ name: homebrew-release
 description: Use when building, validating, publishing, or tap-rendering Homebrew formula tarball releases for this Swift project, including scripts/build-homebrew-release.sh, scripts/render-homebrew-formula.sh, and mise run build:homebrew or homebrew:formula commands.
 ---
 
+## Required Email Privacy Check
+
+Follow the **Git Email Privacy Gate** in the repository-root `AGENTS.md` before
+any commit, tag, or push in this workflow, including delegated operations and
+release/tap checkouts. Recheck the final staged snapshot and commit message,
+verify raw author/committer/tagger metadata, and scan every outgoing ref's history
+before pushing. A private-address match or incomplete check blocks the Git
+operation; automatic/non-blocking workflow steps do not waive this gate.
+
 # Homebrew Release
 
 Use this skill for Formula releases installed with:

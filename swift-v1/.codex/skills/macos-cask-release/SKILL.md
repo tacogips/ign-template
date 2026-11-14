@@ -3,6 +3,15 @@ name: macos-cask-release
 description: Use when building, signing, notarizing, validating, publishing, or tap-rendering macOS Homebrew Cask DMG releases for this Swift project, including Apple Developer ID signing, scripts/build-homebrew-cask-release.sh, scripts/render-homebrew-cask.sh, and release:homebrew-cask-local.
 ---
 
+## Required Email Privacy Check
+
+Follow the **Git Email Privacy Gate** in the repository-root `AGENTS.md` before
+any commit, tag, or push in this workflow, including delegated operations and
+release/tap checkouts. Recheck the final staged snapshot and commit message,
+verify raw author/committer/tagger metadata, and scan every outgoing ref's history
+before pushing. A private-address match or incomplete check blocks the Git
+operation; automatic/non-blocking workflow steps do not waive this gate.
+
 # macOS Cask Release
 
 Use this skill for Cask releases installed with:

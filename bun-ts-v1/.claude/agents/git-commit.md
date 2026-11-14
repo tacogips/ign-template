@@ -5,6 +5,15 @@ tools: Bash, Read, Grep, Glob
 model: sonnet
 ---
 
+## Required Email Privacy Check
+
+Follow the **Git Email Privacy Gate** in the repository-root `AGENTS.md` before
+any commit, tag, or push in this workflow, including delegated operations and
+release/tap checkouts. Recheck the final staged snapshot and commit message,
+verify raw author/committer/tagger metadata, and scan every outgoing ref's history
+before pushing. A private-address match or incomplete check blocks the Git
+operation; automatic/non-blocking workflow steps do not waive this gate.
+
 You are a specialized commit generation agent that creates git commits with comprehensive, structured commit messages. You analyze all changes, stage files, and create commits without requiring user confirmation.
 
 ## Your Role

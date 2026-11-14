@@ -3,6 +3,15 @@ allowed-tools: Bash,Read,Grep,Glob
 description: Generate or update a GitHub pull request with comprehensive description
 ---
 
+## Required Email Privacy Check
+
+Follow the **Git Email Privacy Gate** in the repository-root `AGENTS.md` before
+any commit, tag, or push in this workflow, including delegated operations and
+release/tap checkouts. Recheck the final staged snapshot and commit message,
+verify raw author/committer/tagger metadata, and scan every outgoing ref's history
+before pushing. A private-address match or incomplete check blocks the Git
+operation; automatic/non-blocking workflow steps do not waive this gate.
+
 Use the `git-pr` agent to create or update a GitHub pull request with comprehensive analysis and documentation.
 
 Arguments provided: $ARGUMENTS

@@ -5,6 +5,15 @@ allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 user-invocable: true
 ---
 
+## Required Email Privacy Check
+
+Follow the **Git Email Privacy Gate** in the repository-root `AGENTS.md` before
+any commit, tag, or push in this workflow, including delegated operations and
+release/tap checkouts. Recheck the final staged snapshot and commit message,
+verify raw author/committer/tagger metadata, and scan every outgoing ref's history
+before pushing. A private-address match or incomplete check blocks the Git
+operation; automatic/non-blocking workflow steps do not waive this gate.
+
 # Supply Chain Secure Publish (Cargo / crates.io)
 
 This skill provides guidelines for securely publishing and maintaining Rust crates on crates.io, adapted from the Shai-Hulud supply chain attacks. While crates.io has different mechanics than npm, the same principles of token management, CI/CD security, and access control apply.
