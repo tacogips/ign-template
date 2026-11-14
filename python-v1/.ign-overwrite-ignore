@@ -1,0 +1,9 @@
+design-docs/
+impl-plans/
+.gitignore
+AGENTS.md
+README.md
+mise.toml
+pyproject.toml
+src/
+tests/

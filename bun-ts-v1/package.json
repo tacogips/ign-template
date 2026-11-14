@@ -1,0 +1,46 @@
+{
+  "name": "@ign-var:PROJECT_NAME={current_dir}@",
+  "version": "@ign-var:VERSION=0.1.0@",
+  "description": "@ign-var:DESCRIPTION@",
+  "type": "module",
+  "main": "dist/main.js",
+  "module": "dist/main.js",
+  "types": "dist/main.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/main.d.ts",
+      "import": "./dist/main.js",
+      "default": "./dist/main.js"
+    }
+  },
+  "scripts": {
+    "dev": "bun run --watch src/main.ts",
+    "build": "bun build src/main.ts --outdir dist --target bun",
+    "start": "bun run src/main.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "typecheck": "tsc --noEmit",
+    "lint:biome": "biome check . --diagnostic-level=warn",
+    "lint": "biome check . --diagnostic-level=warn && bun run typecheck",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "clean": "rm -rf dist"
+  },
+  "homepage": "@ign-var:HOMEPAGE=https://github.com/user/repo@",
+  "repository": {
+    "type": "git",
+    "url": "@ign-var:REPOSITORY=https://github.com/user/repo@"
+  },
+@ign-if:HAS_AUTHOR@
+  "author": "@ign-var:AUTHOR_NAME=@ <@ign-var:AUTHOR_EMAIL=@>",
+@ign-endif@
+  "license": "MIT",
+  "trustedDependencies": [],
+  "devDependencies": {
+    "@types/bun": "1.1.14",
+    "@vitest/ui": "2.1.8",
+    "typescript": "5.7.2",
+    "vitest": "2.1.8"
+  }
+}

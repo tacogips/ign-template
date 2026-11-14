@@ -1,0 +1,59 @@
+min_version = "2026.8.3"
+
+[[hooks.enter]]
+shell = "bash"
+script = '''
+if command -v kinko >/dev/null 2>&1 && kinko hook --help >/dev/null 2>&1; then
+  eval "$(kinko --path "$MISE_PROJECT_ROOT" hook enter bash)"
+fi
+'''
+
+[[hooks.leave]]
+shell = "bash"
+script = '''
+if command -v kinko >/dev/null 2>&1 && kinko hook --help >/dev/null 2>&1; then
+  eval "$(kinko hook leave bash)"
+fi
+'''
+
+[tools]
+node = "24.22.1"
+"npm:agent-browser" = "latest"
+"npm:@playwright/test" = "latest"
+gitleaks = "latest"
+pre-commit = "latest"
+
+[tasks.default]
+description = "Show available tasks"
+run = "mise tasks ls"
+
+[tasks.status]
+description = "Show tracked investigation artifacts"
+run = "find design-docs impl-plans -maxdepth 2 -type f | sort"
+
+[tasks.browser-install]
+description = "Install the Chromium browser used by Playwright"
+run = "playwright install chromium"
+
+[tasks.browser-check]
+description = "Show the available investigation tools"
+run = "agent-browser --help && playwright --version"
+
+[tasks.install-git-hooks]
+description = "Install mise tools and the repository pre-commit hook"
+run = '''
+mise install
+
+hooks_path=$(git config --local --get core.hooksPath || true)
+if [ "$hooks_path" = ".git/hooks" ]; then
+  git config --local --unset-all core.hooksPath
+  hooks_path=""
+fi
+
+if [ -z "$hooks_path" ]; then
+  mise exec -- pre-commit install
+else
+  mise exec -- pre-commit validate-config .pre-commit-config.yaml
+  echo "Using existing custom Git hooks path: $hooks_path"
+fi
+'''

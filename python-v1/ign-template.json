@@ -1,0 +1,75 @@
+{
+  "name": "python-v1",
+  "version": "1.0.0",
+  "description": "Modern Python project template with uv and src layout",
+  "author": "tacogips",
+  "repository": "https://github.com/tacogips/ign-template",
+  "license": "MIT",
+  "tags": [
+    "python",
+    "uv",
+    "mise",
+    "ruff",
+    "pytest"
+  ],
+  "variables": {
+    "AUTHOR_EMAIL": {
+      "type": "string",
+      "description": "Variable AUTHOR_EMAIL",
+      "default": ""
+    },
+    "AUTHOR_NAME": {
+      "type": "string",
+      "description": "Variable AUTHOR_NAME",
+      "default": ""
+    },
+    "DESCRIPTION": {
+      "type": "string",
+      "description": "Variable DESCRIPTION",
+      "default": "A Python project"
+    },
+    "HAS_AUTHOR": {
+      "type": "bool",
+      "description": "Variable HAS_AUTHOR",
+      "required": true
+    },
+    "HOMEPAGE": {
+      "type": "string",
+      "description": "Variable HOMEPAGE",
+      "default": "https://github.com/user/repo"
+    },
+    "PACKAGE_NAME": {
+      "type": "string",
+      "description": "Defaults to the output directory name; override if it is not a valid Python package identifier",
+      "default": "{current_dir}"
+    },
+    "PROJECT_NAME": {
+      "type": "string",
+      "description": "Defaults to the output directory name",
+      "default": "{current_dir}"
+    },
+    "REPOSITORY": {
+      "type": "string",
+      "description": "Variable REPOSITORY",
+      "default": "https://github.com/user/repo"
+    },
+    "VERSION": {
+      "type": "string",
+      "description": "Variable VERSION",
+      "default": "0.1.0"
+    }
+  },
+  "settings": {
+    "ignore_patterns": [
+      ".git",
+      ".DS_Store",
+      ".venv",
+      "dist",
+      "__pycache__",
+      ".pytest_cache",
+      ".ruff_cache"
+    ],
+    "include_dotfiles": true
+  },
+  "hash": "25ae45bddc5402786ec206e595f179c6750696c9ccdb933b132f18e4b10782aa"
+}

@@ -1,0 +1,73 @@
+{
+  "name": "go-v1",
+  "version": "1.0.0",
+  "description": "Go project template with standard layout",
+  "author": "tacogips",
+  "repository": "https://github.com/tacogips/ign-template",
+  "license": "MIT",
+  "tags": [
+    "go",
+    "golang",
+    "mise"
+  ],
+  "variables": {
+    "DESCRIPTION": {
+      "type": "string",
+      "description": "Variable DESCRIPTION",
+      "default": "A Go command line tool"
+    },
+    "GITHUB_REPOSITORY": {
+      "type": "string",
+      "description": "Variable GITHUB_REPOSITORY",
+      "default": "user/repo"
+    },
+    "GO_VERSION": {
+      "type": "string",
+      "description": "Variable GO_VERSION",
+      "default": "1.25.4"
+    },
+    "HOMEBREW_FORMULA_CLASS": {
+      "type": "string",
+      "description": "Variable HOMEBREW_FORMULA_CLASS",
+      "default": "App"
+    },
+    "HOMEBREW_TAP": {
+      "type": "string",
+      "description": "Variable HOMEBREW_TAP",
+      "default": "user/tap"
+    },
+    "HOMEPAGE": {
+      "type": "string",
+      "description": "Variable HOMEPAGE",
+      "default": "https://github.com/user/repo"
+    },
+    "LICENSE": {
+      "type": "string",
+      "description": "Variable LICENSE",
+      "default": "MIT"
+    },
+    "MODULE_PATH": {
+      "type": "string",
+      "description": "Defaults to the output directory name; override with a full import path when needed",
+      "default": "{current_dir}"
+    },
+    "PROJECT_NAME": {
+      "type": "string",
+      "description": "Defaults to the output directory name",
+      "default": "{current_dir}"
+    },
+    "VERSION": {
+      "type": "string",
+      "description": "Variable VERSION",
+      "default": "0.1.0"
+    }
+  },
+  "settings": {
+    "ignore_patterns": [
+      ".git",
+      ".DS_Store"
+    ],
+    "include_dotfiles": true
+  },
+  "hash": "38044eb63aa9842bd61254fc76e1e1448aa93787755276fbe056a33565f80f91"
+}
