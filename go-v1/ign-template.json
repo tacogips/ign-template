@@ -1,0 +1,54 @@
+{
+  "name": "go-v1",
+  "version": "1.0.0",
+  "description": "Go project template with standard layout",
+  "author": "tacogips",
+  "repository": "https://github.com/tacogips/ign-template",
+  "license": "MIT",
+  "tags": [
+    "go",
+    "golang",
+    "nix",
+    "task"
+  ],
+  "variables": {
+    "DESCRIPTION": {
+      "type": "string",
+      "description": "Variable DESCRIPTION",
+      "default": "A Golang project"
+    },
+    "GO_VERSION": {
+      "type": "string",
+      "description": "Variable GO_VERSION",
+      "default": "1.25.4"
+    },
+    "HOMEPAGE": {
+      "type": "string",
+      "description": "Variable HOMEPAGE",
+      "default": "https://github.com/user/repo"
+    },
+    "MODULE_PATH": {
+      "type": "string",
+      "description": "Variable MODULE_PATH",
+      "required": true
+    },
+    "PROJECT_NAME": {
+      "type": "string",
+      "description": "Variable PROJECT_NAME",
+      "required": true
+    },
+    "VERSION": {
+      "type": "string",
+      "description": "Variable VERSION",
+      "required": true
+    }
+  },
+  "settings": {
+    "ignore_patterns": [
+      ".git",
+      ".DS_Store"
+    ],
+    "include_dotfiles": true
+  },
+  "hash": "628c5e8590e13988febddc1a55cb97cb854edea127b89b05a5d4e19c69fa50a9"
+}

@@ -1,0 +1,76 @@
+{
+  "name": "rust-v1",
+  "version": "1.0.0",
+  "description": "Rust project template with Nix flake and fenix toolchain",
+  "author": "tacogips",
+  "repository": "https://github.com/tacogips/ign-template",
+  "license": "MIT",
+  "tags": [
+    "rust",
+    "nix",
+    "fenix",
+    "crane",
+    "task"
+  ],
+  "variables": {
+    "AUTHOR_EMAIL": {
+      "type": "string",
+      "description": "Variable AUTHOR_EMAIL",
+      "default": ""
+    },
+    "AUTHOR_NAME": {
+      "type": "string",
+      "description": "Variable AUTHOR_NAME",
+      "default": ""
+    },
+    "DESCRIPTION": {
+      "type": "string",
+      "description": "Variable DESCRIPTION",
+      "default": "A Rust project"
+    },
+    "EDITION": {
+      "type": "int",
+      "description": "Variable EDITION",
+      "default": 2021
+    },
+    "HAS_AUTHOR": {
+      "type": "bool",
+      "description": "Variable HAS_AUTHOR",
+      "required": true
+    },
+    "HOMEPAGE": {
+      "type": "string",
+      "description": "Variable HOMEPAGE",
+      "default": "https://github.com/user/repo"
+    },
+    "PROJECT_NAME": {
+      "type": "string",
+      "description": "Variable PROJECT_NAME",
+      "required": true
+    },
+    "REPOSITORY": {
+      "type": "string",
+      "description": "Variable REPOSITORY",
+      "default": "https://github.com/user/repo"
+    },
+    "RUST_VERSION": {
+      "type": "string",
+      "description": "Variable RUST_VERSION",
+      "default": "1.83.0"
+    },
+    "VERSION": {
+      "type": "string",
+      "description": "Variable VERSION",
+      "default": "0.1.0"
+    }
+  },
+  "settings": {
+    "ignore_patterns": [
+      ".git",
+      ".DS_Store",
+      "target"
+    ],
+    "include_dotfiles": true
+  },
+  "hash": "f0894dded76c35c593d65cee4f2fb86723ad92eebe0566891d7710b57616a680"
+}
