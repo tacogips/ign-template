@@ -1,0 +1,7 @@
+design-docs/
+impl-plans/
+.gitignore
+AGENTS.md
+Cargo.toml
+mise.toml
+src/
