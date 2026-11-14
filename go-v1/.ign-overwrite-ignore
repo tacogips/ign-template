@@ -1,0 +1,9 @@
+design-docs/
+impl-plans/
+.gitignore
+AGENTS.md
+mise.toml
+cmd/
+go.mod
+internal/
+pkg/

@@ -1,0 +1,65 @@
+{
+  "name": "bun-ts-v1",
+  "version": "1.0.0",
+  "description": "TypeScript project template with Bun runtime and mise configuration",
+  "author": "tacogips",
+  "repository": "https://github.com/tacogips/ign-template",
+  "license": "MIT",
+  "tags": [
+    "typescript",
+    "bun",
+    "mise"
+  ],
+  "variables": {
+    "AUTHOR_EMAIL": {
+      "type": "string",
+      "description": "Variable AUTHOR_EMAIL",
+      "default": ""
+    },
+    "AUTHOR_NAME": {
+      "type": "string",
+      "description": "Variable AUTHOR_NAME",
+      "default": ""
+    },
+    "DESCRIPTION": {
+      "type": "string",
+      "description": "Variable DESCRIPTION",
+      "required": true
+    },
+    "HAS_AUTHOR": {
+      "type": "bool",
+      "description": "Variable HAS_AUTHOR",
+      "required": true
+    },
+    "HOMEPAGE": {
+      "type": "string",
+      "description": "Variable HOMEPAGE",
+      "default": "https://github.com/user/repo"
+    },
+    "PROJECT_NAME": {
+      "type": "string",
+      "description": "Defaults to the output directory name",
+      "default": "{current_dir}"
+    },
+    "REPOSITORY": {
+      "type": "string",
+      "description": "Variable REPOSITORY",
+      "default": "https://github.com/user/repo"
+    },
+    "VERSION": {
+      "type": "string",
+      "description": "Variable VERSION",
+      "default": "0.1.0"
+    }
+  },
+  "settings": {
+    "ignore_patterns": [
+      ".git",
+      ".DS_Store",
+      "node_modules",
+      "dist"
+    ],
+    "include_dotfiles": true
+  },
+  "hash": "c15ca33aecf80a68f733353ef7de81127f45885dece1c548bd48e3db285553e5"
+}

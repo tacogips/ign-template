@@ -1,0 +1,34 @@
+{
+  "name": "general-v1",
+  "version": "1.0.0",
+  "description": "General investigation template with mise configuration and reusable agent skills",
+  "author": "tacogips",
+  "repository": "https://github.com/tacogips/ign-template",
+  "license": "MIT",
+  "tags": [
+    "general",
+    "research",
+    "investigation",
+    "mise"
+  ],
+  "variables": {
+    "DESCRIPTION": {
+      "type": "string",
+      "description": "Variable DESCRIPTION",
+      "default": "A general investigation workspace"
+    },
+    "PROJECT_NAME": {
+      "type": "string",
+      "description": "Defaults to the output directory name",
+      "default": "{current_dir}"
+    }
+  },
+  "settings": {
+    "ignore_patterns": [
+      ".git",
+      ".DS_Store"
+    ],
+    "include_dotfiles": true
+  },
+  "hash": "1506cb6b551b5ec991b28fea1c2ee225dd5489a5a336e97bc200b529da189dec"
+}

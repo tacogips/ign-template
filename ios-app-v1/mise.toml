@@ -1,0 +1,89 @@
+min_version = "2026.8.3"
+
+[[hooks.enter]]
+shell = "bash"
+script = '''
+if command -v kinko >/dev/null 2>&1 && kinko hook --help >/dev/null 2>&1; then
+  eval "$(kinko --path "$MISE_PROJECT_ROOT" hook enter bash)"
+fi
+'''
+
+[[hooks.leave]]
+shell = "bash"
+script = '''
+if command -v kinko >/dev/null 2>&1 && kinko hook --help >/dev/null 2>&1; then
+  eval "$(kinko hook leave bash)"
+fi
+'''
+
+[tools]
+python = "3.12"
+ruby = "3.4"
+github-cli = "latest"
+gitleaks = "latest"
+swiftlint = "latest"
+"gem:fastlane" = "latest"
+pre-commit = "latest"
+
+[tasks.default]
+description = "Show available tasks"
+run = "mise tasks ls"
+
+[tasks.build]
+description = "Build the Swift package"
+run = "swift build"
+
+[tasks.test]
+description = "Run Swift tests"
+run = "swift test"
+
+[tasks."build:app"]
+description = "Build the iPhone/iPad simulator app bundles"
+run = "scripts/build-app-targets.py"
+
+[tasks."smoke:simulator-app"]
+description = "Install and launch-smoke the simulator app bundles"
+run = "scripts/smoke-simulator-app.py"
+
+[tasks."archive:ios-app"]
+description = "Build and validate an unsigned generic iOS archive"
+run = "scripts/archive-ios-app.py"
+
+[tasks."archive:ios-app-signed"]
+description = "Build a signed generic iOS archive"
+run = "scripts/archive-ios-app-signed.py"
+
+[tasks."export:ios-app"]
+description = "Export a signed iOS archive for App Store Connect"
+run = "scripts/export-ios-app.py"
+
+[tasks."check:ios-ipa"]
+description = "Validate the exported IPA"
+run = "scripts/check-ios-ipa-readiness.py"
+
+[tasks.lint]
+description = "Run SwiftLint"
+run = "swiftlint"
+
+[tasks.clean]
+description = "Clean SwiftPM, Xcode, and export artifacts"
+run = "rm -rf .build DerivedData dist release"
+
+[tasks.install-git-hooks]
+description = "Install mise tools and the repository pre-commit hook"
+run = '''
+mise install
+
+hooks_path=$(git config --local --get core.hooksPath || true)
+if [ "$hooks_path" = ".git/hooks" ]; then
+  git config --local --unset-all core.hooksPath
+  hooks_path=""
+fi
+
+if [ -z "$hooks_path" ]; then
+  mise exec -- pre-commit install
+else
+  mise exec -- pre-commit validate-config .pre-commit-config.yaml
+  echo "Using existing custom Git hooks path: $hooks_path"
+fi
+'''
