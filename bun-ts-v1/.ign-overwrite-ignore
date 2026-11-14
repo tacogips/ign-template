@@ -1,0 +1,12 @@
+design-docs/
+impl-plans/
+.gitignore
+AGENTS.md
+mise.toml
+biome.json
+bunfig.toml
+package.json
+src/
+src/lib.ts
+src/main.ts
+tsconfig.json

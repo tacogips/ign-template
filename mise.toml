@@ -1,0 +1,110 @@
+min_version = "2026.8.3"
+
+[[hooks.enter]]
+shell = "bash"
+script = '''
+if command -v kinko >/dev/null 2>&1 && kinko hook --help >/dev/null 2>&1; then
+  eval "$(kinko --path "$MISE_PROJECT_ROOT" hook enter bash)"
+fi
+'''
+
+[[hooks.leave]]
+shell = "bash"
+script = '''
+if command -v kinko >/dev/null 2>&1 && kinko hook --help >/dev/null 2>&1; then
+  eval "$(kinko hook leave bash)"
+fi
+'''
+
+[tools]
+go = "latest"
+golangci-lint = "latest"
+"github:tacogips/ign" = "latest"
+gitleaks = "latest"
+pre-commit = "latest"
+
+[tasks.default]
+description = "Show available tasks"
+run = "mise tasks ls"
+
+[tasks.update]
+description = "Update all ign templates"
+run = "mise run template-update-all"
+
+[tasks.template-list]
+description = "List all available ign templates"
+run = '''
+echo "Available templates:"
+for json in ./*/ign-template.json; do
+  if [ -f "$json" ]; then
+    echo "  - $(basename "$(dirname "$json")")"
+  fi
+done
+'''
+
+[tasks.template-update]
+description = "Update one template (usage: TEMPLATE=<template-name> mise run template-update)"
+run = '''
+: "${TEMPLATE:?Set TEMPLATE to a template directory name}"
+template_dir="./$TEMPLATE"
+if [ ! -f "$template_dir/ign-template.json" ]; then
+  echo "Error: template '$TEMPLATE' not found (missing ign-template.json)" >&2
+  exit 1
+fi
+ign template update "$template_dir"
+'''
+
+[tasks.template-update-all]
+description = "Update all ign templates"
+run = '''
+for json in ./*/ign-template.json; do
+  if [ -f "$json" ]; then
+    dir=$(dirname "$json")
+    echo "Updating $(basename "$dir")"
+    ign template update "$dir"
+  fi
+done
+'''
+
+[tasks.template-check]
+description = "Check one template (usage: TEMPLATE=<template-name> mise run template-check)"
+run = '''
+: "${TEMPLATE:?Set TEMPLATE to a template directory name}"
+template_dir="./$TEMPLATE"
+if [ ! -f "$template_dir/ign-template.json" ]; then
+  echo "Error: template '$TEMPLATE' not found (missing ign-template.json)" >&2
+  exit 1
+fi
+ign template check "$template_dir" -v
+'''
+
+[tasks.template-check-all]
+description = "Check all ign templates"
+run = '''
+for json in ./*/ign-template.json; do
+  if [ -f "$json" ]; then
+    dir=$(dirname "$json")
+    echo "Checking $(basename "$dir")"
+    ign template check "$dir" -v
+  fi
+done
+'''
+
+[tasks.install-git-hooks]
+description = "Install mise tools and the repository pre-commit hook"
+run = '''
+mise install
+
+hooks_path=$(git config --local --get core.hooksPath || true)
+if [ "$hooks_path" = ".git/hooks" ]; then
+  git config --local --unset-all core.hooksPath
+  hooks_path=""
+fi
+
+if [ -z "$hooks_path" ]; then
+  mise exec -- pre-commit install
+else
+  mise exec -- pre-commit validate-config .pre-commit-config.yaml
+  echo "Using existing custom Git hooks path: $hooks_path"
+fi
+'''
